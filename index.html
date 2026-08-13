@@ -2,2389 +2,1823 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#087f46">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>SHOHIN ROHNAMO</title>
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#087f46">
+<meta name="description" content="Навигация и общественный транспорт Душанбе">
 
 <style>
-:root{
- --green:#087f46;
- --green2:#12a85c;
- --light:#f3f8f4;
- --white:#fff;
- --text:#142019;
- --muted:#748079;
- --blue:#287fe8;
- --cyan:#00a9d8;
- --orange:#f39a28;
- --gold:#d9a72c;
- --shadow:0 12px 35px rgba(0,0,0,.14);
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-*{
- box-sizing:border-box;
- margin:0;
- padding:0;
- font-family:Arial,Helvetica,sans-serif;
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f8f4;
+  color:#17251d;
 }
 
 body{
- background:#edf4ef;
- color:var(--text);
- overflow:hidden;
+  overflow:hidden;
 }
 
 button,input{
- font:inherit;
+  font:inherit;
 }
 
 button{
- border:0;
- cursor:pointer;
+  border:0;
+  cursor:pointer;
 }
 
-#loader{
- position:fixed;
- inset:0;
- z-index:99999;
- background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- color:white;
- transition:.5s;
+.app{
+  width:100%;
+  height:100%;
+  position:relative;
+  overflow:hidden;
+  background:#f3f8f4;
 }
 
-#loader.hide{
- opacity:0;
- pointer-events:none;
+/* HEADER */
+
+.header{
+  height:68px;
+  background:linear-gradient(135deg,#087f46,#10a55b);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  position:relative;
+  z-index:20;
+  box-shadow:0 4px 18px rgba(0,80,40,.18);
 }
 
-.logoBig{
- font-size:52px;
- font-weight:1000;
- letter-spacing:5px;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.logoSub{
- font-size:10px;
- letter-spacing:3px;
- margin-top:5px;
- opacity:.8;
+.logoIcon{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:white;
+  color:#087f46;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+  font-weight:900;
 }
 
-.loaderLine{
- width:170px;
- height:4px;
- border-radius:10px;
- background:rgba(255,255,255,.3);
- margin-top:24px;
- overflow:hidden;
+.logoText strong{
+  display:block;
+  font-size:17px;
+  letter-spacing:.4px;
 }
 
-.loaderLine span{
- display:block;
- height:100%;
- width:100%;
- background:white;
- animation:loading 1.2s;
+.logoText span{
+  font-size:10px;
+  opacity:.8;
 }
 
-@keyframes loading{
- from{width:0}
- to{width:100%}
+.headerActions{
+  display:flex;
+  gap:7px;
 }
 
-#map{
- position:fixed;
- inset:0;
- z-index:1;
+.iconBtn{
+  width:39px;
+  height:39px;
+  border-radius:13px;
+  background:rgba(255,255,255,.16);
+  color:white;
+  font-size:18px;
 }
 
-.leaflet-control-attribution{
- font-size:8px!important;
+/* SCREENS */
+
+.screen{
+  position:absolute;
+  left:0;
+  right:0;
+  top:68px;
+  bottom:72px;
+  overflow:auto;
+  display:none;
 }
 
-.top{
- position:fixed;
- top:0;
- left:0;
- right:0;
- z-index:1000;
- padding:12px;
- pointer-events:none;
+.screen.active{
+  display:block;
 }
 
-.topRow{
- max-width:900px;
- margin:auto;
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
+/* HOME */
 
-.brand{
- pointer-events:auto;
- display:flex;
- align-items:center;
- gap:9px;
- background:rgba(255,255,255,.96);
- backdrop-filter:blur(18px);
- padding:7px 11px 7px 7px;
- border-radius:17px;
- box-shadow:var(--shadow);
-}
-
-.brandLogo{
- width:40px;
- height:40px;
- border-radius:13px;
- display:flex;
- align-items:center;
- justify-content:center;
- color:#fff;
- font-size:14px;
- font-weight:1000;
- background:linear-gradient(145deg,#056337,#13b866);
-}
-
-.brandText b{
- display:block;
- font-size:12px;
-}
-
-.brandText small{
- display:block;
- color:#7b867f;
- font-size:7px;
- letter-spacing:1.5px;
- margin-top:3px;
-}
-
-.langs{
- pointer-events:auto;
- display:flex;
- gap:3px;
- background:rgba(255,255,255,.95);
- padding:5px;
- border-radius:14px;
- box-shadow:var(--shadow);
-}
-
-.langs button{
- padding:7px 8px;
- border-radius:9px;
- background:transparent;
- color:#68756d;
- font-size:10px;
- font-weight:bold;
-}
-
-.langs button.active{
- background:var(--green);
- color:white;
-}
-
-.menuButton{
- pointer-events:auto;
- width:43px;
- height:43px;
- margin-left:6px;
- border-radius:14px;
- background:white;
- box-shadow:var(--shadow);
- font-size:20px;
-}
-
-.searchArea{
- position:fixed;
- top:68px;
- left:12px;
- right:12px;
- z-index:900;
- max-width:900px;
- margin:auto;
+.home{
+  padding-bottom:25px;
 }
 
 .searchBox{
- height:54px;
- background:rgba(255,255,255,.97);
- backdrop-filter:blur(18px);
- border-radius:17px;
- box-shadow:var(--shadow);
- display:flex;
- align-items:center;
- padding:0 7px 0 15px;
+  margin:14px;
+  background:white;
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 6px 25px rgba(0,60,30,.08);
+}
+
+.searchRow{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.searchRow input{
+  width:100%;
+  border:0;
+  outline:0;
+  font-size:16px;
+  background:transparent;
 }
 
 .searchIcon{
- font-size:19px;
- margin-right:8px;
-}
-
-#search{
- flex:1;
- border:0;
- outline:0;
- background:transparent;
- color:var(--text);
- font-size:14px;
-}
-
-.searchGo{
- width:40px;
- height:40px;
- border-radius:12px;
- background:var(--green);
- color:white;
- font-size:18px;
+  font-size:20px;
 }
 
 .chips{
- display:flex;
- gap:7px;
- overflow-x:auto;
- padding:8px 1px;
- scrollbar-width:none;
-}
-
-.chips::-webkit-scrollbar{
- display:none;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:11px 2px 1px;
 }
 
 .chip{
- flex:none;
- background:rgba(255,255,255,.95);
- border-radius:13px;
- padding:9px 12px;
- box-shadow:0 5px 18px rgba(0,0,0,.08);
- color:#425048;
- font-size:11px;
- font-weight:bold;
+  white-space:nowrap;
+  background:#eaf7ef;
+  color:#087f46;
+  border-radius:30px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:700;
 }
 
-.chip.hot{
- background:#e7f6ed;
- color:var(--green);
+/* MAP */
+
+.map{
+  height:280px;
+  margin:0 14px;
+  border-radius:24px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(35deg,transparent 47%,rgba(255,255,255,.8) 48%,rgba(255,255,255,.8) 51%,transparent 52%),
+    linear-gradient(-35deg,transparent 47%,rgba(255,255,255,.75) 48%,rgba(255,255,255,.75) 51%,transparent 52%),
+    #dcefe2;
+  background-size:95px 95px;
+  box-shadow:0 8px 28px rgba(0,70,30,.12);
 }
 
-.gps{
- position:fixed;
- z-index:1000;
- right:14px;
- bottom:315px;
- width:50px;
- height:50px;
- border-radius:17px;
- background:white;
- box-shadow:var(--shadow);
- color:var(--green);
- font-size:22px;
+.map:before{
+  content:"";
+  position:absolute;
+  width:120%;
+  height:35px;
+  background:#fff;
+  left:-10%;
+  top:120px;
+  transform:rotate(-12deg);
+  opacity:.85;
 }
 
-.bottom{
- position:fixed;
- left:0;
- right:0;
- bottom:0;
- z-index:1000;
- pointer-events:none;
- padding:10px;
+.map:after{
+  content:"";
+  position:absolute;
+  width:120%;
+  height:26px;
+  background:#fff;
+  left:-10%;
+  top:185px;
+  transform:rotate(18deg);
+  opacity:.75;
 }
 
-.bottomPanel{
- max-width:700px;
- margin:auto;
- pointer-events:auto;
- background:rgba(255,255,255,.97);
- backdrop-filter:blur(20px);
- border-radius:25px 25px 0 0;
- padding:12px;
- box-shadow:0 -10px 35px rgba(0,0,0,.12);
+.mapTitle{
+  position:absolute;
+  top:14px;
+  left:14px;
+  z-index:3;
+  background:rgba(255,255,255,.9);
+  padding:8px 12px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.mapPin{
+  position:absolute;
+  z-index:5;
+  width:38px;
+  height:38px;
+  border-radius:50% 50% 50% 5px;
+  background:#087f46;
+  transform:rotate(-45deg);
+  box-shadow:0 4px 12px rgba(0,90,45,.3);
+}
+
+.mapPin span{
+  display:block;
+  transform:rotate(45deg);
+  color:white;
+  text-align:center;
+  line-height:38px;
+}
+
+.pin1{left:25%;top:38%}
+.pin2{left:67%;top:25%}
+.pin3{left:48%;top:68%}
+
+.gpsDot{
+  position:absolute;
+  left:52%;
+  top:45%;
+  width:18px;
+  height:18px;
+  border:4px solid white;
+  background:#087f46;
+  border-radius:50%;
+  z-index:8;
+  box-shadow:0 0 0 8px rgba(8,127,70,.18);
+}
+
+.mapControls{
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.mapControl{
+  width:42px;
+  height:42px;
+  background:white;
+  border-radius:14px;
+  box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+/* QUICK */
+
+.section{
+  padding:17px 14px 0;
+}
+
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px;
+}
+
+.sectionTitle h2{
+  margin:0;
+  font-size:18px;
+}
+
+.sectionTitle span{
+  font-size:12px;
+  color:#087f46;
+}
+
+.quickGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
 }
 
 .quick{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:7px;
+  background:white;
+  padding:12px 5px;
+  border-radius:17px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,60,30,.06);
 }
 
-.quick button{
- background:#f4f8f5;
- border-radius:14px;
- padding:9px 4px;
- color:#46544c;
- font-size:9px;
- font-weight:bold;
+.quickIcon{
+  font-size:23px;
+  margin-bottom:6px;
 }
 
-.quick button span{
- display:block;
- font-size:19px;
- margin-bottom:3px;
+.quick span{
+  font-size:10px;
+  font-weight:700;
 }
 
-.routePanel{
- display:none;
- margin-bottom:8px;
- background:#f5f9f6;
- border-radius:17px;
- padding:9px;
-}
+/* TRANSPORT */
 
-.routePanel.show{
- display:block;
-}
-
-.pointRow{
- height:42px;
- display:flex;
- align-items:center;
- gap:8px;
-}
-
-.pointIcon{
- width:27px;
- height:27px;
- border-radius:50%;
- display:flex;
- justify-content:center;
- align-items:center;
- color:white;
- font-size:11px;
- font-weight:bold;
-}
-
-.pointA{
- background:#12a85c;
-}
-
-.pointB{
- background:#e84b4b;
-}
-
-.pointInput{
- flex:1;
- border:0;
- outline:0;
- background:transparent;
- font-size:12px;
- min-width:0;
-}
-
-.mapChoose{
- padding:7px 9px;
- border-radius:9px;
- background:#e4f3e9;
- color:var(--green);
- font-size:10px;
- font-weight:bold;
+.transportGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
 }
 
 .transport{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:6px;
- margin-top:5px;
+  color:white;
+  border-radius:18px;
+  padding:13px;
+  min-height:90px;
 }
 
-.transport button{
- padding:10px 4px;
- border-radius:11px;
- font-size:10px;
- font-weight:bold;
- color:#56645b;
- background:white;
+.bus{background:linear-gradient(135deg,#1677d2,#0c9bd8)}
+.trolley{background:linear-gradient(135deg,#13a8d1,#45d6ee)}
+.mini{background:linear-gradient(135deg,#ed8b18,#ffb52c)}
+
+.transport b{
+  font-size:21px;
 }
 
-.transport button.active.car{
- background:var(--green);
- color:white;
+.transport small{
+  display:block;
+  margin-top:5px;
+  opacity:.9;
 }
 
-.transport button.active.foot{
- background:#8a6a35;
- color:white;
+/* PLACES */
+
+.placeList{
+  display:grid;
+  gap:9px;
 }
 
-.transport button.active.bike{
- background:#287fe8;
- color:white;
+.place{
+  background:white;
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 4px 15px rgba(0,60,30,.06);
+}
+
+.placeImg{
+  width:58px;
+  height:58px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#d2ead9,#9bd4ae);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+}
+
+.placeInfo{
+  flex:1;
+}
+
+.placeInfo b{
+  display:block;
+  font-size:14px;
+}
+
+.placeInfo span{
+  display:block;
+  color:#718078;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.star{
+  background:none;
+  font-size:22px;
+}
+
+/* ROUTE */
+
+.routePanel{
+  margin:14px;
+  background:white;
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 6px 25px rgba(0,60,30,.08);
+}
+
+.routeInput{
+  background:#f1f7f3;
+  border-radius:14px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.routeInput small{
+  color:#6b7b72;
+}
+
+.routeInput input{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  outline:0;
+  font-size:15px;
+  margin-top:5px;
+}
+
+.mainBtn{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  background:#087f46;
+  color:white;
+  font-weight:800;
+  margin-top:5px;
 }
 
 .shadowMode{
- margin-top:7px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:10px;
- border-radius:12px;
- background:#fff9df;
-}
-
-.shadowText b{
- display:block;
- font-size:11px;
-}
-
-.shadowText small{
- color:#8b7a42;
- font-size:9px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 2px;
 }
 
 .switch{
- width:43px;
- height:24px;
- background:#d8ded9;
- border-radius:20px;
- padding:3px;
+  width:45px;
+  height:25px;
+  border-radius:20px;
+  background:#cdd8d1;
+  padding:3px;
+}
+
+.switch.active{
+  background:#087f46;
 }
 
 .switch i{
- display:block;
- width:18px;
- height:18px;
- border-radius:50%;
- background:white;
- transition:.2s;
+  width:19px;
+  height:19px;
+  display:block;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
 }
 
-.switch.on{
- background:#d6a72d;
+.switch.active i{
+  transform:translateX(20px);
 }
 
-.switch.on i{
- transform:translateX(19px);
-}
-
-.build{
- width:100%;
- margin-top:7px;
- padding:14px;
- border-radius:13px;
- color:white;
- font-size:12px;
- font-weight:900;
- background:linear-gradient(145deg,#06743f,#12a85c);
-}
+/* ROUTE RESULT */
 
 .routeResult{
- display:none;
- background:white;
- border-radius:18px;
- padding:12px;
- margin-bottom:8px;
- box-shadow:0 5px 20px rgba(0,0,0,.08);
+  margin-top:12px;
+  display:none;
 }
 
-.routeResult.show{
- display:block;
+.routeCard{
+  background:#f3f8f4;
+  border-radius:17px;
+  padding:13px;
+  margin-top:8px;
 }
 
-.routeStats{
- display:flex;
- justify-content:space-between;
- align-items:center;
+.timeline{
+  position:relative;
+  padding-left:27px;
 }
 
-.big{
- font-size:22px;
- font-weight:1000;
+.timeline:before{
+  content:"";
+  position:absolute;
+  left:8px;
+  top:8px;
+  bottom:8px;
+  width:3px;
+  background:#a8d7b9;
 }
 
-.small{
- font-size:9px;
- color:var(--muted);
+.step{
+  position:relative;
+  padding:8px 0;
 }
 
-.routeLine{
- height:5px;
- border-radius:10px;
- margin:10px 0;
- background:linear-gradient(90deg,#12a85c,#d9a72c,#287fe8);
+.step:before{
+  content:"";
+  position:absolute;
+  left:-23px;
+  top:12px;
+  width:11px;
+  height:11px;
+  background:#087f46;
+  border:3px solid white;
+  border-radius:50%;
+  box-shadow:0 0 0 1px #087f46;
 }
 
-.start{
- width:100%;
- padding:13px;
- border-radius:12px;
- background:var(--green);
- color:white;
- font-weight:bold;
+/* ROUTES */
+
+.routeSearch{
+  margin:14px;
+  background:white;
+  padding:12px;
+  border-radius:17px;
+  box-shadow:0 5px 20px rgba(0,60,30,.07);
 }
 
-.overlay{
- position:fixed;
- inset:0;
- z-index:5000;
- background:rgba(0,0,0,.45);
- display:none;
+.routeSearch input{
+  width:100%;
+  border:0;
+  outline:0;
 }
 
-.overlay.show{
- display:block;
+.routeItem{
+  margin:9px 14px;
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  box-shadow:0 4px 15px rgba(0,60,30,.06);
 }
 
-.drawer{
- position:fixed;
- z-index:6000;
- top:0;
- right:-390px;
- width:360px;
- max-width:91%;
- height:100%;
- background:white;
- padding:14px;
- overflow:auto;
- transition:.3s;
- box-shadow:-15px 0 40px rgba(0,0,0,.22);
+.routeNumber{
+  width:50px;
+  height:50px;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:900;
+  font-size:18px;
+  background:#087f46;
 }
 
-.drawer.open{
- right:0;
+/* STOPS */
+
+.stop{
+  margin:9px 14px;
+  padding:14px;
+  background:white;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 4px 15px rgba(0,60,30,.06);
 }
 
-.drawerHead{
- padding:21px;
- border-radius:22px;
- color:white;
- background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
- margin-bottom:10px;
+.stopIcon{
+  width:43px;
+  height:43px;
+  background:#e5f5eb;
+  color:#087f46;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:13px;
+  font-size:20px;
 }
 
-.drawerHead h1{
- font-size:28px;
+.stopInfo{
+  flex:1;
 }
 
-.drawerHead p{
- font-size:10px;
- opacity:.8;
- margin-top:4px;
+.stopInfo b{
+  display:block;
 }
 
-.closeDrawer{
- float:right;
- width:34px;
- height:34px;
- border-radius:10px;
+.stopInfo small{
+  color:#75837b;
 }
 
-.menuItem{
- width:100%;
- padding:14px;
- border-radius:14px;
- text-align:left;
- background:white;
- color:#25342b;
- font-weight:bold;
- font-size:13px;
- margin:2px 0;
+/* ADD STOP */
+
+.form{
+  margin:14px;
+  background:white;
+  padding:16px;
+  border-radius:20px;
+  box-shadow:0 5px 22px rgba(0,60,30,.07);
 }
 
-.menuItem:hover{
- background:#edf8f1;
+.form label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin:12px 0 6px;
 }
 
-.menuItem span{
- display:inline-block;
- width:30px;
- font-size:18px;
+.form input,
+.form textarea,
+.form select{
+  width:100%;
+  padding:13px;
+  border:1px solid #dce7df;
+  border-radius:13px;
+  outline:0;
+  background:#f8fbf9;
 }
 
-.page{
- position:fixed;
- inset:0;
- z-index:4000;
- display:none;
- overflow:auto;
- background:#f0f6f2;
- padding:75px 14px 30px;
+/* LANGUAGE */
+
+.language{
+  display:grid;
+  gap:10px;
+  padding:14px;
 }
 
-.page.show{
- display:block;
+.langBtn{
+  padding:16px;
+  background:white;
+  border-radius:17px;
+  text-align:left;
+  font-weight:700;
+  box-shadow:0 4px 15px rgba(0,60,30,.06);
 }
 
-.pageInner{
- max-width:900px;
- margin:auto;
+/* BACK */
+
+.backBar{
+  padding:12px 14px 2px;
 }
 
-.pageHero{
- padding:23px;
- border-radius:23px;
- color:white;
- background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
- margin-bottom:13px;
+.backBtn{
+  background:white;
+  padding:9px 13px;
+  border-radius:12px;
+  color:#087f46;
+  font-weight:700;
 }
 
-.pageHero h1{
- font-size:26px;
+/* NAV */
+
+.bottomNav{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:72px;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid #e2ebe5;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:30;
+  padding-bottom:5px;
 }
 
-.pageHero p{
- margin-top:6px;
- opacity:.85;
- font-size:12px;
+.navBtn{
+  background:transparent;
+  color:#819087;
+  font-size:10px;
+  font-weight:700;
 }
 
-.card{
- background:white;
- border-radius:19px;
- padding:16px;
- margin-bottom:11px;
- box-shadow:0 6px 25px rgba(0,0,0,.07);
+.navBtn .navIcon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
 }
 
-.card h3{
- margin-bottom:7px;
+.navBtn.active{
+  color:#087f46;
 }
 
-.muted{
- color:var(--muted);
- font-size:12px;
- line-height:1.55;
+/* TOAST */
+
+.toast{
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:88px;
+  background:#17251d;
+  color:white;
+  padding:13px 15px;
+  border-radius:15px;
+  text-align:center;
+  font-size:13px;
+  z-index:100;
+  transform:translateY(130px);
+  transition:.3s;
 }
 
-.badge{
- display:inline-block;
- padding:6px 9px;
- border-radius:9px;
- font-size:10px;
- font-weight:bold;
- margin:3px;
+.toast.show{
+  transform:translateY(0);
 }
 
-.bus{
- background:#e8f0ff;
- color:var(--blue);
-}
-
-.trolley{
- background:#e3f9ff;
- color:#008db7;
-}
-
-.mini{
- background:#fff1df;
- color:#d77d0b;
-}
-
-.primary{
- width:100%;
- padding:13px;
- border-radius:12px;
- color:white;
- background:var(--green);
- font-weight:bold;
-}
-
-.placeGrid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:11px;
-}
-
-.placeCard{
- background:white;
- border-radius:19px;
- padding:17px;
- box-shadow:0 6px 25px rgba(0,0,0,.07);
-}
-
-.placeEmoji{
- font-size:30px;
- margin-bottom:10px;
-}
+/* MODAL */
 
 .modal{
- position:fixed;
- inset:0;
- z-index:9000;
- display:none;
- align-items:flex-end;
- background:rgba(0,0,0,.5);
- padding:10px;
+  position:absolute;
+  inset:0;
+  background:rgba(0,30,15,.45);
+  z-index:90;
+  display:none;
+  align-items:flex-end;
 }
 
 .modal.show{
- display:flex;
+  display:flex;
 }
 
 .modalBox{
- width:700px;
- max-width:100%;
- max-height:90vh;
- overflow:auto;
- background:white;
- border-radius:24px;
- padding:18px;
- margin:auto;
+  background:white;
+  width:100%;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+  max-height:80%;
+  overflow:auto;
 }
 
-.field{
- margin-bottom:12px;
+.closeBtn{
+  float:right;
+  background:#edf4ef;
+  width:35px;
+  height:35px;
+  border-radius:12px;
 }
 
-.field label{
- display:block;
- margin-bottom:6px;
- font-size:11px;
- font-weight:bold;
-}
+/* DESKTOP */
 
-.field input,
-.field textarea,
-.field select{
- width:100%;
- padding:12px;
- border:1px solid #d6e3da;
- border-radius:12px;
- outline:0;
- background:white;
-}
-
-body.dark{
- background:#07110b;
- color:#fff;
-}
-
-body.dark .brand,
-body.dark .langs,
-body.dark .menuButton,
-body.dark .searchBox,
-body.dark .chip,
-body.dark .bottomPanel,
-body.dark .gps{
- background:#142219;
- color:white;
-}
-
-body.dark #search{
- color:white;
-}
-
-body.dark .quick button,
-body.dark .routePanel,
-body.dark .transport button{
- background:#1a2b20;
- color:white;
-}
-
-body.dark .routeResult,
-body.dark .drawer,
-body.dark .card,
-body.dark .placeCard{
- background:#142219;
- color:white;
-}
-
-body.dark .menuItem{
- background:#142219;
- color:white;
-}
-
-body.dark .page{
- background:#07110b;
-}
-
-@media(max-width:600px){
- .brandText{
-  display:none;
- }
-
- .langs button{
-  padding:7px 6px;
- }
-}
-
-@media(min-width:800px){
- .bottom{
-  bottom:20px;
- }
-
- .bottomPanel{
-  border-radius:24px;
- }
-
- .gps{
-  bottom:330px;
- }
+@media(min-width:700px){
+  .app{
+    max-width:480px;
+    margin:auto;
+    box-shadow:0 0 40px rgba(0,0,0,.12);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="loader">
- <div class="logoBig">SHT</div>
- <div class="logoSub">SHOHIN ROHNAMO</div>
- <div class="loaderLine"><span></span></div>
-</div>
+<div class="app">
 
-<div id="map"></div>
+<header class="header">
 
-<div class="top">
- <div class="topRow">
-
-  <div class="brand">
-   <div class="brandLogo">SHT</div>
-   <div class="brandText">
-    <b>SHOHIN ROHNAMO</b>
-    <small>DUSHANBE NAVIGATION</small>
-   </div>
-  </div>
-
-  <div style="display:flex;align-items:center">
-   <div class="langs">
-    <button id="tg" onclick="setLanguage('tg')">TJ</button>
-    <button id="ru" class="active" onclick="setLanguage('ru')">RU</button>
-    <button id="en" onclick="setLanguage('en')">EN</button>
-   </div>
-
-   <button class="menuButton" onclick="openMenu()">☰</button>
-  </div>
-
- </div>
-</div>
-
-<div class="searchArea">
-
- <div class="searchBox">
-  <span class="searchIcon">🔎</span>
-
-  <input
-   id="search"
-   placeholder="Куда едем?"
-   onkeydown="if(event.key==='Enter')searchPlace()"
-  >
-
-  <button class="searchGo" onclick="searchPlace()">➜</button>
- </div>
-
- <div class="chips">
-  <button class="chip hot" onclick="popular('Садбарг')">🔥 Садбарг</button>
-  <button class="chip" onclick="popular('Корвон')">🛍️ Корвон</button>
-  <button class="chip" onclick="popular('Караболо')">🏥 Караболо</button>
-  <button class="chip" onclick="popular('Цирк')">🎪 Цирк</button>
-  <button class="chip" onclick="popular('Пединститут')">🎓 Пединститут</button>
-  <button class="chip" onclick="popular('Аэропорт')">✈️ Аэропорт</button>
-  <button class="chip" onclick="popular('Вокзал')">🚉 Вокзал</button>
- </div>
-
-</div>
-
-<button class="gps" onclick="getGPS()">⦿</button>
-
-<div class="bottom">
-
- <div class="bottomPanel">
-
-  <div id="routePanel" class="routePanel">
-
-   <div class="pointRow">
-    <div class="pointIcon pointA">A</div>
-    <input id="inputA" class="pointInput" readonly placeholder="Откуда?">
-    <button class="mapChoose" onclick="chooseA()">Карта</button>
-   </div>
-
-   <div class="pointRow">
-    <div class="pointIcon pointB">B</div>
-    <input id="inputB" class="pointInput" readonly placeholder="Куда?">
-    <button class="mapChoose" onclick="chooseB()">Карта</button>
-   </div>
-
-   <div class="transport">
-    <button id="car" class="active car" onclick="transport('car')">🚗 Авто</button>
-    <button id="foot" class="foot" onclick="transport('foot')">🚶 Пешком</button>
-    <button id="bike" class="bike" onclick="transport('bike')">🚲 Велосипед</button>
-   </div>
-
-   <div class="shadowMode" onclick="toggleShadow()">
-    <div class="shadowText">
-     <b>🌳 Маршрут в тени</b>
-     <small>Пешеходный режим</small>
+  <div class="logo">
+    <div class="logoIcon">SHT</div>
+    <div class="logoText">
+      <strong>SHOHIN ROHNAMO</strong>
+      <span>Душанбе • Навигация</span>
     </div>
-    <div id="shadowSwitch" class="switch">
-     <i></i>
-    </div>
-   </div>
-
-   <button class="build" onclick="buildRoute()">
-    🧭 ПОСТРОИТЬ МАРШРУТ
-   </button>
-
   </div>
 
-  <div id="routeResult" class="routeResult">
+  <div class="headerActions">
+    <button class="iconBtn" onclick="showScreen('language')">🌐</button>
+    <button class="iconBtn" onclick="getGPS()">📍</button>
+  </div>
 
-   <div class="routeStats">
-    <div>
-     <div id="routeTime" class="big">--</div>
-     <div class="small">ВРЕМЯ В ПУТИ</div>
+</header>
+
+
+<!-- HOME -->
+
+<section id="home" class="screen active home">
+
+  <div class="searchBox">
+
+    <div class="searchRow">
+      <span class="searchIcon">🔎</span>
+
+      <input
+        id="mainSearch"
+        placeholder="Куда поедем?"
+        oninput="searchEverything(this.value)"
+      >
+
+      <button onclick="getGPS()">📍</button>
     </div>
 
-    <div style="text-align:right">
-     <div id="routeDistance" class="big">--</div>
-     <div class="small">РАССТОЯНИЕ</div>
+    <div class="chips">
+      <button class="chip" onclick="quickSearch('Садбарг')">Садбарг</button>
+      <button class="chip" onclick="quickSearch('Караболо')">Караболо</button>
+      <button class="chip" onclick="quickSearch('Корвон')">Корвон</button>
+      <button class="chip" onclick="quickSearch('Цирк')">Цирк</button>
+      <button class="chip" onclick="quickSearch('Аэропорт')">Аэропорт</button>
+      <button class="chip" onclick="quickSearch('Вокзал')">Вокзал</button>
     </div>
-   </div>
-
-   <div class="routeLine"></div>
-
-   <button class="start" onclick="startNavigation()">
-    ▶ НАЧАТЬ НАВИГАЦИЮ
-   </button>
 
   </div>
 
-  <div class="quick">
-   <button onclick="openRouteMode()">
-    <span>🧭</span>Маршрут
-   </button>
 
-   <button onclick="openStops()">
-    <span>🚏</span>Остановки
-   </button>
+  <div class="map">
 
-   <button onclick="openPlaces()">
-    <span>🏙️</span>Душанбе
-   </button>
+    <div class="mapTitle">📍 Душанбе</div>
 
-   <button onclick="openRoutes()">
-    <span>🚌</span>Роҳҳо
-   </button>
+    <div class="mapPin pin1"><span>🚏</span></div>
+    <div class="mapPin pin2"><span>🚏</span></div>
+    <div class="mapPin pin3"><span>🚏</span></div>
+
+    <div class="gpsDot" id="gpsDot"></div>
+
+    <div class="mapControls">
+      <button class="mapControl" onclick="getGPS()">📍</button>
+      <button class="mapControl" onclick="showScreen('route')">🧭</button>
+    </div>
+
   </div>
 
- </div>
-</div>
 
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  <div class="section">
 
-<aside id="drawer" class="drawer">
+    <div class="sectionTitle">
+      <h2>Быстрый доступ</h2>
+      <span onclick="showScreen('places')">Все</span>
+    </div>
 
- <div class="drawerHead">
-  <button class="closeDrawer" onclick="closeMenu()">✕</button>
-  <h1>SHT</h1>
-  <p>SHOHIN ROHNAMO</p>
- </div>
+    <div class="quickGrid">
 
- <button class="menuItem" onclick="goHome()">
-  <span>🏠</span>Главная
- </button>
+      <button class="quick" onclick="showScreen('route')">
+        <div class="quickIcon">🏠</div>
+        <span>Дом</span>
+      </button>
 
- <button class="menuItem" onclick="openRouteMode()">
-  <span>🧭</span>Навигация
- </button>
+      <button class="quick" onclick="showScreen('route')">
+        <div class="quickIcon">💼</div>
+        <span>Работа</span>
+      </button>
 
- <button class="menuItem" onclick="openRoutes()">
-  <span>🚌</span>Маршруты
- </button>
+      <button class="quick" onclick="quickSearch('Корвон')">
+        <div class="quickIcon">🛍️</div>
+        <span>Корвон</span>
+      </button>
 
- <button class="menuItem" onclick="openStops()">
-  <span>🚏</span>Остановки
- </button>
+      <button class="quick" onclick="quickSearch('Вокзал')">
+        <div class="quickIcon">🚉</div>
+        <span>Вокзал</span>
+      </button>
 
- <button class="menuItem" onclick="openPlaces()">
-  <span>🏙️</span>Места Душанбе
- </button>
+    </div>
 
- <button class="menuItem" onclick="openPopular()">
-  <span>🔥</span>Народные ориентиры
- </button>
+  </div>
 
- <button class="menuItem" onclick="openAddStop()">
-  <span>➕</span>Добавить остановку
- </button>
 
- <button class="menuItem" onclick="openAddRoute()">
-  <span>➕</span>Добавить маршрут
- </button>
+  <div class="section">
 
- <button class="menuItem" onclick="openContacts()">
-  <span>📷</span>Instagram / Тамос
- </button>
+    <div class="sectionTitle">
+      <h2>Транспорт</h2>
+      <span onclick="showScreen('routes')">Маршруты</span>
+    </div>
 
- <button class="menuItem" onclick="openAgreement()">
-  <span>📄</span>Соглашение
- </button>
+    <div class="transportGrid">
 
- <button class="menuItem" onclick="toggleDark()">
-  <span>🌙</span>Тёмная тема
- </button>
+      <button class="transport bus" onclick="filterTransport('Автобус')">
+        <b>🚌</b>
+        <small>Автобусы</small>
+      </button>
 
-</aside>
+      <button class="transport trolley" onclick="filterTransport('Троллейбус')">
+        <b>🚎</b>
+        <small>Троллейбусы</small>
+      </button>
 
-<section id="page" class="page">
- <div id="pageContent" class="pageInner"></div>
+      <button class="transport mini" onclick="filterTransport('Маршрутка')">
+        <b>🚐</b>
+        <small>Маршрутки</small>
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="sectionTitle">
+      <h2>Места Душанбе</h2>
+      <span onclick="showScreen('places')">Больше</span>
+    </div>
+
+    <div class="placeList">
+
+      <div class="place" onclick="quickSearch('Корвон')">
+        <div class="placeImg">🛍️</div>
+        <div class="placeInfo">
+          <b>Корвон</b>
+          <span>Рынок • Душанбе</span>
+        </div>
+        <button class="star">☆</button>
+      </div>
+
+      <div class="place" onclick="quickSearch('Аэропорт')">
+        <div class="placeImg">✈️</div>
+        <div class="placeInfo">
+          <b>Аэропорт Душанбе</b>
+          <span>Аэропорт</span>
+        </div>
+        <button class="star">☆</button>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ROUTE -->
+
+<section id="route" class="screen">
+
+  <div class="backBar">
+    <button class="backBtn" onclick="goBack()">← Назад</button>
+  </div>
+
+  <div class="routePanel">
+
+    <h2>🧭 Построить маршрут</h2>
+
+    <div class="routeInput">
+      <small>Откуда</small>
+      <input id="fromInput" placeholder="Моё местоположение">
+    </div>
+
+    <div class="routeInput">
+      <small>Куда</small>
+      <input id="toInput" placeholder="Например: Корвон">
+    </div>
+
+    <div class="shadowMode">
+      <div>
+        <b>🌳 Маршрут в тени</b><br>
+        <small>Больше парков и аллей</small>
+      </div>
+
+      <button id="shadowSwitch" class="switch" onclick="toggleShadow()">
+        <i></i>
+      </button>
+    </div>
+
+    <button class="mainBtn" onclick="buildRoute()">
+      🧭 Найти маршрут
+    </button>
+
+    <div id="routeResult" class="routeResult">
+
+      <div class="routeCard">
+
+        <b>Пример маршрута</b>
+
+        <div class="timeline">
+
+          <div class="step">
+            🚶 Пешком • 3 мин
+          </div>
+
+          <div class="step">
+            🚌 Автобус №3
+          </div>
+
+          <div class="step">
+            🔄 Пересадка
+          </div>
+
+          <div class="step">
+            🚐 Маршрутка №16
+          </div>
+
+          <div class="step">
+            🏁 Прибытие
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ROUTES -->
+
+<section id="routes" class="screen">
+
+  <div class="backBar">
+    <button class="backBtn" onclick="goBack()">← Назад</button>
+  </div>
+
+  <div class="routeSearch">
+    <input
+      id="routeSearch"
+      placeholder="Поиск маршрута: 16, 25, 19..."
+      oninput="searchRoutes(this.value)"
+    >
+  </div>
+
+  <div id="routeList"></div>
+
+</section>
+
+
+<!-- STOPS -->
+
+<section id="stops" class="screen">
+
+  <div class="backBar">
+    <button class="backBtn" onclick="goBack()">← Назад</button>
+  </div>
+
+  <div class="section">
+    <div class="sectionTitle">
+      <h2>🚏 Остановки</h2>
+    </div>
+  </div>
+
+  <div id="stopList"></div>
+
+  <div class="form">
+
+    <h3>Добавить остановку</h3>
+
+    <label>Название</label>
+    <input id="newStopName" placeholder="Например: Садбарг">
+
+    <label>Какие маршруты проходят?</label>
+    <input id="newStopRoutes" placeholder="№3, №16, №25">
+
+    <label>Дополнительная информация</label>
+    <textarea id="newStopInfo" placeholder="Описание остановки"></textarea>
+
+    <button class="mainBtn" onclick="addStop()">
+      ➕ Добавить остановку
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- PLACES -->
+
+<section id="places" class="screen">
+
+  <div class="backBar">
+    <button class="backBtn" onclick="goBack()">← Назад</button>
+  </div>
+
+  <div class="section">
+
+    <div class="sectionTitle">
+      <h2>🏙️ Достопримечательности Душанбе</h2>
+    </div>
+
+    <div class="placeList">
+
+      <div class="place">
+        <div class="placeImg">🏛️</div>
+        <div class="placeInfo">
+          <b>Национальный музей</b>
+          <span>Центр Душанбе</span>
+        </div>
+        <button class="star" onclick="favorite(this)">☆</button>
+      </div>
+
+      <div class="place">
+        <div class="placeImg">🌳</div>
+        <div class="placeInfo">
+          <b>Парк Рудаки</b>
+          <span>Парк и прогулочная зона</span>
+        </div>
+        <button class="star" onclick="favorite(this)">☆</button>
+      </div>
+
+      <div class="place">
+        <div class="placeImg">🏰</div>
+        <div class="placeInfo">
+          <b>Крепость Гиссар</b>
+          <span>Популярное место для посещения</span>
+        </div>
+        <button class="star" onclick="favorite(this)">☆</button>
+      </div>
+
+      <div class="place">
+        <div class="placeImg">🏢</div>
+        <div class="placeInfo">
+          <b>Площадь Исмоили Сомони</b>
+          <span>Центр города</span>
+        </div>
+        <button class="star" onclick="favorite(this)">☆</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LANGUAGE -->
+
+<section id="language" class="screen">
+
+  <div class="backBar">
+    <button class="backBtn" onclick="goBack()">← Назад</button>
+  </div>
+
+  <div class="language">
+
+    <h2>🌐 Язык</h2>
+
+    <button class="langBtn" onclick="setLanguage('ru')">
+      🇷🇺 Русский
+    </button>
+
+    <button class="langBtn" onclick="setLanguage('tg')">
+      🇹🇯 Тоҷикӣ
+    </button>
+
+    <button class="langBtn" onclick="setLanguage('en')">
+      🇬🇧 English
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottomNav">
+
+  <button class="navBtn active" onclick="showScreen('home',this)">
+    <span class="navIcon">🏠</span>
+    Главная
+  </button>
+
+  <button class="navBtn" onclick="showScreen('route',this)">
+    <span class="navIcon">🧭</span>
+    Маршрут
+  </button>
+
+  <button class="navBtn" onclick="showScreen('stops',this)">
+    <span class="navIcon">🚏</span>
+    Остановки
+  </button>
+
+  <button class="navBtn" onclick="showScreen('routes',this)">
+    <span class="navIcon">🚌</span>
+    Транспорт
+  </button>
+
+  <button class="navBtn" onclick="showScreen('places',this)">
+    <span class="navIcon">🏙️</span>
+    Места
+  </button>
+
+</nav>
+
+
+<div id="toast" class="toast"></div>
+
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modalBox">
+    <button class="closeBtn" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Информация</h2>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+</div>
+
 
 <script>
 
-const map = L.map("map",{
- zoomControl:false
-}).setView([38.5598,68.7870],13);
-
-L.tileLayer(
- "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
- {
-  maxZoom:19,
-  attribution:"© OpenStreetMap"
- }
-).addTo(map);
-
-let A=null;
-let B=null;
-let markerA=null;
-let markerB=null;
-let routeLayer=null;
-let selecting=null;
-let currentTransport="car";
+let currentScreen="home";
+let historyScreens=["home"];
 let shadowMode=false;
-let newStop=null;
 
-const popularPlaces={
 
- "Садбарг":[38.5762,68.7894],
- "Корвон":[38.5481,68.7585],
- "Караболо":[38.5821,68.7857],
- "Цирк":[38.5713,68.7850],
- "Пединститут":[38.5719,68.7807],
- "Аэропорт":[38.5475,68.8147],
- "Вокзал":[38.5670,68.7810]
+/* ROUTES DATA */
 
-};
-
-const stops=[
+const routes=[
 
  {
-  name:"Садбарг",
-  lat:38.5762,
-  lng:68.7894,
-  buses:["3","3a"],
-  trolley:["4"],
-  mini:["16","25","19"]
+  number:"3",
+  type:"Автобус",
+  color:"bus",
+  name:"Центр — Аэропорт"
  },
 
  {
-  name:"Корвон",
-  lat:38.5481,
-  lng:68.7585,
-  buses:["1","8"],
-  trolley:[],
-  mini:["16","25"]
+  number:"16",
+  type:"Маршрутка",
+  color:"mini",
+  name:"Корвон — Центр"
  },
 
  {
-  name:"Караболо",
-  lat:38.5821,
-  lng:68.7857,
-  buses:["2","18"],
-  trolley:["1"],
-  mini:["19","33"]
+  number:"19",
+  type:"Маршрутка",
+  color:"mini",
+  name:"Садбарг — Вокзал"
  },
 
  {
-  name:"Цирк",
-  lat:38.5713,
-  lng:68.7850,
-  buses:["3","8"],
-  trolley:["4"],
-  mini:["16","19"]
+  number:"25",
+  type:"Маршрутка",
+  color:"mini",
+  name:"Караболо — Центр"
  },
 
  {
-  name:"Аэропорт",
-  lat:38.5475,
-  lng:68.8147,
-  buses:["2"],
-  trolley:[],
-  mini:["8","16"]
+  number:"8",
+  type:"Автобус",
+  color:"bus",
+  name:"Цирк — Центр"
+ },
+
+ {
+  number:"4",
+  type:"Троллейбус",
+  color:"trolley",
+  name:"Вокзал — Центр"
  }
 
 ];
 
-function addStops(){
 
- stops.forEach((s,index)=>{
+/* STOPS */
 
-  const marker=L.circleMarker(
-   [s.lat,s.lng],
-   {
-    radius:8,
-    color:"#087f46",
-    fillColor:"#12a85c",
-    fillOpacity:1,
-    weight:3
-   }
-  ).addTo(map);
+let stops=[
 
-  marker.bindPopup(`
-   <div style="min-width:190px">
+ {
+  name:"Садбарг",
+  routes:"№3, №16, №19",
+  info:"Популярная остановка"
+ },
 
-    <b>🚏 ${s.name}</b>
+ {
+  name:"Караболо",
+  routes:"№16, №25",
+  info:"Район Караболо"
+ },
 
-    <br><br>
+ {
+  name:"Корвон",
+  routes:"№3, №16, №25",
+  info:"Рынок Корвон"
+ },
 
-    <b style="color:#287fe8">
-     🚌 Автобус:
-    </b>
-    ${s.buses.join(", ")||"—"}
+ {
+  name:"Цирк",
+  routes:"№3, №8, №19",
+  info:"Рядом с цирком"
+ },
 
-    <br>
+ {
+  name:"Аэропорт",
+  routes:"№3, №8",
+  info:"Аэропорт Душанбе"
+ },
 
-    <b style="color:#00a9d8">
-     🚎 Троллейбус:
-    </b>
-    ${s.trolley.join(", ")||"—"}
-
-    <br>
-
-    <b style="color:#f39a28">
-     🚐 Маршрутка:
-    </b>
-    ${s.mini.join(", ")||"—"}
-
-    <br><br>
-
-    <button
-     onclick="stopAsDestination(${index})"
-     style="
-      width:100%;
-      padding:9px;
-      border:0;
-      border-radius:9px;
-      background:#087f46;
-      color:white;
-      font-weight:bold
-     ">
-     🧭 Поехать сюда
-    </button>
-
-   </div>
-  `);
-
- });
-
-}
-
-addStops();
-
-map.on("click",e=>{
-
- if(selecting==="A"){
-  setA(e.latlng);
-  return;
+ {
+  name:"Вокзал",
+  routes:"№4, №19",
+  info:"Железнодорожный вокзал"
  }
 
- if(selecting==="B"){
-  setB(e.latlng);
-  return;
- }
+];
 
- if(selecting==="STOP"){
 
-  newStop=e.latlng;
-  selecting=null;
+/* SCREEN */
 
-  L.marker(e.latlng)
-   .addTo(map)
-   .bindPopup("📍 Новая остановка")
-   .openPopup();
+function showScreen(id,button){
 
-  openAddStop();
+  if(id===currentScreen)return;
 
- }
+  historyScreens.push(id);
+  currentScreen=id;
 
-});
+  document.querySelectorAll(".screen")
+    .forEach(s=>s.classList.remove("active"));
 
-function chooseA(){
+  const screen=document.getElementById(id);
 
- selecting="A";
+  if(screen){
+    screen.classList.add("active");
+    screen.scrollTop=0;
+  }
 
- openRouteMode();
+  if(button){
 
- alert("Нажмите на карте место отправления.");
+    document.querySelectorAll(".navBtn")
+      .forEach(b=>b.classList.remove("active"));
 
-}
+    button.classList.add("active");
 
-function setA(pos){
+  }
 
- A=pos;
-
- if(markerA)
-  map.removeLayer(markerA);
-
- markerA=L.marker(pos)
-  .addTo(map)
-  .bindPopup("🟢 Точка A")
-  .openPopup();
-
- document.getElementById("inputA").value=
-  pos.lat.toFixed(5)+", "+pos.lng.toFixed(5);
-
- selecting=null;
+  if(id==="routes")renderRoutes();
+  if(id==="stops")renderStops();
 
 }
 
-function chooseB(){
 
- selecting="B";
+/* BACK */
 
- openRouteMode();
+function goBack(){
 
- alert("Нажмите на карте место назначения.");
+  if(historyScreens.length>1){
 
-}
+    historyScreens.pop();
 
-function setB(pos){
+    const previous=
+      historyScreens[historyScreens.length-1];
 
- B=pos;
+    currentScreen=previous;
 
- if(markerB)
-  map.removeLayer(markerB);
+    document.querySelectorAll(".screen")
+      .forEach(s=>s.classList.remove("active"));
 
- markerB=L.marker(pos)
-  .addTo(map)
-  .bindPopup("🔴 Точка B")
-  .openPopup();
+    document.getElementById(previous)
+      ?.classList.add("active");
 
- document.getElementById("inputB").value=
-  pos.lat.toFixed(5)+", "+pos.lng.toFixed(5);
+  }else{
 
- selecting=null;
+    showScreen("home");
 
-}
-
-function transport(type){
-
- currentTransport=type;
-
- ["car","foot","bike"].forEach(id=>{
-  document.getElementById(id).classList.remove("active");
- });
-
- document.getElementById(type).classList.add("active");
-
- if(type==="foot"){
-
-  shadowMode=true;
-
-  document
-   .getElementById("shadowSwitch")
-   .classList.add("on");
-
- }
+  }
 
 }
 
-function toggleShadow(){
 
- shadowMode=!shadowMode;
-
- document
-  .getElementById("shadowSwitch")
-  .classList.toggle("on",shadowMode);
-
- if(shadowMode){
-
-  transport("foot");
-
-  alert(
-   "🌳 Режим «Маршрут в тени» включён."
-  );
-
- }
-
-}
-
-async function buildRoute(){
-
- if(!A || !B){
-
-  alert(
-   "Сначала выберите точки A и B."
-  );
-
-  return;
-
- }
-
- let profile="driving";
-
- if(currentTransport==="foot")
-  profile="foot";
-
- if(currentTransport==="bike")
-  profile="cycling";
-
- const url=
- "https://router.project-osrm.org/route/v1/"+
- profile+"/"+
- A.lng+","+A.lat+";"+
- B.lng+","+B.lat+
- "?overview=full&geometries=geojson&steps=true";
-
- const result=
- document.getElementById("routeResult");
-
- result.classList.add("show");
-
- document.getElementById("routeTime")
-  .textContent="...";
-
- document.getElementById("routeDistance")
-  .textContent="...";
-
- try{
-
-  const response=await fetch(url);
-
-  if(!response.ok)
-   throw new Error();
-
-  const data=await response.json();
-
-  if(data.code!=="Ok")
-   throw new Error();
-
-  const r=data.routes[0];
-
-  if(routeLayer)
-   map.removeLayer(routeLayer);
-
-  routeLayer=L.geoJSON(
-   r.geometry,
-   {
-    style:{
-     color:shadowMode?"#b58a24":"#087f46",
-     weight:7,
-     opacity:.95
-    }
-   }
-  ).addTo(map);
-
-  map.fitBounds(
-   routeLayer.getBounds(),
-   {
-    padding:[80,100]
-   }
-  );
-
-  document.getElementById("routeDistance")
-   .textContent=
-   (r.distance/1000).toFixed(1)+" км";
-
-  document.getElementById("routeTime")
-   .textContent=
-   Math.max(1,Math.round(r.duration/60))+
-   " мин";
-
- }catch(e){
-
-  document.getElementById("routeTime")
-   .textContent="Ошибка";
-
-  document.getElementById("routeDistance")
-   .textContent="—";
-
-  alert(
-   "Маршрут не найден. Проверьте интернет и попробуйте снова."
-  );
-
- }
-
-}
+/* GPS */
 
 function getGPS(){
 
- if(!navigator.geolocation){
+  if(!navigator.geolocation){
 
-  alert(
-   "GPS не поддерживается."
-  );
+    toast("GPS не поддерживается");
 
-  return;
-
- }
-
- navigator.geolocation.getCurrentPosition(
-
-  position=>{
-
-   const pos={
-    lat:position.coords.latitude,
-    lng:position.coords.longitude
-   };
-
-   map.setView(
-    [pos.lat,pos.lng],
-    16
-   );
-
-   L.marker(pos)
-    .addTo(map)
-    .bindPopup("📍 Вы здесь")
-    .openPopup();
-
-  },
-
-  ()=>{
-   alert(
-    "Разрешите доступ к геолокации."
-   );
-  },
-
-  {
-   enableHighAccuracy:true,
-   timeout:10000
+    return;
   }
 
- );
+  toast("Определяем местоположение...");
+
+  navigator.geolocation.getCurrentPosition(
+
+    position=>{
+
+      const lat=position.coords.latitude;
+      const lon=position.coords.longitude;
+
+      const dot=document.getElementById("gpsDot");
+
+      if(dot){
+
+        dot.style.left="52%";
+        dot.style.top="45%";
+
+      }
+
+      toast(
+        "📍 GPS найден: "+
+        lat.toFixed(4)+", "+
+        lon.toFixed(4)
+      );
+
+    },
+
+    ()=>{
+      toast("Не удалось получить GPS");
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000
+    }
+
+  );
 
 }
 
-function stopAsDestination(index){
 
- const s=stops[index];
+/* SEARCH */
 
- B={
-  lat:s.lat,
-  lng:s.lng
- };
+function searchEverything(value){
 
- setB(B);
+  value=value.toLowerCase().trim();
 
- openRouteMode();
+  if(!value)return;
 
- if(!A)
-  getGPS();
+  const stop=stops.find(s=>
+    s.name.toLowerCase().includes(value)
+  );
 
-}
+  const route=routes.find(r=>
+    r.number===value
+  );
 
-function popular(name){
+  if(stop){
 
- const p=popularPlaces[name];
+    toast("🚏 "+stop.name+" • "+stop.routes);
 
- if(!p)
-  return;
+  }else if(route){
 
- map.setView(p,16);
+    toast(
+      "🚌 №"+route.number+
+      " • "+route.name
+    );
 
- document.getElementById("search").value=name;
-
- const temp=L.circleMarker(
-  p,
-  {
-   radius:12,
-   color:"#d9a72c",
-   fillColor:"#fff1a8",
-   fillOpacity:.9,
-   weight:4
   }
- ).addTo(map);
-
- setTimeout(()=>{
-  map.removeLayer(temp);
- },4000);
 
 }
 
-function searchPlace(){
 
- const value=
- document.getElementById("search")
- .value
- .trim()
- .toLowerCase();
+function quickSearch(value){
 
- if(!value)
-  return;
+  document.getElementById("mainSearch").value=value;
 
- const key=
- Object.keys(popularPlaces)
- .find(x=>
-  x.toLowerCase().includes(value)
- );
+  const stop=stops.find(s=>s.name===value);
 
- if(key){
+  if(stop){
 
-  popular(key);
-  return;
+    showModal(
+      "🚏 "+stop.name,
+      "<b>Маршруты:</b><br>"+
+      stop.routes+
+      "<br><br>"+
+      stop.info
+    );
 
- }
+  }else{
 
- const stop=
- stops.find(s=>
-  s.name.toLowerCase().includes(value)
- );
+    toast("🔎 Ищем: "+value);
 
- if(stop){
+  }
 
-  map.setView(
-   [stop.lat,stop.lng],
-   17
+}
+
+
+/* ROUTES */
+
+function renderRoutes(filter=""){
+
+  const list=document.getElementById("routeList");
+
+  if(!list)return;
+
+  const data=routes.filter(r=>
+    r.number.includes(filter) ||
+    r.type.toLowerCase().includes(filter.toLowerCase())
   );
 
-  return;
+  list.innerHTML=data.map(r=>`
 
- }
+    <div class="routeItem">
 
- alert(
-  "Ориентир пока не найден."
- );
+      <div class="routeNumber ${r.color}">
+        ${r.number}
+      </div>
 
-}
+      <div class="stopInfo">
 
-function openRouteMode(){
+        <b>${r.type} №${r.number}</b>
 
- closeMenu();
+        <small>${r.name}</small>
 
- document
-  .getElementById("routePanel")
-  .classList.add("show");
+      </div>
 
- document
-  .getElementById("routeResult")
-  .classList.remove("show");
+      <button onclick="showRoute('${r.number}')">
+        →
+      </button>
 
- setTimeout(()=>{
-  map.invalidateSize();
- },100);
+    </div>
+
+  `).join("");
 
 }
 
-function openMenu(){
 
- document
-  .getElementById("drawer")
-  .classList.add("open");
+function searchRoutes(value){
 
- document
-  .getElementById("overlay")
-  .classList.add("show");
+  renderRoutes(value.trim());
 
 }
 
-function closeMenu(){
 
- document
-  .getElementById("drawer")
-  .classList.remove("open");
+function showRoute(number){
 
- document
-  .getElementById("overlay")
-  .classList.remove("show");
+  const r=routes.find(x=>x.number===number);
 
-}
+  if(!r)return;
 
-const page=
- document.getElementById("page");
-
-const pageContent=
- document.getElementById("pageContent");
-
-function openPage(html){
-
- pageContent.innerHTML=html;
-
- page.classList.add("show");
-
- closeMenu();
-
-}
-
-function closePage(){
-
- page.classList.remove("show");
-
-}
-
-function goHome(){
-
- closePage();
-
- closeMenu();
-
- setTimeout(()=>{
-  map.invalidateSize();
- },100);
-
-}
-
-function openStops(){
-
- openPage(`
-
- <div class="pageHero">
-
-  <h1>🚏 Остановки Душанбе</h1>
-
-  <p>
-   Народные названия и проходящий транспорт.
-  </p>
-
- </div>
-
- ${stops.map((s,i)=>`
-
- <div class="card">
-
-  <h3>🚏 ${s.name}</h3>
-
-  <p class="muted">
-   Популярная остановка/ориентир Душанбе.
-  </p>
-
-  <br>
-
-  <b>Транспорт:</b>
-
-  <div>
-
-   ${s.buses.map(x=>
-    `<span class="badge bus">
-     🚌 №${x}
-    </span>`
-   ).join("")}
-
-   ${s.trolley.map(x=>
-    `<span class="badge trolley">
-     🚎 №${x}
-    </span>`
-   ).join("")}
-
-   ${s.mini.map(x=>
-    `<span class="badge mini">
-     🚐 №${x}
-    </span>`
-   ).join("")}
-
-  </div>
-
-  <br>
-
-  <button
-   class="primary"
-   onclick="closePage();stopAsDestination(${i})">
-
-   🧭 Поехать сюда
-
-  </button>
-
- </div>
-
- `).join("")}
-
- `);
-
-}
-
-function openPlaces(){
-
- openPage(`
-
- <div class="pageHero">
-
-  <h1>🏙️ Места Душанбе</h1>
-
-  <p>
-   Ҷойҳои диданбоби Душанбе.
-  </p>
-
- </div>
-
- <div class="placeGrid">
-
-  <div class="placeCard">
-
-   <div class="placeEmoji">🌳</div>
-
-   <h3>
-    Парк Рудаки
-   </h3>
-
-   <p class="muted">
-    Популярное место для прогулок
-    в центре Душанбе.
-   </p>
-
-   <br>
-
-   <button
-    class="primary"
-    onclick="
-     closePage();
-     map.setView([38.5736,68.7864],16)
-    ">
-
-    📍 На карте
-
-   </button>
-
-  </div>
-
-  <div class="placeCard">
-
-   <div class="placeEmoji">🏛️</div>
-
-   <h3>
-    Площадь Исмоили Сомони
-   </h3>
-
-   <p class="muted">
-    Один из главных ориентиров столицы.
-   </p>
-
-   <br>
-
-   <button
-    class="primary"
-    onclick="
-     closePage();
-     map.setView([38.5736,68.7864],16)
-    ">
-
-    📍 На карте
-
-   </button>
-
-  </div>
-
-  <div class="placeCard">
-
-   <div class="placeEmoji">🏙️</div>
-
-   <h3>
-    Центр Душанбе
-   </h3>
-
-   <p class="muted">
-    Центральная часть города.
-   </p>
-
-   <br>
-
-   <button
-    class="primary"
-    onclick="
-     closePage();
-     map.setView([38.5598,68.7870],15)
-    ">
-
-    📍 На карте
-
-   </button>
-
-  </div>
-
-  <div class="placeCard">
-
-   <div class="placeEmoji">✈️</div>
-
-   <h3>
-    Аэропорт
-   </h3>
-
-   <p class="muted">
-    Международный аэропорт Душанбе.
-   </p>
-
-   <br>
-
-   <button
-    class="primary"
-    onclick="
-     closePage();
-     popular('Аэропорт')
-    ">
-
-    📍 На карте
-
-   </button>
-
-  </div>
-
- </div>
-
- `);
-
-}
-
-function openRoutes(){
-
- openPage(`
-
- <div class="pageHero">
-
-  <h1>🚌 Роҳҳо</h1>
-
-  <p>
-   Маршруты городского транспорта.
-  </p>
-
- </div>
-
- <div class="card">
-
-  <h3>🚌 Автобус №3</h3>
-
-  <p class="muted">
-   Городское направление.
-  </p>
-
-  <span class="badge bus">
-   🚌 АВТОБУС
-  </span>
-
- </div>
-
- <div class="card">
-
-  <h3>🚌 Автобус №3a</h3>
-
-  <p class="muted">
-   Городское направление.
-  </p>
-
-  <span class="badge bus">
-   🚌 АВТОБУС
-  </span>
-
- </div>
-
- <div class="card">
-
-  <h3>🚐 Маршрутка №16</h3>
-
-  <p class="muted">
-   Городское направление.
-  </p>
-
-  <span class="badge mini">
-   🚐 МАРШРУТКА
-  </span>
-
- </div>
-
- <div class="card">
-
-  <h3>🚐 Маршрутка №25</h3>
-
-  <p class="muted">
-   Городское направление.
-  </p>
-
-  <span class="badge mini">
-   🚐 МАРШРУТКА
-  </span>
-
- </div>
-
- `);
-
-}
-
-function openPopular(){
-
- openPage(`
-
- <div class="pageHero">
-
-  <h1>🔥 Народные ориентиры</h1>
-
-  <p>
-   Места, по которым жители Душанбе
-   часто ориентируются.
-  </p>
-
- </div>
-
- <div class="placeGrid">
-
- ${Object.keys(popularPlaces).map(name=>`
-
-  <div class="placeCard">
-
-   <div class="placeEmoji">📍</div>
-
-   <h3>${name}</h3>
-
-   <p class="muted">
-    Популярный городской ориентир.
-   </p>
-
-   <br>
-
-   <button
-    class="primary"
-    onclick="
-     closePage();
-     popular('${name}')
-    ">
-
-    📍 Показать
-
-   </button>
-
-  </div>
-
- `).join("")}
-
- </div>
-
- `);
-
-}
-
-function openAddStop(){
-
- openPage(`
-
- <div class="pageHero">
-
-  <h1>➕ Добавить остановку</h1>
-
-  <p>
-   Выберите место на карте
-   и предложите новую остановку.
-  </p>
-
- </div>
-
- <div class="card">
-
-  <button
-   class="primary"
-   onclick="selectNewStop()">
-
-   📍 Выбрать точку на карте
-
-  </button>
-
-  <br><br>
-
-  <div class="field">
-
-   <label>
-    Название остановки
-   </label>
-
-   <input
-    id="newName"
-    placeholder="Например: Садбарг">
-
-  </div>
-
-  <div class="field">
-
-   <label>
-    Автобусы
-   </label>
-
-   <input
-    id="newBus"
-    placeholder="3, 8">
-
-  </div>
-
-  <div class="field">
-
-   <label>
-    Троллейбусы
-   </label>
-
-   <input
-    id="newTrolley"
-    placeholder="4">
-
-  </div>
-
-  <div class="field">
-
-   <label>
-    Маршрутки
-   </label>
-
-   <input
-    id="newMini"
-    placeholder="16, 25, 19">
-
-  </div>
-
-  <button
-   class="primary"
-   onclick="saveNewStop()">
-
-   📤 Отправить предложение
-
-  </button>
-
- </div>
-
- `);
-
-}
-
-function selectNewStop(){
-
- closePage();
-
- selecting="STOP";
-
- alert(
-  "Нажмите на карте точку новой остановки."
- );
-
-}
-
-function saveNewStop(){
-
- if(!newStop){
-
-  alert(
-   "Сначала выберите место на карте."
+  showModal(
+    "Маршрут №"+r.number,
+    `
+    <p><b>Тип:</b> ${r.type}</p>
+    <p><b>Направление:</b> ${r.name}</p>
+    <hr>
+    <p>🚏 Остановки маршрута будут добавляться в базу ROHNAMO.</p>
+    `
   );
 
-  return;
+}
 
- }
 
- const name=
- document.getElementById("newName")
- .value
- .trim();
+function filterTransport(type){
 
- if(!name){
+  showScreen("routes");
 
-  alert(
-   "Введите название остановки."
+  setTimeout(()=>{
+
+    document.getElementById("routeSearch").value=type;
+
+    searchRoutes(type);
+
+  },50);
+
+}
+
+
+/* STOPS */
+
+function renderStops(){
+
+  const list=document.getElementById("stopList");
+
+  if(!list)return;
+
+  list.innerHTML=stops.map(s=>`
+
+    <div class="stop">
+
+      <div class="stopIcon">🚏</div>
+
+      <div class="stopInfo">
+
+        <b>${s.name}</b>
+
+        <small>${s.routes}<br>${s.info}</small>
+
+      </div>
+
+      <button onclick="showModal(
+        '🚏 ${s.name}',
+        '<b>Маршруты:</b> ${s.routes}<br><br>${s.info}'
+      )">→</button>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+function addStop(){
+
+  const name=
+    document.getElementById("newStopName").value.trim();
+
+  const routesValue=
+    document.getElementById("newStopRoutes").value.trim();
+
+  const info=
+    document.getElementById("newStopInfo").value.trim();
+
+  if(!name){
+
+    toast("Введите название остановки");
+
+    return;
+  }
+
+  stops.push({
+
+    name:name,
+    routes:routesValue||"Не указано",
+    info:info||"Новая остановка"
+
+  });
+
+  localStorage.setItem(
+    "rohnamoStops",
+    JSON.stringify(stops)
   );
 
-  return;
+  renderStops();
 
- }
+  document.getElementById("newStopName").value="";
+  document.getElementById("newStopRoutes").value="";
+  document.getElementById("newStopInfo").value="";
 
- const item={
-
-  name:name,
-
-  lat:newStop.lat,
-
-  lng:newStop.lng,
-
-  buses:
-   document.getElementById("newBus").value,
-
-  trolley:
-   document.getElementById("newTrolley").value,
-
-  mini:
-   document.getElementById("newMini").value
-
- };
-
- const list=
- JSON.parse(
-  localStorage.getItem(
-   "SHOHIN_STOP_SUGGESTIONS"
-  )||"[]"
- );
-
- list.push(item);
-
- localStorage.setItem(
-  "SHOHIN_STOP_SUGGESTIONS",
-  JSON.stringify(list)
- );
-
- alert(
-  "Остановка сохранена как предложение."
- );
-
- newStop=null;
-
- closePage();
+  toast("✅ Остановка добавлена");
 
 }
 
-function openAddRoute(){
 
- openPage(`
+/* SHADOW */
 
- <div class="pageHero">
+function toggleShadow(){
 
-  <h1>➕ Добавить маршрут</h1>
+  shadowMode=!shadowMode;
 
-  <p>
-   Маршрут создаётся через точки карты.
-  </p>
+  const sw=document.getElementById("shadowSwitch");
 
- </div>
+  sw.classList.toggle("active",shadowMode);
 
- <div class="card">
-
-  <div class="field">
-
-   <label>Название</label>
-
-   <input
-    id="routeName"
-    placeholder="Например Душанбе → Корвон">
-
-  </div>
-
-  <div class="field">
-
-   <label>Номер транспорта</label>
-
-   <input
-    id="routeNumber"
-    placeholder="16">
-
-  </div>
-
-  <button
-   class="primary"
-   onclick="
-    closePage();
-    openRouteMode();
-    chooseA()
-   ">
-
-   📍 Выбрать точку A
-
-  </button>
-
-  <br><br>
-
-  <button
-   class="primary"
-   onclick="
-    closePage();
-    openRouteMode();
-    chooseB()
-   ">
-
-   📍 Выбрать точку B
-
-  </button>
-
- </div>
-
- `);
+  toast(
+    shadowMode
+    ?"🌳 Режим маршрута в тени включён"
+    :"🌳 Режим маршрута в тени выключен"
+  );
 
 }
 
-function openContacts(){
 
- openPage(`
+/* BUILD ROUTE */
 
- <div class="pageHero">
+function buildRoute(){
 
-  <h1>📷 Тамос</h1>
+  const from=
+    document.getElementById("fromInput").value ||
+    "Моё местоположение";
 
-  <p>
-   Связь с SHOHIN ROHNAMO.
-  </p>
+  const to=
+    document.getElementById("toInput").value;
 
- </div>
+  if(!to){
 
- <div class="card">
+    toast("Введите пункт назначения");
 
-  <h3>
-   Instagram
-  </h3>
+    return;
+  }
 
-  <p class="muted">
-   Сообщайте об ошибках,
-   добавляйте остановки
-   и предлагайте новые маршруты.
-  </p>
+  const result=
+    document.getElementById("routeResult");
 
-  <br>
+  result.style.display="block";
 
-  <a
-   href="https://www.instagram.com/shohin_tajikistan/"
-   target="_blank"
-   style="
-    display:block;
-    text-align:center;
-    text-decoration:none;
-    padding:13px;
-    border-radius:12px;
-    background:#087f46;
-    color:white;
-    font-weight:bold
-   ">
+  result.querySelector(".routeCard")
+    .innerHTML=`
 
-   📷 @shohin_tajikistan
+      <b>🧭 ${from} → ${to}</b>
 
-  </a>
+      <div class="timeline">
 
- </div>
+        <div class="step">
+          🚶 Пешком • 3 мин
+        </div>
 
- `);
+        <div class="step">
+          🚌 Автобус №3
+        </div>
+
+        <div class="step">
+          🔄 Пересадка
+        </div>
+
+        <div class="step">
+          🚐 Маршрутка №16
+        </div>
+
+        <div class="step">
+          🏁 ${to}
+        </div>
+
+      </div>
+
+      ${
+        shadowMode
+        ?"<p>🌳 Выбран маршрут с приоритетом зелёных зон.</p>"
+        :""
+      }
+
+    `;
+
+  toast("Маршрут найден");
+
+}
+
+
+/* FAVORITE */
+
+function favorite(button){
+
+  button.textContent=
+    button.textContent==="☆" ? "★" : "☆";
 
 }
 
-function openAgreement(){
 
- openPage(`
-
- <div class="pageHero">
-
-  <h1>📄 Соглашение</h1>
-
-  <p>
-   Условия использования сервиса.
-  </p>
-
- </div>
-
- <div class="card">
-
-  <h3>
-   1. Общие положения
-  </h3>
-
-  <p class="muted">
-   SHOHIN ROHNAMO является информационным
-   навигационным сервисом.
-   Карты, маршруты, остановки
-   и транспортная информация
-   могут изменяться.
-  </p>
-
-  <br>
-
-  <h3>
-   2. Навигация
-  </h3>
-
-  <p class="muted">
-   Пользователь самостоятельно обязан
-   соблюдать правила дорожного движения,
-   дорожные знаки и требования безопасности.
-  </p>
-
-  <br>
-
-  <h3>
-   3. Пользовательские предложения
-  </h3>
-
-  <p class="muted">
-   Информация, отправленная пользователями,
-   может проходить проверку перед публикацией.
-  </p>
-
-  <br>
-
-  <h3>
-   4. Геолокация
-  </h3>
-
-  <p class="muted">
-   Для работы GPS браузер может запросить
-   разрешение на использование местоположения.
-  </p>
-
- </div>
-
- `);
-
-}
+/* LANGUAGE */
 
 function setLanguage(lang){
 
- ["tg","ru","en"].forEach(x=>{
-  document
-   .getElementById(x)
-   .classList.remove("active");
- });
+  const names={
+    ru:"Русский выбран",
+    tg:"Тоҷикӣ интихоб шуд",
+    en:"English selected"
+  };
 
- document
-  .getElementById(lang)
-  .classList.add("active");
-
- const s=
- document.getElementById("search");
-
- if(lang==="tg")
-  s.placeholder="Ба куҷо меравем?";
-
- else if(lang==="en")
-  s.placeholder="Where are we going?";
-
- else
-  s.placeholder="Куда едем?";
+  toast("🌐 "+names[lang]);
 
 }
 
-function toggleDark(){
 
- document.body.classList.toggle("dark");
+/* MODAL */
 
- localStorage.setItem(
-  "SHOHIN_DARK",
-  document.body.classList.contains("dark")
- );
+function showModal(title,content){
 
-}
+  document.getElementById("modalTitle")
+    .textContent=title;
 
-function startNavigation(){
+  document.getElementById("modalContent")
+    .innerHTML=content;
 
- if(!A || !B){
-
-  alert(
-   "Сначала выберите A и B."
-  );
-
-  return;
-
- }
-
- if(!routeLayer){
-
-  buildRoute();
-
-  return;
-
- }
-
- alert(
-  "🧭 Навигация запущена."
- );
+  document.getElementById("modal")
+    .classList.add("show");
 
 }
 
-window.addEventListener("load",()=>{
 
- if(
-  localStorage.getItem("SHOHIN_DARK")
-  ==="true"
- ){
+function closeModal(event){
 
-  document.body.classList.add("dark");
+  if(!event || event.target.id==="modal"){
 
- }
+    document.getElementById("modal")
+      .classList.remove("show");
 
- setTimeout(()=>{
+  }
 
-  document
-   .getElementById("loader")
-   .classList.add("hide");
+}
 
- },900);
 
-});
+/* TOAST */
+
+function toast(message){
+
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+
+  t.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=setTimeout(()=>{
+
+    t.classList.remove("show");
+
+  },2500);
+
+}
+
+
+/* LOAD SAVED STOPS */
+
+try{
+
+  const saved=
+    JSON.parse(
+      localStorage.getItem("rohnamoStops")
+    );
+
+  if(Array.isArray(saved) && saved.length){
+
+    stops=saved;
+
+  }
+
+}catch(e){}
+
+
+/* SERVICE WORKER */
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener("load",()=>{
+
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then(()=>{
+        console.log("ROHNAMO PWA ready");
+      })
+      .catch(err=>{
+        console.log("PWA:",err);
+      });
+
+  });
+
+}
+
+
+/* START */
+
+renderRoutes();
+renderStops();
 
 </script>
 
