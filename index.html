@@ -35,7 +35,7 @@ body{
 }
 
 /* =========================
-   FAST START
+   LOADING
 ========================= */
 
 #loading{
@@ -46,7 +46,7 @@ body{
     align-items:center;
     justify-content:center;
     background:#07120b;
-    transition:.55s ease
+    transition:.55s
 }
 
 #loading.hide{
@@ -60,29 +60,28 @@ body{
 }
 
 .loader-logo{
-    font-size:38px;
+    font-size:40px;
     font-weight:1000;
-    letter-spacing:3px;
+    letter-spacing:4px;
     color:#39df89;
     text-shadow:0 0 30px #39df8955
 }
 
 .loader-text{
     margin-top:10px;
-    color:#819088;
+    color:#849189;
     font-size:9px
 }
 
 .loader-dot{
     width:7px;
     height:7px;
-    margin:16px auto 0;
+    margin:16px auto;
     border-radius:50%;
     background:#39df89;
-    box-shadow:
-        0 0 0 8px #39df8920,
-        0 0 25px #39df89;
-    animation:pulse 1.1s infinite
+    box-shadow:0 0 0 8px #39df8920,
+               0 0 25px #39df89;
+    animation:pulse 1s infinite
 }
 
 @keyframes logoIn{
@@ -174,13 +173,15 @@ body{
     position:fixed;
     top:68px;
     left:12px;
-    width:330px;
+    width:340px;
     max-width:calc(100% - 24px);
+    max-height:calc(100vh - 90px);
+    overflow:auto;
     padding:12px;
     z-index:3000;
     display:none;
     border-radius:22px;
-    background:#07120bf7;
+    background:#07120bf8;
     border:1px solid #ffffff15;
     backdrop-filter:blur(25px);
     box-shadow:0 20px 70px #0009
@@ -339,13 +340,20 @@ body{
     background:#0d2114
 }
 
-.field input{
+.field input,
+.field textarea{
     flex:1;
     border:0;
     outline:0;
     background:transparent;
     color:#fff;
-    font-size:11px
+    font-size:11px;
+    font-family:Arial;
+    resize:none
+}
+
+.field textarea{
+    min-height:70px
 }
 
 .status,
@@ -360,7 +368,49 @@ body{
 }
 
 /* =========================
-   MAP CONTROLS
+   TOURIST PLACES
+========================= */
+
+.tour-card{
+    padding:13px;
+    margin-bottom:8px;
+    border-radius:16px;
+    background:#0d2114;
+    border:1px solid #ffffff0d
+}
+
+.tour-icon{
+    font-size:25px;
+    margin-bottom:6px
+}
+
+.tour-card h3{
+    color:#fff;
+    font-size:12px;
+    margin-bottom:5px
+}
+
+.tour-card p{
+    color:#91a098;
+    font-size:9px;
+    line-height:1.5;
+    margin:0 0 8px
+}
+
+.tour-btn{
+    width:100%;
+    padding:9px;
+    border:0;
+    border-radius:10px;
+    background:#39df89;
+    color:#031008;
+    font-size:9px;
+    font-weight:bold;
+    cursor:pointer
+}
+
+/* =========================
+   MAP PANEL
 ========================= */
 
 .map-panel{
@@ -397,6 +447,10 @@ body{
     background:#39df89;
     color:#031008
 }
+
+/* =========================
+   GPS
+========================= */
 
 .gps{
     position:fixed;
@@ -481,9 +535,8 @@ body{
     border-radius:50%;
     background:#268cff;
     border:4px solid white;
-    box-shadow:
-        0 0 0 8px #268cff33,
-        0 4px 20px #0008
+    box-shadow:0 0 0 8px #268cff33,
+               0 4px 20px #0008
 }
 
 .place{
@@ -496,6 +549,19 @@ body{
     background:#39df89;
     border:3px solid white;
     box-shadow:0 4px 15px #0007
+}
+
+.stop-marker{
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#ffb52e;
+    border:3px solid white;
+    box-shadow:0 4px 18px #0008;
+    font-size:17px
 }
 
 /* =========================
@@ -667,24 +733,39 @@ body{
 
 <body>
 
-<!-- FAST SPLASH -->
+<!-- =========================
+     LOADING
+========================= -->
+
 <div id="loading">
+
     <div class="loader">
-        <div class="loader-logo">SHT</div>
+
+        <div class="loader-logo">
+            SHT
+        </div>
+
         <div class="loader-text">
             SHOHIN ROHNAMO
         </div>
+
         <div class="loader-dot"></div>
+
     </div>
+
 </div>
 
 <div id="map"></div>
 
-<!-- TOP -->
+<!-- =========================
+     TOP
+========================= -->
+
 <div class="top">
 
-    <button class="logo"
-            onclick="toggleMenu()">
+    <button
+        class="logo"
+        onclick="toggleMenu()">
         SHT
     </button>
 
@@ -693,6 +774,10 @@ body{
         <input
             id="search"
             placeholder="Ҷустуҷӯи ҷой, истгоҳ, роҳ..."
+            onkeydown="
+                if(event.key==='Enter')
+                searchMap()
+            "
         >
 
         <button onclick="searchMap()">
@@ -703,7 +788,10 @@ body{
 
 </div>
 
-<!-- MENU -->
+<!-- =========================
+     MENU
+========================= -->
+
 <div id="menu" class="menu">
 
     <div class="menu-title">
@@ -714,8 +802,9 @@ body{
         Роҳнамо барои Тоҷикистон
     </div>
 
-    <button class="menu-item"
-            onclick="openPage('cityPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('cityPage')">
 
         <span class="menu-icon">🚌</span>
 
@@ -723,8 +812,9 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('interPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('interPage')">
 
         <span class="menu-icon">🚐</span>
 
@@ -732,8 +822,9 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('addPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('addPage')">
 
         <span class="menu-icon">➕</span>
 
@@ -741,8 +832,33 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('placesPage')">
+    <!-- NEW -->
+
+    <button
+        class="menu-item"
+        onclick="openPage('addStopPage')">
+
+        <span class="menu-icon">🚌</span>
+
+        Иловаи истгоҳ
+
+    </button>
+
+    <!-- NEW -->
+
+    <button
+        class="menu-item"
+        onclick="openPage('tourismPage')">
+
+        <span class="menu-icon">🏙️</span>
+
+        Ҷойҳои диданбоби Душанбе
+
+    </button>
+
+    <button
+        class="menu-item"
+        onclick="openPage('placesPage')">
 
         <span class="menu-icon">📍</span>
 
@@ -750,8 +866,9 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('favoritesPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('favoritesPage')">
 
         <span class="menu-icon">❤️</span>
 
@@ -759,8 +876,9 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('settingsPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('settingsPage')">
 
         <span class="menu-icon">⚙️</span>
 
@@ -770,8 +888,9 @@ body{
 
     <div class="separator"></div>
 
-    <button class="menu-item"
-            onclick="openPage('contactPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('contactPage')">
 
         <span class="menu-icon">📞</span>
 
@@ -779,8 +898,9 @@ body{
 
     </button>
 
-    <button class="menu-item"
-            onclick="openPage('agreementPage')">
+    <button
+        class="menu-item"
+        onclick="openPage('agreementPage')">
 
         <span class="menu-icon">📄</span>
 
@@ -790,7 +910,10 @@ body{
 
 </div>
 
-<!-- CITY -->
+<!-- =========================
+     CITY ROUTES
+========================= -->
+
 <div id="cityPage" class="page">
 
     <h2>
@@ -798,25 +921,28 @@ body{
     </h2>
 
     <p>
-        Нуқтаи оғоз ва таъинотро интихоб кунед.
+        Нуқтаи оғоз ва таъинотро мустақиман аз карта интихоб кунед.
     </p>
 
-    <button class="main-btn"
-            onclick="startMapRoute()">
+    <button
+        class="main-btn"
+        onclick="startMapRoute()">
 
         📍 ИНТИХОБИ А ВА Б АЗ КАРТА
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="startGPSNavigation()">
+    <button
+        class="secondary-btn"
+        onclick="useMyLocationAsA()">
 
         📍 ОТ МАН → Б
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -824,7 +950,10 @@ body{
 
 </div>
 
-<!-- INTERCITY -->
+<!-- =========================
+     INTERCITY
+========================= -->
+
 <div id="interPage" class="page">
 
     <h2>
@@ -857,15 +986,17 @@ body{
 
     </div>
 
-    <button class="main-btn"
-            onclick="searchIntercity()">
+    <button
+        class="main-btn"
+        onclick="searchIntercity()">
 
         🚐 ҶУСТУҶӮ
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -873,7 +1004,10 @@ body{
 
 </div>
 
-<!-- ADD ROUTE -->
+<!-- =========================
+     ADD ROUTE
+========================= -->
+
 <div id="addPage" class="page">
 
     <h2>
@@ -881,69 +1015,78 @@ body{
     </h2>
 
     <p>
-        Нуқтаҳоро мустақиман аз карта интихоб кунед.
+        Нуқтаҳоро ҳатман аз карта интихоб кунед.
     </p>
 
-    <div id="routeStatus"
-         class="status">
+    <div
+        id="routeStatus"
+        class="status">
 
         Аввал нуқтаи А-ро интихоб кунед.
 
     </div>
 
-    <button class="main-btn"
-            onclick="useMyLocationAsA()">
+    <button
+        class="main-btn"
+        onclick="useMyLocationAsA()">
 
         📍 ОТ МАН → Б
 
     </button>
 
-    <button id="aButton"
-            class="point-btn"
-            onclick="selectA()">
+    <button
+        id="aButton"
+        class="point-btn"
+        onclick="selectA()">
 
-        📍 ИНТИХОБИ НУҚТАИ А
-
-    </button>
-
-    <button id="bButton"
-            class="point-btn"
-            onclick="selectB()">
-
-        📍 ИНТИХОБИ НУҚТАИ Б
+        🟢 ИНТИХОБИ НУҚТАИ А
 
     </button>
 
-    <div id="aInfo"
-         class="point-info">
+    <button
+        id="bButton"
+        class="point-btn"
+        onclick="selectB()">
+
+        🔴 ИНТИХОБИ НУҚТАИ Б
+
+    </button>
+
+    <div
+        id="aInfo"
+        class="point-info">
 
         🟢 А: интихоб нашудааст
 
     </div>
 
-    <div id="bInfo"
-         class="point-info">
+    <div
+        id="bInfo"
+        class="point-info">
 
         🔴 Б: интихоб нашудааст
 
     </div>
 
-    <button class="main-btn"
-            onclick="buildRealRoute()">
+    <button
+        class="main-btn"
+        onclick="buildRealRoute()">
 
         🛣️ СОХТАНИ МАРШРУТИ ВОҚЕӢ
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="resetRoute()">
+    <button
+        class="secondary-btn"
+        onclick="resetRoute()">
 
         ↩️ Аз нав интихоб кардан
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -951,57 +1094,174 @@ body{
 
 </div>
 
-<!-- PLACES -->
+<!-- =========================
+     ADD STOP
+========================= -->
+
+<div id="addStopPage" class="page">
+
+    <h2>
+        🚌 Иловаи истгоҳ
+    </h2>
+
+    <p>
+        Аввал нуқтаи воқеии истгоҳро аз карта интихоб кунед.
+        Баъд номи истгоҳро нависед.
+    </p>
+
+    <div
+        id="stopStatus"
+        class="status">
+
+        📍 Нуқтаи истгоҳ интихоб нашудааст.
+
+    </div>
+
+    <button
+        id="stopPointButton"
+        class="main-btn"
+        onclick="startStopSelection()">
+
+        📍 ИНТИХОБИ НУҚТА АЗ КАРТА
+
+    </button>
+
+    <div class="field">
+
+        <span>🚌</span>
+
+        <input
+            id="stopName"
+            placeholder="Номи истгоҳ"
+        >
+
+    </div>
+
+    <div class="field">
+
+        <span>📝</span>
+
+        <textarea
+            id="stopDescription"
+            placeholder="Маълумоти иловагӣ"
+        ></textarea>
+
+    </div>
+
+    <button
+        class="main-btn"
+        onclick="saveNewStop()">
+
+        💾 ЗАХИРА КАРДАНИ ИСТГОҲ
+
+    </button>
+
+    <button
+        class="secondary-btn"
+        onclick="showStops()">
+
+        🚌 НИШОН ДОДАНИ ИСТГОҲҲО
+
+    </button>
+
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
+
+        Бастан
+
+    </button>
+
+</div>
+
+<!-- =========================
+     TOURISM DUSHANBE
+========================= -->
+
+<div id="tourismPage" class="page">
+
+    <h2>
+        🏙️ Ҷойҳои диданбоби Душанбе
+    </h2>
+
+    <p>
+        Ҷойҳои машҳури Душанбе. Ҷойро интихоб кунед,
+        карта ба тарафи он мекушояд.
+    </p>
+
+    <div id="tourList"></div>
+
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
+
+        Бастан
+
+    </button>
+
+</div>
+
+<!-- =========================
+     PLACES
+========================= -->
+
 <div id="placesPage" class="page">
 
     <h2>
         📍 Ҷойҳо
     </h2>
 
-    <button class="menu-item"
-            onclick="filterPlaces('hospital')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('hospital')">
 
         🏥 Беморхонаҳо
 
     </button>
 
-    <button class="menu-item"
-            onclick="filterPlaces('school')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('school')">
 
         🏫 Мактабҳо
 
     </button>
 
-    <button class="menu-item"
-            onclick="filterPlaces('mosque')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('mosque')">
 
         🕌 Масҷидҳо
 
     </button>
 
-    <button class="menu-item"
-            onclick="filterPlaces('shop')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('shop')">
 
         🏪 Мағозаҳо
 
     </button>
 
-    <button class="menu-item"
-            onclick="filterPlaces('fuel')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('fuel')">
 
         ⛽ Нуқтаҳои сӯзишворӣ
 
     </button>
 
-    <button class="menu-item"
-            onclick="filterPlaces('bank')">
+    <button
+        class="menu-item"
+        onclick="filterPlaces('bank')">
 
         🏦 Бонкҳо
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -1009,9 +1269,11 @@ body{
 
 </div>
 
-<!-- FAVORITES -->
-<div id="favoritesPage"
-     class="page">
+<!-- =========================
+     FAVORITES
+========================= -->
+
+<div id="favoritesPage" class="page">
 
     <h2>
         ❤️ Избранное
@@ -1021,22 +1283,25 @@ body{
         Ҷойҳои дӯстдошта дар хотираи браузер нигоҳ дошта мешаванд.
     </p>
 
-    <button class="menu-item"
-            onclick="saveHome()">
+    <button
+        class="menu-item"
+        onclick="saveHome()">
 
         🏠 Хонаи ман
 
     </button>
 
-    <button class="menu-item"
-            onclick="saveWork()">
+    <button
+        class="menu-item"
+        onclick="saveWork()">
 
         💼 Ҷои кор
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -1044,9 +1309,11 @@ body{
 
 </div>
 
-<!-- SETTINGS -->
-<div id="settingsPage"
-     class="page">
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<div id="settingsPage" class="page">
 
     <h2>
         ⚙️ Танзимот
@@ -1060,28 +1327,33 @@ body{
 
         <div class="options">
 
-            <button class="option selected"
-                    onclick="setLanguage('tg',this)">
+            <button
+                class="option selected"
+                onclick="setLanguage('tg',this)">
                 Тоҷикӣ
             </button>
 
-            <button class="option"
-                    onclick="setLanguage('ru',this)">
+            <button
+                class="option"
+                onclick="setLanguage('ru',this)">
                 Русский
             </button>
 
-            <button class="option"
-                    onclick="setLanguage('en',this)">
+            <button
+                class="option"
+                onclick="setLanguage('en',this)">
                 English
             </button>
 
-            <button class="option"
-                    onclick="setLanguage('uz',this)">
+            <button
+                class="option"
+                onclick="setLanguage('uz',this)">
                 O‘zbekcha
             </button>
 
-            <button class="option"
-                    onclick="setLanguage('fa',this)">
+            <button
+                class="option"
+                onclick="setLanguage('fa',this)">
                 فارسی
             </button>
 
@@ -1097,13 +1369,15 @@ body{
 
         <div class="options">
 
-            <button class="option selected"
-                    onclick="setTheme('dark',this)">
+            <button
+                class="option selected"
+                onclick="setTheme('dark',this)">
                 🌙 Тёмный
             </button>
 
-            <button class="option"
-                    onclick="setTheme('light',this)">
+            <button
+                class="option"
+                onclick="setTheme('light',this)">
                 ☀️ Светлый
             </button>
 
@@ -1119,18 +1393,21 @@ body{
 
         <div class="options">
 
-            <button class="option"
-                    onclick="setTextSize('small')">
+            <button
+                class="option"
+                onclick="setTextSize('small')">
                 A
             </button>
 
-            <button class="option selected"
-                    onclick="setTextSize('normal')">
+            <button
+                class="option selected"
+                onclick="setTextSize('normal')">
                 A+
             </button>
 
-            <button class="option"
-                    onclick="setTextSize('large')">
+            <button
+                class="option"
+                onclick="setTextSize('large')">
                 A++
             </button>
 
@@ -1138,8 +1415,9 @@ body{
 
     </div>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -1147,9 +1425,11 @@ body{
 
 </div>
 
-<!-- CONTACT -->
-<div id="contactPage"
-     class="page">
+<!-- =========================
+     CONTACT
+========================= -->
+
+<div id="contactPage" class="page">
 
     <h2>
         📞 Тамос бо мо
@@ -1159,16 +1439,18 @@ body{
         Барои тағйир, илова ва пешниҳодҳо бо мо тамос гиред.
     </p>
 
-    <button class="menu-item"
-            onclick="openInstagram()">
+    <button
+        class="menu-item"
+        onclick="openInstagram()">
 
         📸 Instagram
         @shohin_tajikistan
 
     </button>
 
-    <button class="secondary-btn"
-            onclick="closePages()">
+    <button
+        class="secondary-btn"
+        onclick="closePages()">
 
         Бастан
 
@@ -1176,9 +1458,11 @@ body{
 
 </div>
 
-<!-- AGREEMENT -->
-<div id="agreementPage"
-     class="page">
+<!-- =========================
+     AGREEMENT
+========================= -->
+
+<div id="agreementPage" class="page">
 
     <h2>
         📄 Созишномаи корбар
@@ -1203,8 +1487,9 @@ body{
         риоя кунед ва ба аломатҳои воқеии роҳ афзалият диҳед.
     </p>
 
-    <button class="main-btn"
-            onclick="closePages()">
+    <button
+        class="main-btn"
+        onclick="closePages()">
 
         ҚАБУЛ
 
@@ -1212,9 +1497,13 @@ body{
 
 </div>
 
-<!-- ROUTE CARD -->
-<div id="routeCard"
-     class="route-card">
+<!-- =========================
+     ROUTE CARD
+========================= -->
+
+<div
+    id="routeCard"
+    class="route-card">
 
     <div class="route-title">
         🛣️ Маршрут тайёр аст
@@ -1248,8 +1537,9 @@ body{
 
     </div>
 
-    <div id="routeInfo"
-         class="route-info">
+    <div
+        id="routeInfo"
+        class="route-info">
 
         Роҳ аз рӯи графи воқеии роҳҳо сохта шудааст.
 
@@ -1257,28 +1547,34 @@ body{
 
 </div>
 
-<!-- MAP PANEL -->
+<!-- =========================
+     MAP PANEL
+========================= -->
+
 <div class="map-panel">
 
     <div class="layers">
 
-        <button id="roadsBtn"
-                class="active"
-                onclick="showRoads()">
+        <button
+            id="roadsBtn"
+            class="active"
+            onclick="showRoads()">
 
             🛣️ РОҲҲО
 
         </button>
 
-        <button id="placesBtn"
-                onclick="showPlaces()">
+        <button
+            id="placesBtn"
+            onclick="showPlaces()">
 
             📍 ҶОЙҲО
 
         </button>
 
-        <button id="stopsBtn"
-                onclick="showStops()">
+        <button
+            id="stopsBtn"
+            onclick="showStops()">
 
             🚌 ИСТГОҲҲО
 
@@ -1289,15 +1585,18 @@ body{
 </div>
 
 <!-- GPS -->
-<button id="gpsButton"
-        class="gps"
-        onclick="locateMe()">
+
+<button
+    id="gpsButton"
+    class="gps"
+    onclick="locateMe()">
 
     ◎
 
 </button>
 
 <!-- BOTTOM -->
+
 <div class="bottom">
 
     <small>
@@ -1316,18 +1615,18 @@ body{
 
 <script>
 
-/* =========================================
+/* =====================================================
    FILES
-========================================= */
+===================================================== */
 
 const ROADS_FILE="export (1).geojson";
 const PLACES_FILE="export (2).geojson";
 const STOPS_FILE="export (3).geojson";
 
 
-/* =========================================
+/* =====================================================
    MAP
-========================================= */
+===================================================== */
 
 const map=L.map("map",{
     center:[38.5598,68.7870],
@@ -1346,9 +1645,9 @@ L.tileLayer(
 ).addTo(map);
 
 
-/* =========================================
+/* =====================================================
    DATA
-========================================= */
+===================================================== */
 
 let roadsData=null;
 let placesData=null;
@@ -1359,9 +1658,9 @@ let placesLayer=null;
 let stopsLayer=null;
 
 
-/* =========================================
+/* =====================================================
    GRAPH
-========================================= */
+===================================================== */
 
 const graph=new Map();
 
@@ -1380,8 +1679,7 @@ function coordinateKey(lat,lon){
 
 function getOrCreateNode(lat,lon){
 
-    const key=
-        coordinateKey(lat,lon);
+    const key=coordinateKey(lat,lon);
 
     if(!graph.has(key)){
 
@@ -1401,23 +1699,15 @@ function getOrCreateNode(lat,lon){
 }
 
 
-function haversine(
-    lat1,
-    lon1,
-    lat2,
-    lon2
-){
+function haversine(lat1,lon1,lat2,lon2){
 
     const R=6371000;
 
     const p1=lat1*Math.PI/180;
     const p2=lat2*Math.PI/180;
 
-    const dp=
-        (lat2-lat1)*Math.PI/180;
-
-    const dl=
-        (lon2-lon1)*Math.PI/180;
+    const dp=(lat2-lat1)*Math.PI/180;
+    const dl=(lon2-lon1)*Math.PI/180;
 
     const a=
         Math.sin(dp/2)**2+
@@ -1435,11 +1725,8 @@ function haversine(
 
 function addEdge(a,b){
 
-    if(
-        !a||
-        !b||
-        a.id===b.id
-    )return;
+    if(!a||!b||a.id===b.id)
+        return;
 
     const d=
         haversine(
@@ -1476,30 +1763,21 @@ function addLineString(coords){
 
     for(const c of coords){
 
-        if(
-            !Array.isArray(c)||
-            c.length<2
-        )continue;
+        if(!Array.isArray(c)||c.length<2)
+            continue;
 
         const lon=Number(c[0]);
         const lat=Number(c[1]);
 
-        if(
-            !Number.isFinite(lat)||
-            !Number.isFinite(lon)
-        )continue;
+        if(!Number.isFinite(lat)||
+           !Number.isFinite(lon))
+            continue;
 
         const node=
-            getOrCreateNode(
-                lat,
-                lon
-            );
+            getOrCreateNode(lat,lon);
 
         if(previous)
-            addEdge(
-                previous,
-                node
-            );
+            addEdge(previous,node);
 
         previous=node;
     }
@@ -1508,49 +1786,25 @@ function addLineString(coords){
 
 function processGeometry(g){
 
-    if(!g)return;
+    if(!g)
+        return;
 
-    if(
-        g.type==="LineString"
-    ){
+    if(g.type==="LineString"){
 
-        addLineString(
-            g.coordinates
-        );
+        addLineString(g.coordinates);
 
-    }else if(
-        g.type==="MultiLineString"
-    ){
+    }else if(g.type==="MultiLineString"){
 
-        for(
-            const line of
-            g.coordinates||[]
-        ){
-
+        for(const line of g.coordinates||[])
             addLineString(line);
 
-        }
+    }else if(g.type==="GeometryCollection"){
 
-    }else if(
-        g.type==="GeometryCollection"
-    ){
-
-        for(
-            const x of
-            g.geometries||[]
-        ){
-
+        for(const x of g.geometries||[])
             processGeometry(x);
-
-        }
-
     }
 }
 
-
-/* =========================================
-   CONNECT NEARBY
-========================================= */
 
 function connectNearbyNodes(){
 
@@ -1562,18 +1816,12 @@ function connectNearbyNodes(){
 
         return Math.floor(lat/size)+","+
                Math.floor(lon/size);
-
     }
 
-    for(
-        const node of graphNodes
-    ){
+    for(const node of graphNodes){
 
         const key=
-            cellKey(
-                node.lat,
-                node.lon
-            );
+            cellKey(node.lat,node.lon);
 
         if(!cells.has(key))
             cells.set(key,[]);
@@ -1587,9 +1835,7 @@ function connectNearbyNodes(){
         [1,-1],[1,0],[1,1]
     ];
 
-    for(
-        const node of graphNodes
-    ){
+    for(const node of graphNodes){
 
         const baseLat=
             Math.floor(node.lat/size);
@@ -1597,10 +1843,7 @@ function connectNearbyNodes(){
         const baseLon=
             Math.floor(node.lon/size);
 
-        for(
-            const [dy,dx]
-            of directions
-        ){
+        for(const [dy,dx] of directions){
 
             const list=
                 cells.get(
@@ -1608,20 +1851,15 @@ function connectNearbyNodes(){
                     (baseLon+dx)
                 );
 
-            if(!list)continue;
+            if(!list)
+                continue;
 
-            for(
-                const other of list
-            ){
+            for(const other of list){
 
                 if(node===other)
                     continue;
 
-                if(
-                    node.neighbors.has(
-                        other.id
-                    )
-                )
+                if(node.neighbors.has(other.id))
                     continue;
 
                 const d=
@@ -1632,28 +1870,13 @@ function connectNearbyNodes(){
                         other.lon
                     );
 
-                if(
-                    d<=SNAP_METERS
-                ){
-
-                    addEdge(
-                        node,
-                        other
-                    );
-
-                }
-
+                if(d<=SNAP_METERS)
+                    addEdge(node,other);
             }
-
         }
-
     }
 }
 
-
-/* =========================================
-   BUILD GRAPH
-========================================= */
 
 async function buildGraph(data){
 
@@ -1665,24 +1888,17 @@ async function buildGraph(data){
         i++
     ){
 
-        const feature=
-            data.features[i];
+        const feature=data.features[i];
 
         if(feature.geometry)
-            processGeometry(
-                feature.geometry
-            );
+            processGeometry(feature.geometry);
 
         if(i%150===0)
-            await new Promise(
-                r=>setTimeout(r,0)
-            );
+            await new Promise(r=>setTimeout(r,0));
     }
 
     graphNodes=
-        Array.from(
-            graph.values()
-        );
+        Array.from(graph.values());
 
     connectNearbyNodes();
 
@@ -1693,9 +1909,9 @@ async function buildGraph(data){
 }
 
 
-/* =========================================
+/* =====================================================
    LOAD JSON
-========================================= */
+===================================================== */
 
 async function loadJSON(file){
 
@@ -1706,9 +1922,7 @@ async function loadJSON(file){
 
     if(!response.ok)
         throw new Error(
-            file+
-            " HTTP "+
-            response.status
+            file+" HTTP "+response.status
         );
 
     return response.json();
@@ -1718,9 +1932,7 @@ async function loadJSON(file){
 async function loadRoads(){
 
     roadsData=
-        await loadJSON(
-            ROADS_FILE
-        );
+        await loadJSON(ROADS_FILE);
 
     roadsLayer=
         L.geoJSON(
@@ -1734,19 +1946,15 @@ async function loadRoads(){
             }
         ).addTo(map);
 
-    /*
-       Граф строится в фоне.
-    */
-
     setTimeout(
         async()=>{
-            await buildGraph(
-                roadsData
-            );
+
+            await buildGraph(roadsData);
 
             toast(
                 "✓ Навигация готова"
             );
+
         },
         50
     );
@@ -1758,9 +1966,7 @@ async function loadPlaces(){
     try{
 
         placesData=
-            await loadJSON(
-                PLACES_FILE
-            );
+            await loadJSON(PLACES_FILE);
 
         placesLayer=
             L.geoJSON(
@@ -1786,7 +1992,6 @@ async function loadPlaces(){
     }catch(e){
 
         console.warn(e);
-
     }
 }
 
@@ -1796,42 +2001,55 @@ async function loadStops(){
     try{
 
         stopsData=
-            await loadJSON(
-                STOPS_FILE
-            );
+            await loadJSON(STOPS_FILE);
 
         stopsLayer=
             L.geoJSON(
                 stopsData,
                 {
-                    pointToLayer:(f,ll)=>
-                        L.marker(
-                            ll,
-                            {
-                                icon:
-                                    L.divIcon({
-                                        className:"",
-                                        html:
-                                            '<div class="place">🚌</div>',
-                                        iconSize:[30,30],
-                                        iconAnchor:[15,15]
-                                    })
-                            }
-                        )
+                    pointToLayer:(f,ll)=>{
+
+                        const name=
+                            f.properties?.name||
+                            f.properties?.NAME||
+                            "Истгоҳ";
+
+                        const marker=
+                            L.marker(
+                                ll,
+                                {
+                                    icon:
+                                        L.divIcon({
+                                            className:"",
+                                            html:
+                                                '<div class="stop-marker">🚌</div>',
+                                            iconSize:[34,34],
+                                            iconAnchor:[17,17]
+                                        })
+                                }
+                            );
+
+                        marker.bindPopup(
+                            "<b>🚌 "+
+                            name+
+                            "</b>"
+                        );
+
+                        return marker;
+                    }
                 }
             );
 
     }catch(e){
 
         console.warn(e);
-
     }
 }
 
 
-/* =========================================
-   POINTS
-========================================= */
+/* =====================================================
+   ROUTE POINTS
+===================================================== */
 
 let selecting=null;
 
@@ -1845,14 +2063,11 @@ let routeLine=null;
 let routeShadow=null;
 
 
-/* =========================================
-   POINT MARKER
-========================================= */
+/* =====================================================
+   ROUTE MARKERS
+===================================================== */
 
-function createPointMarker(
-    p,
-    type
-){
+function createPointMarker(p,type){
 
     return L.marker(
         [p.lat,p.lon],
@@ -1874,17 +2089,11 @@ function createPointMarker(
 }
 
 
-/* =========================================
-   SELECT A
-========================================= */
-
 function selectA(){
 
     closePages();
 
-    openPage(
-        "addPage"
-    );
+    openPage("addPage");
 
     selecting="A";
 
@@ -1902,10 +2111,6 @@ function selectA(){
 }
 
 
-/* =========================================
-   SELECT B
-========================================= */
-
 function selectB(){
 
     if(!pointA){
@@ -1919,9 +2124,7 @@ function selectB(){
 
     closePages();
 
-    openPage(
-        "addPage"
-    );
+    openPage("addPage");
 
     selecting="B";
 
@@ -1939,13 +2142,72 @@ function selectB(){
 }
 
 
-/* =========================================
+/* =====================================================
    MAP CLICK
-========================================= */
+===================================================== */
 
 map.on(
     "click",
     e=>{
+
+        /* STOP SELECTION */
+
+        if(stopSelecting){
+
+            const p={
+                lat:e.latlng.lat,
+                lon:e.latlng.lng
+            };
+
+            newStopPoint=p;
+
+            stopSelecting=false;
+
+            document
+                .getElementById(
+                    "stopPointButton"
+                )
+                .classList.remove("point-btn");
+
+            document
+                .getElementById(
+                    "stopStatus"
+                )
+                .innerHTML=
+                    "🟢 Нуқтаи истгоҳ интихоб шуд:<br>"+
+                    p.lat.toFixed(6)+
+                    ", "+
+                    p.lon.toFixed(6);
+
+            if(newStopMarker)
+                map.removeLayer(
+                    newStopMarker
+                );
+
+            newStopMarker=
+                L.marker(
+                    [p.lat,p.lon],
+                    {
+                        icon:
+                            L.divIcon({
+                                className:"",
+                                html:
+                                    '<div class="stop-marker">🚌</div>',
+                                iconSize:[34,34],
+                                iconAnchor:[17,17]
+                            })
+                    }
+                ).addTo(map);
+
+            toast(
+                "🚌 Нуқтаи истгоҳ интихоб шуд"
+            );
+
+            return;
+        }
+
+
+        /* ROUTE SELECTION */
 
         if(!selecting)
             return;
@@ -1955,22 +2217,15 @@ map.on(
             lon:e.latlng.lng
         };
 
-        if(
-            selecting==="A"
-        ){
+        if(selecting==="A"){
 
             pointA=p;
 
             if(markerA)
-                map.removeLayer(
-                    markerA
-                );
+                map.removeLayer(markerA);
 
             markerA=
-                createPointMarker(
-                    p,
-                    "A"
-                );
+                createPointMarker(p,"A");
 
             document
                 .getElementById("aInfo")
@@ -1999,15 +2254,10 @@ map.on(
             pointB=p;
 
             if(markerB)
-                map.removeLayer(
-                    markerB
-                );
+                map.removeLayer(markerB);
 
             markerB=
-                createPointMarker(
-                    p,
-                    "B"
-                );
+                createPointMarker(p,"B");
 
             document
                 .getElementById("bInfo")
@@ -2027,10 +2277,6 @@ map.on(
                 "🧠 Маршрут строится..."
             );
 
-            /*
-               АВТОМАТИЧЕСКИ строим маршрут.
-            */
-
             setTimeout(
                 ()=>{
                     buildRealRoute();
@@ -2042,15 +2288,11 @@ map.on(
 );
 
 
-/* =========================================
-   GRAPH NEAREST
-========================================= */
+/* =====================================================
+   GRAPH ROUTING
+===================================================== */
 
-function nearestNodes(
-    lat,
-    lon,
-    count=8
-){
+function nearestNodes(lat,lon,count=8){
 
     return graphNodes
         .map(
@@ -2067,13 +2309,9 @@ function nearestNodes(
         )
         .sort(
             (a,b)=>
-                a.distance-
-                b.distance
+                a.distance-b.distance
         )
-        .slice(
-            0,
-            count
-        );
+        .slice(0,count);
 }
 
 
@@ -2087,10 +2325,6 @@ function heuristic(a,b){
     );
 }
 
-
-/* =========================================
-   HEAP
-========================================= */
 
 class MinHeap{
 
@@ -2108,9 +2342,7 @@ class MinHeap{
         while(i>0){
 
             const p=
-                Math.floor(
-                    (i-1)/2
-                );
+                Math.floor((i-1)/2);
 
             if(
                 this.data[p].priority<=
@@ -2132,16 +2364,12 @@ class MinHeap{
 
     pop(){
 
-        if(
-            !this.data.length
-        )
+        if(!this.data.length)
             return null;
 
-        const result=
-            this.data[0];
+        const result=this.data[0];
 
-        const last=
-            this.data.pop();
+        const last=this.data.pop();
 
         if(this.data.length){
 
@@ -2153,11 +2381,8 @@ class MinHeap{
 
                 let s=i;
 
-                const l=
-                    i*2+1;
-
-                const r=
-                    i*2+2;
+                const l=i*2+1;
+                const r=i*2+2;
 
                 if(
                     l<this.data.length&&
@@ -2197,45 +2422,24 @@ class MinHeap{
 }
 
 
-/* =========================================
-   A*
-========================================= */
+async function aStar(startId,goalId){
 
-async function aStar(
-    startId,
-    goalId
-){
-
-    const start=
-        graph.get(startId);
-
-    const goal=
-        graph.get(goalId);
+    const start=graph.get(startId);
+    const goal=graph.get(goalId);
 
     if(!start||!goal)
         return null;
 
-    const open=
-        new MinHeap();
+    const open=new MinHeap();
 
-    const gScore=
-        new Map();
+    const gScore=new Map();
+    const cameFrom=new Map();
 
-    const cameFrom=
-        new Map();
-
-    gScore.set(
-        startId,
-        0
-    );
+    gScore.set(startId,0);
 
     open.push({
         id:startId,
-        priority:
-            heuristic(
-                start,
-                goal
-            )
+        priority:heuristic(start,goal)
     });
 
     let iterations=0;
@@ -2247,30 +2451,22 @@ async function aStar(
 
         iterations++;
 
-        const current=
-            open.pop();
+        const current=open.pop();
 
         if(!current)
             break;
 
-        if(
-            current.id===
-            goalId
-        ){
+        if(current.id===goalId){
 
             const path=[
                 current.id
             ];
 
-            let x=
-                current.id;
+            let x=current.id;
 
-            while(
-                cameFrom.has(x)
-            ){
+            while(cameFrom.has(x)){
 
-                x=
-                    cameFrom.get(x);
+                x=cameFrom.get(x);
 
                 path.push(x);
             }
@@ -2283,9 +2479,7 @@ async function aStar(
         }
 
         const node=
-            graph.get(
-                current.id
-            );
+            graph.get(current.id);
 
         if(!node)
             continue;
@@ -2299,20 +2493,12 @@ async function aStar(
         ){
 
             const score=
-                (
-                    gScore.get(
-                        current.id
-                    )??Infinity
-                )+
+                (gScore.get(current.id)??Infinity)+
                 distance;
 
             if(
                 score<
-                (
-                    gScore.get(
-                        neighborId
-                    )??Infinity
-                )
+                (gScore.get(neighborId)??Infinity)
             ){
 
                 cameFrom.set(
@@ -2326,48 +2512,37 @@ async function aStar(
                 );
 
                 const n=
-                    graph.get(
-                        neighborId
-                    );
+                    graph.get(neighborId);
 
                 open.push({
                     id:neighborId,
                     priority:
                         score+
-                        heuristic(
-                            n,
-                            goal
-                        )
+                        heuristic(n,goal)
                 });
             }
         }
 
-        if(
-            iterations%10000===0
-        ){
-
+        if(iterations%10000===0)
             await new Promise(
                 r=>setTimeout(r,0)
             );
-        }
     }
 
     return null;
 }
 
 
-/* =========================================
-   ROUTE
-========================================= */
+/* =====================================================
+   BUILD ROUTE
+===================================================== */
 
 async function buildRealRoute(){
 
     if(!pointA||!pointB)
         return;
 
-    if(
-        !graphNodes.length
-    ){
+    if(!graphNodes.length){
 
         setRouteStatus(
             "⏳ Граф дорог ещё загружается..."
@@ -2404,13 +2579,9 @@ async function buildRealRoute(){
     let bestPath=null;
     let bestScore=Infinity;
 
-    for(
-        const aa of A
-    ){
+    for(const aa of A){
 
-        for(
-            const bb of B
-        ){
+        for(const bb of B){
 
             const path=
                 await aStar(
@@ -2442,9 +2613,7 @@ async function buildRealRoute(){
                         );
                 }
 
-                if(
-                    d<bestScore
-                ){
+                if(d<bestScore){
 
                     bestScore=d;
                     bestPath=path;
@@ -2466,43 +2635,32 @@ async function buildRealRoute(){
         return;
     }
 
-    drawBeautifulRoute(
-        bestPath
-    );
+    drawBeautifulRoute(bestPath);
 }
 
 
-/* =========================================
-   BEAUTIFUL ROUTE
-========================================= */
+/* =====================================================
+   DRAW ROUTE
+===================================================== */
 
-function drawBeautifulRoute(
-    path
-){
+function drawBeautifulRoute(path){
 
     const coords=[
         [pointA.lat,pointA.lon]
     ];
 
-    for(
-        const node of path
-    ){
+    for(const node of path){
 
         coords.push([
             node.lat,
             node.lon
         ]);
-
     }
 
     coords.push([
         pointB.lat,
         pointB.lon
     ]);
-
-    /*
-       DARK SHADOW
-    */
 
     routeShadow=
         L.polyline(
@@ -2516,10 +2674,6 @@ function drawBeautifulRoute(
             }
         ).addTo(map);
 
-    /*
-       GREEN ROUTE
-    */
-
     routeLine=
         L.polyline(
             [],
@@ -2532,25 +2686,17 @@ function drawBeautifulRoute(
             }
         ).addTo(map);
 
-    /*
-       Анимация появления маршрута.
-    */
-
     let i=0;
 
     const timer=
         setInterval(
             ()=>{
 
-                if(
-                    i>=coords.length
-                ){
+                if(i>=coords.length){
 
                     clearInterval(timer);
 
-                    finishRoute(
-                        coords
-                    );
+                    finishRoute(coords);
 
                     return;
                 }
@@ -2567,27 +2713,13 @@ function drawBeautifulRoute(
 }
 
 
-/* =========================================
-   FINISH ROUTE
-========================================= */
+function finishRoute(coords){
 
-function finishRoute(
-    coords
-){
-
-    routeShadow.setLatLngs(
-        coords
-    );
-
-    routeLine.setLatLngs(
-        coords
-    );
-
-    const bounds=
-        routeLine.getBounds();
+    routeShadow.setLatLngs(coords);
+    routeLine.setLatLngs(coords);
 
     map.flyToBounds(
-        bounds,
+        routeLine.getBounds(),
         {
             paddingTopLeft:[40,100],
             paddingBottomRight:[40,180],
@@ -2612,11 +2744,6 @@ function finishRoute(
             );
     }
 
-    /*
-       Средняя скорость для
-       городской навигации.
-    */
-
     const speedKmh=30;
 
     const minutes=
@@ -2630,9 +2757,7 @@ function finishRoute(
         );
 
     document
-        .getElementById(
-            "routeDistance"
-        )
+        .getElementById("routeDistance")
         .textContent=
             distance>=1000
             ?
@@ -2641,27 +2766,18 @@ function finishRoute(
             Math.round(distance)+" м";
 
     document
-        .getElementById(
-            "routeTime"
-        )
+        .getElementById("routeTime")
         .textContent=
-            minutes+
-            " мин";
+            minutes+" мин";
 
     document
-        .getElementById(
-            "routeInfo"
-        )
+        .getElementById("routeInfo")
         .textContent=
-            "🟢 А → 🔴 Б  •  Роҳ аз рӯи графи воқеии роҳҳо";
+            "🟢 А → 🔴 Б • Роҳ аз рӯи графи воқеии роҳҳо";
 
     document
-        .getElementById(
-            "routeCard"
-        )
-        .classList.add(
-            "show"
-        );
+        .getElementById("routeCard")
+        .classList.add("show");
 
     setRouteStatus(
         "🟢 Маршрут омода шуд."
@@ -2673,45 +2789,34 @@ function finishRoute(
 }
 
 
-/* =========================================
-   REMOVE ROUTE
-========================================= */
-
 function removeRoute(){
 
     if(routeLine){
 
-        map.removeLayer(
-            routeLine
-        );
+        map.removeLayer(routeLine);
 
         routeLine=null;
     }
 
     if(routeShadow){
 
-        map.removeLayer(
-            routeShadow
-        );
+        map.removeLayer(routeShadow);
 
         routeShadow=null;
     }
 
     document
-        .getElementById(
-            "routeCard"
-        )
-        .classList.remove(
-            "show"
-        );
+        .getElementById("routeCard")
+        .classList.remove("show");
 }
 
 
-/* =========================================
+/* =====================================================
    GPS
-========================================= */
+===================================================== */
 
 let currentGPS=null;
+
 let gpsMarker=null;
 let gpsAccuracyCircle=null;
 let gpsWatchId=null;
@@ -2719,9 +2824,7 @@ let gpsWatchId=null;
 
 function locateMe(){
 
-    if(
-        !navigator.geolocation
-    ){
+    if(!navigator.geolocation){
 
         toast(
             "GPS недоступен"
@@ -2734,9 +2837,7 @@ function locateMe(){
 
         position=>{
 
-            updateGPS(
-                position
-            );
+            updateGPS(position);
 
             map.flyTo(
                 [
@@ -2790,18 +2891,12 @@ function startGPSWatch(){
         );
 
     document
-        .getElementById(
-            "gpsButton"
-        )
-        .classList.add(
-            "active"
-        );
+        .getElementById("gpsButton")
+        .classList.add("active");
 }
 
 
-function updateGPS(
-    position
-){
+function updateGPS(position){
 
     const lat=
         position.coords.latitude;
@@ -2869,10 +2964,6 @@ function updateGPS(
 }
 
 
-/* =========================================
-   GPS A
-========================================= */
-
 function useMyLocationAsA(){
 
     if(!currentGPS){
@@ -2914,9 +3005,7 @@ function useMyLocationAsA(){
 
     closePages();
 
-    openPage(
-        "addPage"
-    );
+    openPage("addPage");
 
     setRouteStatus(
         "📍 А = ваше местоположение. Выберите Б."
@@ -2926,47 +3015,451 @@ function useMyLocationAsA(){
 }
 
 
-/* =========================================
+/* =====================================================
+   ADD STOP
+===================================================== */
+
+let stopSelecting=false;
+
+let newStopPoint=null;
+
+let newStopMarker=null;
+
+let customStops=[];
+
+
+function startStopSelection(){
+
+    closePages();
+
+    openPage("addStopPage");
+
+    stopSelecting=true;
+
+    document
+        .getElementById("stopStatus")
+        .innerHTML=
+            "📍 Ҳоло дар карта нуқтаи истгоҳро интихоб кунед.";
+
+    toast(
+        "📍 Нуқтаи истгоҳро дар карта интихоб кунед"
+    );
+}
+
+
+function saveNewStop(){
+
+    if(!newStopPoint){
+
+        toast(
+            "Аввал нуқтаи истгоҳро интихоб кунед"
+        );
+
+        return;
+    }
+
+    const name=
+        document
+            .getElementById("stopName")
+            .value
+            .trim();
+
+    const description=
+        document
+            .getElementById("stopDescription")
+            .value
+            .trim();
+
+    if(!name){
+
+        toast(
+            "Номи истгоҳро нависед"
+        );
+
+        return;
+    }
+
+    const stop={
+        id:
+            "custom-"+Date.now(),
+        name,
+        description,
+        lat:newStopPoint.lat,
+        lon:newStopPoint.lon
+    };
+
+    customStops.push(stop);
+
+    localStorage.setItem(
+        "shohin_custom_stops",
+        JSON.stringify(customStops)
+    );
+
+    addCustomStopToMap(stop);
+
+    document
+        .getElementById("stopName")
+        .value="";
+
+    document
+        .getElementById("stopDescription")
+        .value="";
+
+    newStopPoint=null;
+
+    document
+        .getElementById("stopStatus")
+        .innerHTML=
+            "✅ Истгоҳ захира шуд.";
+
+    toast(
+        "🚌 Истгоҳ илова шуд"
+    );
+}
+
+
+function addCustomStopToMap(stop){
+
+    const marker=
+        L.marker(
+            [stop.lat,stop.lon],
+            {
+                icon:
+                    L.divIcon({
+                        className:"",
+                        html:
+                            '<div class="stop-marker">🚌</div>',
+                        iconSize:[34,34],
+                        iconAnchor:[17,17]
+                    })
+            }
+        ).addTo(map);
+
+    marker.bindPopup(
+        "<b>🚌 "+
+        escapeHTML(stop.name)+
+        "</b><br>"+
+        escapeHTML(stop.description||"")+
+        "<br><small>"+
+        stop.lat.toFixed(6)+
+        ", "+
+        stop.lon.toFixed(6)+
+        "</small>"
+    );
+}
+
+
+function loadCustomStops(){
+
+    try{
+
+        customStops=
+            JSON.parse(
+                localStorage.getItem(
+                    "shohin_custom_stops"
+                )||"[]"
+            );
+
+        customStops.forEach(
+            addCustomStopToMap
+        );
+
+    }catch(e){
+
+        customStops=[];
+    }
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =====================================================
+   DUSHANBE TOURIST PLACES
+===================================================== */
+
+/*
+   Координаты ориентировочные для демонстрации.
+   Позже можно заменить их точными координатами.
+*/
+
+const DUSHANBE_PLACES=[
+
+    {
+        id:"rudaki",
+        icon:"🌳",
+        name:"Боғи Рӯдакӣ",
+        description:
+            "Яке аз боғҳои машҳури маркази Душанбе.",
+        lat:38.5748,
+        lon:68.7805
+    },
+
+    {
+        id:"national_museum",
+        icon:"🏛️",
+        name:"Осорхонаи миллии Тоҷикистон",
+        description:
+            "Осорхонаи асосии таърихию фарҳангии Тоҷикистон.",
+        lat:38.5707,
+        lon:68.7758
+    },
+
+    {
+        id:"navruz_palace",
+        icon:"🏛️",
+        name:"Қасри Наврӯз",
+        description:
+            "Маҷмааи фарҳангӣ ва яке аз ҷойҳои машҳури Душанбе.",
+        lat:38.5897,
+        lon:68.7834
+    },
+
+    {
+        id:"flag",
+        icon:"🇹🇯",
+        name:"Нишони давлатии Тоҷикистон",
+        description:
+            "Яке аз рамзҳои шинохтаи пойтахт.",
+        lat:38.5769,
+        lon:68.7868
+    },
+
+    {
+        id:"national_library",
+        icon:"📚",
+        name:"Китобхонаи миллии Тоҷикистон",
+        description:
+            "Китобхонаи миллӣ дар маркази Душанбе.",
+        lat:38.5763,
+        lon:68.7809
+    },
+
+    {
+        id:"iram",
+        icon:"🌿",
+        name:"Боғи Ирам",
+        description:
+            "Боғи сабз ва машҳур барои истироҳат.",
+        lat:38.5869,
+        lon:68.7862
+    },
+
+    {
+        id:"central_mosque",
+        icon:"🕌",
+        name:"Масҷиди марказии Душанбе",
+        description:
+            "Яке аз калонтарин масҷидҳои Душанбе.",
+        lat:38.5812,
+        lon:68.7798
+    },
+
+    {
+        id:"somoni",
+        icon:"🗿",
+        name:"Муҷассамаи Исмоили Сомонӣ",
+        description:
+            "Муҷассамаи машҳур дар маркази Душанбе.",
+        lat:38.5742,
+        lon:68.7860
+    }
+
+];
+
+
+function renderTourism(){
+
+    const container=
+        document.getElementById(
+            "tourList"
+        );
+
+    container.innerHTML="";
+
+    DUSHANBE_PLACES.forEach(
+        place=>{
+
+            const card=
+                document.createElement("div");
+
+            card.className="tour-card";
+
+            card.innerHTML=
+                `
+                <div class="tour-icon">
+                    ${place.icon}
+                </div>
+
+                <h3>
+                    ${escapeHTML(place.name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(place.description)}
+                </p>
+
+                <button
+                    class="tour-btn"
+                    onclick="
+                        goToTouristPlace('${place.id}')
+                    ">
+
+                    🧭 Ба ин ҷо маршрут
+
+                </button>
+                `;
+
+            container.appendChild(card);
+        }
+    );
+}
+
+
+function goToTouristPlace(id){
+
+    const place=
+        DUSHANBE_PLACES.find(
+            p=>p.id===id
+        );
+
+    if(!place)
+        return;
+
+    closePages();
+
+    map.flyTo(
+        [place.lat,place.lon],
+        16,
+        {
+            duration:1.2
+        }
+    );
+
+    L.popup()
+        .setLatLng(
+            [place.lat,place.lon]
+        )
+        .setContent(
+            "<b>"+
+            place.icon+
+            " "+
+            escapeHTML(place.name)+
+            "</b><br>"+
+            escapeHTML(place.description)+
+            "<br><br>"+
+            "<button onclick=\"routeToPlace('"+
+            place.id+
+            "')\" style=\"padding:8px;border:0;border-radius:8px;background:#39df89;font-weight:bold;cursor:pointer\">"+
+            "🧭 Маршрут аз ман"+
+            "</button>"
+        )
+        .openOn(map);
+
+    toast(
+        "📍 "+place.name
+    );
+}
+
+
+function routeToPlace(id){
+
+    const place=
+        DUSHANBE_PLACES.find(
+            p=>p.id===id
+        );
+
+    if(!place)
+        return;
+
+    pointB={
+        lat:place.lat,
+        lon:place.lon
+    };
+
+    if(markerB)
+        map.removeLayer(markerB);
+
+    markerB=
+        createPointMarker(
+            pointB,
+            "B"
+        );
+
+    if(currentGPS){
+
+        pointA={
+            lat:currentGPS.lat,
+            lon:currentGPS.lon
+        };
+
+        if(markerA)
+            map.removeLayer(markerA);
+
+        markerA=
+            createPointMarker(
+                pointA,
+                "A"
+            );
+
+        buildRealRoute();
+
+    }else{
+
+        toast(
+            "📍 Аввал GPS-ро фаъол кунед"
+        );
+
+        locateMe();
+
+        setTimeout(
+            ()=>{
+                if(currentGPS)
+                    routeToPlace(id);
+            },
+            1800
+        );
+    }
+}
+
+
+/* =====================================================
    LAYERS
-========================================= */
+===================================================== */
 
 function hideLayers(){
 
     if(roadsLayer)
-        map.removeLayer(
-            roadsLayer
-        );
+        map.removeLayer(roadsLayer);
 
     if(placesLayer)
-        map.removeLayer(
-            placesLayer
-        );
+        map.removeLayer(placesLayer);
 
     if(stopsLayer)
-        map.removeLayer(
-            stopsLayer
-        );
+        map.removeLayer(stopsLayer);
 }
 
 
 function activateLayer(id){
 
     document
-        .querySelectorAll(
-            ".layers button"
-        )
+        .querySelectorAll(".layers button")
         .forEach(
             b=>
-                b.classList.remove(
-                    "active"
-                )
+                b.classList.remove("active")
         );
 
     document
         .getElementById(id)
-        .classList.add(
-            "active"
-        );
+        .classList.add("active");
 }
 
 
@@ -2977,9 +3470,7 @@ function showRoads(){
     if(roadsLayer)
         roadsLayer.addTo(map);
 
-    activateLayer(
-        "roadsBtn"
-    );
+    activateLayer("roadsBtn");
 }
 
 
@@ -2990,9 +3481,7 @@ function showPlaces(){
     if(placesLayer)
         placesLayer.addTo(map);
 
-    activateLayer(
-        "placesBtn"
-    );
+    activateLayer("placesBtn");
 }
 
 
@@ -3003,23 +3492,26 @@ function showStops(){
     if(stopsLayer)
         stopsLayer.addTo(map);
 
-    activateLayer(
-        "stopsBtn"
+    customStops.forEach(
+        stop=>{
+
+            /* custom markers are already on map */
+        }
     );
+
+    activateLayer("stopsBtn");
 }
 
 
-/* =========================================
+/* =====================================================
    MENU
-========================================= */
+===================================================== */
 
 function toggleMenu(){
 
     document
         .getElementById("menu")
-        .classList.toggle(
-            "open"
-        );
+        .classList.toggle("open");
 }
 
 
@@ -3027,48 +3519,38 @@ function openPage(id){
 
     document
         .getElementById("menu")
-        .classList.remove(
-            "open"
-        );
+        .classList.remove("open");
 
     closePages();
 
     document
         .getElementById(id)
-        .classList.add(
-            "open"
-        );
+        .classList.add("open");
 }
 
 
 function closePages(){
 
     document
-        .querySelectorAll(
-            ".page"
-        )
+        .querySelectorAll(".page")
         .forEach(
             p=>
-                p.classList.remove(
-                    "open"
-                )
+                p.classList.remove("open")
         );
 }
 
 
 function startMapRoute(){
 
-    openPage(
-        "addPage"
-    );
+    openPage("addPage");
 
     selectA();
 }
 
 
-/* =========================================
+/* =====================================================
    RESET
-========================================= */
+===================================================== */
 
 function resetRoute(){
 
@@ -3104,9 +3586,9 @@ function resetRoute(){
 }
 
 
-/* =========================================
+/* =====================================================
    SEARCH
-========================================= */
+===================================================== */
 
 function searchMap(){
 
@@ -3131,15 +3613,11 @@ function searchMap(){
         [placesData,stopsData]
     ){
 
-        if(
-            !data||
-            !data.features
-        )
+        if(!data||!data.features)
             continue;
 
         for(
-            const feature of
-            data.features
+            const feature of data.features
         ){
 
             const text=
@@ -3150,28 +3628,20 @@ function searchMap(){
                     .join(" ")
                     .toLowerCase();
 
-            if(
-                text.includes(value)
-            ){
+            if(text.includes(value)){
 
                 const layer=
-                    L.geoJSON(
-                        feature
-                    );
+                    L.geoJSON(feature);
 
                 const bounds=
                     layer.getBounds();
 
-                if(
-                    bounds.isValid()
-                ){
+                if(bounds.isValid()){
 
                     map.fitBounds(
                         bounds,
                         {
-                            padding:[
-                                80,80
-                            ]
+                            padding:[80,80]
                         }
                     );
                 }
@@ -3185,15 +3655,32 @@ function searchMap(){
         }
     }
 
+    const tourist=
+        DUSHANBE_PLACES.find(
+            p=>
+                p.name
+                    .toLowerCase()
+                    .includes(value)
+        );
+
+    if(tourist){
+
+        goToTouristPlace(
+            tourist.id
+        );
+
+        return;
+    }
+
     toast(
         "Ҳеҷ чиз ёфт нашуд"
     );
 }
 
 
-/* =========================================
+/* =====================================================
    OTHER
-========================================= */
+===================================================== */
 
 function searchIntercity(){
 
@@ -3241,10 +3728,7 @@ function saveWork(){
 }
 
 
-function setLanguage(
-    lang,
-    button
-){
+function setLanguage(lang,button){
 
     localStorage.setItem(
         "language",
@@ -3256,21 +3740,14 @@ function setLanguage(
         .querySelectorAll(".option")
         .forEach(
             x=>
-                x.classList.remove(
-                    "selected"
-                )
+                x.classList.remove("selected")
         );
 
-    button.classList.add(
-        "selected"
-    );
+    button.classList.add("selected");
 }
 
 
-function setTheme(
-    theme,
-    button
-){
+function setTheme(theme,button){
 
     localStorage.setItem(
         "theme",
@@ -3282,26 +3759,18 @@ function setTheme(
         .querySelectorAll(".option")
         .forEach(
             x=>
-                x.classList.remove(
-                    "selected"
-                )
+                x.classList.remove("selected")
         );
 
-    button.classList.add(
-        "selected"
-    );
+    button.classList.add("selected");
 
-    if(
-        theme==="light"
-    ){
+    if(theme==="light"){
 
-        document.body.style.background=
-            "#f5f7f6";
+        document.body.style.background="#f5f7f6";
 
     }else{
 
-        document.body.style.background=
-            "#07120b";
+        document.body.style.background="#07120b";
     }
 }
 
@@ -3333,9 +3802,9 @@ function openInstagram(){
 }
 
 
-/* =========================================
+/* =====================================================
    STATUS
-========================================= */
+===================================================== */
 
 function setRouteStatus(text){
 
@@ -3349,68 +3818,51 @@ function setRouteStatus(text){
 }
 
 
-/* =========================================
+/* =====================================================
    TOAST
-========================================= */
+===================================================== */
 
 let toastTimer=null;
 
 function toast(text){
 
     const el=
-        document.getElementById(
-            "toast"
-        );
+        document.getElementById("toast");
 
     el.textContent=text;
 
-    el.classList.add(
-        "show"
-    );
+    el.classList.add("show");
 
-    clearTimeout(
-        toastTimer
-    );
+    clearTimeout(toastTimer);
 
     toastTimer=
         setTimeout(
             ()=>{
-                el.classList.remove(
-                    "show"
-                );
+                el.classList.remove("show");
             },
             2500
         );
 }
 
 
-/* =========================================
-   START FAST
-========================================= */
+/* =====================================================
+   START
+===================================================== */
 
 async function start(){
-
-    /*
-       Сначала убираем splash.
-       Карта становится доступной почти сразу.
-    */
 
     setTimeout(
         ()=>{
             document
-                .getElementById(
-                    "loading"
-                )
-                .classList.add(
-                    "hide"
-                );
+                .getElementById("loading")
+                .classList.add("hide");
         },
         650
     );
 
-    /*
-       Загружаем данные параллельно.
-    */
+    renderTourism();
+
+    loadCustomStops();
 
     try{
 
