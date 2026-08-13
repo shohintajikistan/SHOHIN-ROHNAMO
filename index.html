@@ -2,1047 +2,1405 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#168a45">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b8f4d">
 <title>SHOHIN ROHNAMO</title>
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,Helvetica,sans-serif;
+:root{
+  --g:#0b8f4d;
+  --g2:#18b866;
+  --g3:#075d35;
+  --bg:#eef8f1;
+  --card:#fff;
+  --text:#142019;
+  --muted:#718078;
+  --line:#dcebe1;
+  --shadow:0 10px 30px rgba(0,50,25,.10);
+  --radius:22px;
 }
 
-:root{
-    --green:#168a45;
-    --green2:#20a957;
-    --darkgreen:#096b35;
-    --light:#f4faf6;
-    --card:#ffffff;
-    --text:#172019;
-    --muted:#68756d;
-    --border:#dce9df;
-    --shadow:0 8px 25px rgba(0,0,0,.08);
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Inter,Arial,sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-    background:var(--light);
-    color:var(--text);
-    min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:white;
+  background:linear-gradient(145deg,#064d2c,#0b8f4d,#19b866);
+  transition:.5s;
+}
+
+.loaderLogo{
+  font-size:46px;
+  font-weight:1000;
+  letter-spacing:4px;
+}
+
+.loaderText{
+  margin-top:5px;
+  font-size:12px;
+  letter-spacing:3px;
+  opacity:.9;
+}
+
+.loaderLine{
+  width:180px;
+  height:5px;
+  border-radius:10px;
+  background:rgba(255,255,255,.25);
+  overflow:hidden;
+  margin-top:22px;
+}
+
+.loaderLine span{
+  display:block;
+  height:100%;
+  width:100%;
+  background:white;
+  animation:loader 1s ease;
+}
+
+@keyframes loader{
+  from{width:0}
+  to{width:100%}
+}
+
+.hide{
+  display:none!important;
 }
 
 /* HEADER */
 
-header{
-    position:sticky;
-    top:0;
-    z-index:2000;
-    background:linear-gradient(135deg,#087535,#20a957);
-    color:white;
-    box-shadow:0 4px 20px rgba(0,0,0,.18);
+.header{
+  position:fixed;
+  left:0;
+  right:0;
+  top:0;
+  z-index:3000;
+  padding:12px 15px;
+  pointer-events:none;
 }
 
-.top{
-    max-width:1200px;
-    margin:auto;
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 18px;
+.headerInner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.logo{
-    font-weight:900;
-    font-size:25px;
-    letter-spacing:1px;
+.brand{
+  pointer-events:auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 13px;
+  border-radius:17px;
+  background:rgba(255,255,255,.91);
+  backdrop-filter:blur(15px);
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
 }
 
-.logo small{
-    display:block;
-    font-size:10px;
-    letter-spacing:3px;
-    opacity:.85;
+.brandIcon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-weight:1000;
+  font-size:18px;
+  background:linear-gradient(145deg,#087b42,#19b866);
 }
 
-.menuBtn{
-    border:0;
-    background:rgba(255,255,255,.15);
-    color:white;
-    width:45px;
-    height:45px;
-    border-radius:14px;
-    font-size:23px;
-    cursor:pointer;
+.brandText b{
+  display:block;
+  font-size:14px;
+}
+
+.brandText small{
+  display:block;
+  color:#6d7973;
+  font-size:8px;
+  letter-spacing:2px;
+  margin-top:2px;
+}
+
+.menuButton{
+  pointer-events:auto;
+  border:0;
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  color:white;
+  background:linear-gradient(145deg,#087b42,#19b866);
+  box-shadow:0 8px 22px rgba(0,90,45,.28);
+  font-size:22px;
+}
+
+/* APP */
+
+.app{
+  min-height:100vh;
+  padding-bottom:88px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+
+.homeMap{
+  position:relative;
+  height:min(78vh,720px);
+  min-height:520px;
+  background:#d9e9de;
+}
+
+#homeMap{
+  width:100%;
+  height:100%;
+}
+
+.mapShade{
+  pointer-events:none;
+  position:absolute;
+  z-index:500;
+  left:0;
+  right:0;
+  bottom:0;
+  height:190px;
+  background:linear-gradient(transparent,rgba(238,248,241,.98));
+}
+
+.homeContent{
+  position:absolute;
+  z-index:1000;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:15px;
+}
+
+.homePanel{
+  max-width:620px;
+  margin:auto;
+}
+
+.searchBox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:19px;
+  padding:5px 7px 5px 15px;
+  box-shadow:0 10px 35px rgba(0,50,25,.17);
+}
+
+.searchBox span{
+  font-size:20px;
+}
+
+.searchBox input{
+  border:0;
+  outline:0;
+  background:transparent;
+  width:100%;
+  font-size:15px;
+  padding:12px 0;
+}
+
+.searchBox button{
+  border:0;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  color:white;
+  background:var(--g);
+}
+
+.quickGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.quick{
+  border:0;
+  padding:12px 5px;
+  border-radius:16px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 8px 22px rgba(0,50,25,.10);
+  color:var(--text);
+}
+
+.quick .ico{
+  font-size:20px;
+  display:block;
+  margin-bottom:5px;
+}
+
+.quick b{
+  display:block;
+  font-size:11px;
+}
+
+.gpsFloat{
+  position:absolute;
+  z-index:1200;
+  right:16px;
+  bottom:225px;
+  width:53px;
+  height:53px;
+  border:0;
+  border-radius:18px;
+  color:white;
+  background:var(--g);
+  box-shadow:0 10px 25px rgba(0,80,40,.28);
+  font-size:22px;
+}
+
+/* BOTTOM NAV */
+
+.bottomNav{
+  position:fixed;
+  z-index:3500;
+  bottom:12px;
+  left:12px;
+  right:12px;
+  max-width:650px;
+  margin:auto;
+  height:66px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:23px;
+  box-shadow:0 12px 35px rgba(0,50,25,.18);
+}
+
+.navBtn{
+  border:0;
+  background:transparent;
+  color:#708078;
+  font-size:10px;
+}
+
+.navBtn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.navBtn.active{
+  color:var(--g);
+  font-weight:bold;
+}
+
+/* GENERAL */
+
+.section{
+  max-width:1100px;
+  margin:auto;
+  padding:88px 15px 20px;
+}
+
+.pageHero{
+  padding:20px;
+  border-radius:26px;
+  color:white;
+  background:linear-gradient(145deg,#075d35,#0b8f4d,#19b866);
+  box-shadow:var(--shadow);
+  margin-bottom:15px;
+}
+
+.pageHero h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.pageHero p{
+  opacity:.9;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.cardBody{
+  padding:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+.photo{
+  display:block;
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  background:#dcebe1;
+}
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 16px;
+  color:white;
+  background:linear-gradient(145deg,#087b42,#18ad5c);
+  font-weight:800;
+}
+
+.btn.secondary{
+  color:var(--g3);
+  background:#e4f5e9;
+}
+
+.btn.red{
+  background:#dc4141;
+}
+
+.full{
+  width:100%;
+}
+
+.muted{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.notice{
+  padding:14px;
+  border-radius:15px;
+  background:#e5f6ea;
+  border-left:4px solid var(--g);
+  margin-bottom:14px;
+  line-height:1.5;
+  font-size:14px;
+}
+
+/* ROUTE */
+
+.routeControls{
+  background:var(--card);
+  padding:15px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.pointRow{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:9px;
+}
+
+.pointIcon{
+  width:34px;
+  height:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:11px;
+  color:white;
+  font-weight:bold;
+  background:var(--g);
+}
+
+.pointRow input{
+  flex:1;
+}
+
+.routeButtons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+#routeMap{
+  height:500px;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+/* INPUT */
+
+.form{
+  background:var(--card);
+  padding:18px;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:800;
+}
+
+input,textarea,select{
+  width:100%;
+  border:1px solid #d3e3d8;
+  border-radius:13px;
+  outline:none;
+  padding:13px;
+  background:white;
+  color:#142019;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+/* STOPS */
+
+.stopCard{
+  position:relative;
+}
+
+.status{
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:2;
+  padding:6px 9px;
+  color:white;
+  border-radius:9px;
+  background:#e3a52a;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.badges{
+  margin:8px 0;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 9px;
+  margin:3px 2px 0 0;
+  border-radius:9px;
+  background:#e7f7ec;
+  color:#087b42;
+  font-size:12px;
+  font-weight:800;
+}
+
+/* PLACES */
+
+.placeCard{
+  cursor:pointer;
+  transition:.2s;
+}
+
+.placeCard:hover{
+  transform:translateY(-3px);
+}
+
+.placeInfo{
+  padding:15px;
 }
 
 /* MENU */
 
-.sideMenu{
-    position:fixed;
-    top:0;
-    right:-330px;
-    width:320px;
-    max-width:90%;
-    height:100vh;
-    z-index:5000;
-    background:white;
-    box-shadow:-8px 0 30px rgba(0,0,0,.25);
-    transition:.3s;
-    padding:22px;
-    overflow:auto;
-}
-
-.sideMenu.open{
-    right:0;
-}
-
-.menuTitle{
-    background:linear-gradient(135deg,#087535,#20a957);
-    color:white;
-    padding:20px;
-    border-radius:18px;
-    margin-bottom:15px;
-}
-
-.menuTitle b{
-    font-size:22px;
-}
-
-.menuItem{
-    display:block;
-    width:100%;
-    padding:15px;
-    margin:8px 0;
-    border:1px solid var(--border);
-    border-radius:14px;
-    background:white;
-    text-align:left;
-    cursor:pointer;
-    font-size:15px;
-}
-
-.menuItem:hover{
-    background:#effaf2;
-    border-color:#8bd3a6;
-}
-
 .overlay{
-    position:fixed;
-    inset:0;
-    z-index:4000;
-    background:rgba(0,0,0,.4);
-    display:none;
+  position:fixed;
+  z-index:5000;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
 }
 
 .overlay.show{
-    display:block;
+  display:block;
 }
 
-/* MAIN */
-
-main{
-    max-width:1200px;
-    margin:auto;
-    padding:18px;
+.sideMenu{
+  position:fixed;
+  z-index:6000;
+  top:0;
+  right:-390px;
+  width:360px;
+  max-width:92%;
+  height:100vh;
+  overflow:auto;
+  background:white;
+  padding:16px;
+  transition:.3s;
+  box-shadow:-15px 0 45px rgba(0,0,0,.25);
 }
 
-.page{
-    display:none;
+.sideMenu.open{
+  right:0;
 }
 
-.page.active{
-    display:block;
+.menuHead{
+  color:white;
+  padding:20px;
+  border-radius:22px;
+  margin-bottom:12px;
+  background:linear-gradient(145deg,#075d35,#0b8f4d,#19b866);
 }
 
-.hero{
-    background:linear-gradient(135deg,#087535,#20a957);
-    color:white;
-    border-radius:25px;
-    padding:28px 22px;
-    margin-bottom:18px;
-    box-shadow:var(--shadow);
+.menuHead strong{
+  font-size:26px;
 }
 
-.hero h1{
-    font-size:31px;
-    margin-bottom:8px;
+.menuHead small{
+  display:block;
+  margin-top:5px;
+  opacity:.85;
 }
 
-.hero p{
-    opacity:.92;
-    line-height:1.5;
+.menuClose{
+  position:absolute;
+  right:25px;
+  top:25px;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:12px;
 }
 
-.search{
-    width:100%;
-    margin-top:18px;
-    padding:15px 17px;
-    border:0;
-    border-radius:14px;
-    outline:none;
-    font-size:16px;
+.menuItem{
+  width:100%;
+  border:1px solid var(--line);
+  background:white;
+  padding:14px;
+  border-radius:15px;
+  text-align:left;
+  margin:5px 0;
+  font-weight:700;
 }
 
-/* CARDS */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
+.menuItem:hover{
+  background:#eaf8ee;
 }
 
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-}
-
-.cardBody{
-    padding:16px;
-}
-
-.card h3{
-    margin-bottom:8px;
-}
-
-.card p{
-    color:var(--muted);
-    line-height:1.5;
-    font-size:14px;
-}
-
-.photo{
-    width:100%;
-    height:170px;
-    object-fit:cover;
-    background:#dfeee4;
-}
-
-.btn{
-    border:0;
-    background:var(--green);
-    color:white;
-    padding:13px 17px;
-    border-radius:13px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.btn:hover{
-    background:var(--darkgreen);
-}
-
-.btn.secondary{
-    background:#e8f6ec;
-    color:#087535;
-}
-
-.btn.danger{
-    background:#d83434;
-}
-
-/* MAP */
-
-#map{
-    height:470px;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-}
-
-.mapTools{
-    display:flex;
-    flex-wrap:wrap;
-    gap:9px;
-    margin:12px 0;
-}
-
-/* FORMS */
-
-.form{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--border);
-}
-
-.formGroup{
-    margin-bottom:14px;
-}
-
-.formGroup label{
-    display:block;
-    margin-bottom:7px;
-    font-weight:bold;
-}
-
-input,textarea,select{
-    width:100%;
-    padding:13px;
-    border:1px solid #cbdace;
-    border-radius:12px;
-    outline:none;
-    font-size:15px;
-    background:white;
-}
-
-textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:var(--green);
-}
-
-/* TRANSPORT */
-
-.routeBadge{
-    display:inline-block;
-    padding:6px 9px;
-    margin:3px;
-    background:#e7f7ec;
-    color:#087535;
-    border-radius:9px;
-    font-weight:bold;
-    font-size:13px;
-}
-
-/* PLACE */
-
-.placeCard{
-    cursor:pointer;
-    transition:.2s;
-}
-
-.placeCard:hover{
-    transform:translateY(-3px);
-}
-
-/* SETTINGS */
-
-.settingRow{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:15px 0;
-    border-bottom:1px solid var(--border);
-}
-
-/* FOOTER */
-
-footer{
-    margin-top:30px;
-    padding:25px 18px;
-    text-align:center;
-    color:var(--muted);
-}
-
-/* DARK */
-
-body.dark{
-    --light:#0c1510;
-    --card:#142019;
-    --text:#f0f8f2;
-    --muted:#a7b7ac;
-    --border:#263b2d;
-}
-
-body.dark .sideMenu,
-body.dark input,
-body.dark textarea,
-body.dark select{
-    background:#142019;
-    color:white;
-}
-
-body.dark .menuItem{
-    background:#142019;
-    color:white;
-    border-color:#294532;
-}
-
-body.dark .menuItem:hover{
-    background:#1b3022;
+.menuItem span{
+  display:inline-block;
+  width:30px;
 }
 
 /* MODAL */
 
 .modal{
-    position:fixed;
-    inset:0;
-    z-index:6000;
-    background:rgba(0,0,0,.65);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.6);
+  padding:10px;
 }
 
 .modal.show{
-    display:flex;
+  display:flex;
 }
 
 .modalBox{
-    background:white;
-    color:#172019;
-    width:700px;
-    max-width:100%;
-    max-height:90vh;
-    overflow:auto;
-    border-radius:22px;
-    padding:20px;
+  width:700px;
+  max-width:100%;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:25px;
+  background:white;
+  padding:18px;
+  animation:up .25s ease;
 }
 
-body.dark .modalBox{
-    background:#142019;
-    color:white;
+@keyframes up{
+  from{transform:translateY(50px);opacity:0}
+  to{transform:translateY(0);opacity:1}
 }
 
 .modalHead{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
 }
 
 .close{
-    border:0;
-    background:#eee;
-    border-radius:10px;
-    width:40px;
-    height:40px;
-    cursor:pointer;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:#edf3ef;
 }
 
-/* LOADING */
+/* DARK */
 
-#loading{
-    position:fixed;
-    inset:0;
-    z-index:10000;
-    background:linear-gradient(135deg,#087535,#20a957);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    transition:.4s;
+body.dark{
+  --bg:#08120c;
+  --card:#111e16;
+  --text:#eff9f2;
+  --muted:#a6b7ad;
+  --line:#263a2c;
 }
 
-.loaderLogo{
-    font-size:34px;
-    font-weight:900;
+body.dark .brand,
+body.dark .bottomNav{
+  background:rgba(17,30,22,.94);
+  color:white;
 }
 
-.loaderBar{
-    width:230px;
-    height:7px;
-    background:rgba(255,255,255,.25);
-    border-radius:20px;
-    margin-top:20px;
-    overflow:hidden;
+body.dark .sideMenu,
+body.dark .menuItem,
+body.dark .modalBox{
+  background:#111e16;
+  color:white;
 }
 
-.loaderProgress{
-    width:100%;
-    height:100%;
-    background:white;
-    animation:load 1s ease;
+body.dark input,
+body.dark textarea,
+body.dark select{
+  background:#17271c;
+  color:white;
+  border-color:#304637;
 }
 
-@keyframes load{
-    from{width:0}
-    to{width:100%}
+body.dark .quick{
+  background:#111e16;
+  color:white;
 }
 
-.hidden{
-    display:none!important;
+body.dark .menuItem{
+  border-color:#263a2c;
 }
 
-.notice{
-    padding:14px;
-    background:#eaf8ee;
-    border-left:5px solid var(--green);
-    border-radius:10px;
-    margin-bottom:15px;
-    line-height:1.5;
-}
+/* DESKTOP */
 
-body.dark .notice{
-    background:#183322;
+@media(min-width:800px){
+
+  .bottomNav{
+    display:none;
+  }
+
+  .homeMap{
+    height:100vh;
+  }
+
+  .homeContent{
+    bottom:30px;
+  }
+
+  .quickGrid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .gpsFloat{
+    bottom:250px;
+    right:35px;
+  }
 }
 
 @media(max-width:600px){
-    main{
-        padding:12px;
-    }
 
-    .hero h1{
-        font-size:25px;
-    }
+  .homeMap{
+    min-height:650px;
+  }
 
-    #map{
-        height:390px;
-    }
+  .quick b{
+    font-size:9px;
+  }
 
-    .top{
-        padding:9px 12px;
-    }
+  #routeMap{
+    height:410px;
+  }
+
+  .section{
+    padding-top:82px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- FAST LOADING -->
-<div id="loading">
-    <div class="loaderLogo">SHT</div>
-    <div>SHOHIN ROHNAMO</div>
-    <div class="loaderBar">
-        <div class="loaderProgress"></div>
-    </div>
+<div id="loader">
+  <div class="loaderLogo">SHT</div>
+  <div class="loaderText">SHOHIN ROHNAMO</div>
+  <div class="loaderLine"><span></span></div>
 </div>
 
-<!-- HEADER -->
+<header class="header">
+  <div class="headerInner">
 
-<header>
-    <div class="top">
-        <div class="logo">
-            SHT
-            <small>SHOHIN ROHNAMO</small>
-        </div>
-
-        <button class="menuBtn" onclick="openMenu()">☰</button>
+    <div class="brand">
+      <div class="brandIcon">SHT</div>
+      <div class="brandText">
+        <b>SHOHIN ROHNAMO</b>
+        <small>TAJIKISTAN NAVIGATION</small>
+      </div>
     </div>
+
+    <button class="menuButton" onclick="openMenu()">☰</button>
+
+  </div>
 </header>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- SIDE MENU -->
+<!-- MENU -->
 
-<div class="sideMenu" id="sideMenu">
+<aside id="sideMenu" class="sideMenu">
 
-    <div class="menuTitle">
-        <b>SHT</b>
-        <p>SHOHIN ROHNAMO</p>
-    </div>
+  <div class="menuHead">
+    <button class="menuClose" onclick="closeMenu()">✕</button>
+    <strong>SHT</strong>
+    <small>SHOHIN ROHNAMO</small>
+  </div>
 
-    <button class="menuItem" onclick="showPage('cityRoutes')">
-        🚌 Маршрут дар дохили шаҳр
-    </button>
+  <button class="menuItem" onclick="go('home')">
+    <span>🏠</span> Главная
+  </button>
 
-    <button class="menuItem" onclick="showPage('intercity')">
-        🛣️ Маршрут ба берун аз шаҳр
-    </button>
+  <button class="menuItem" onclick="go('navigation')">
+    <span>🧭</span> Навигация A → B
+  </button>
 
-    <button class="menuItem" onclick="showPage('addRoute')">
-        ➕ Иловаи маршрут A → B
-    </button>
+  <button class="menuItem" onclick="go('cityRoutes')">
+    <span>🚌</span> Маршрут дар дохили шаҳр
+  </button>
 
-    <button class="menuItem" onclick="showPage('stops')">
-        🚏 Истгоҳҳо
-    </button>
+  <button class="menuItem" onclick="go('intercity')">
+    <span>🛣️</span> Маршрут ба беруни шаҳр
+  </button>
 
-    <button class="menuItem" onclick="showPage('places')">
-        🏙️ Ҷойҳои диданбоби Душанбе
-    </button>
+  <button class="menuItem" onclick="go('stops')">
+    <span>🚏</span> Истгоҳҳо
+  </button>
 
-    <button class="menuItem" onclick="showPage('contacts')">
-        📞 Тамосҳои мо
-    </button>
+  <button class="menuItem" onclick="go('places')">
+    <span>🏙️</span> Ҷойҳои диданбоби Душанбе
+  </button>
 
-    <button class="menuItem" onclick="showPage('agreement')">
-        📄 Созишномаи истифодабарӣ
-    </button>
+  <button class="menuItem" onclick="go('addStop')">
+    <span>➕</span> Иловаи истгоҳ
+  </button>
 
-    <button class="menuItem" onclick="showPage('settings')">
-        ⚙️ Танзимот
-    </button>
+  <button class="menuItem" onclick="go('addRoute')">
+    <span>➕</span> Иловаи маршрут A → B
+  </button>
 
-</div>
+  <button class="menuItem" onclick="go('contacts')">
+    <span>📞</span> Тамосҳои мо
+  </button>
 
-<main>
+  <button class="menuItem" onclick="go('agreement')">
+    <span>📄</span> Созишномаи истифодабарӣ
+  </button>
+
+  <button class="menuItem" onclick="go('settings')">
+    <span>⚙️</span> Танзимот
+  </button>
+
+</aside>
+
+<main class="app">
 
 <!-- HOME -->
 
-<section class="page active" id="home">
+<section id="home" class="page active">
 
-    <div class="hero">
-        <h1>SHOHIN ROHNAMO</h1>
-        <p>
-            Харитаи роҳҳо, истгоҳҳо ва ҷойҳои муҳими Душанбе.
-            Роҳи худро осонтар пайдо кунед.
-        </p>
+  <div class="homeMap">
 
-        <input
-            class="search"
-            id="mainSearch"
-            placeholder="🔎 Ҷустуҷӯи ҷой, истгоҳ ё маршрут..."
-            oninput="searchEverything()"
-        >
+    <div id="homeMap"></div>
+
+    <div class="mapShade"></div>
+
+    <button class="gpsFloat" onclick="gpsHome()">⦿</button>
+
+    <div class="homeContent">
+
+      <div class="homePanel">
+
+        <div class="searchBox">
+          <span>🔎</span>
+
+          <input
+            id="searchInput"
+            placeholder="Куда вы хотите поехать?"
+            onkeydown="if(event.key==='Enter')searchPlace()"
+          >
+
+          <button onclick="searchPlace()">➜</button>
+        </div>
+
+        <div class="quickGrid">
+
+          <button class="quick" onclick="go('navigation')">
+            <span class="ico">🧭</span>
+            <b>Навигация</b>
+          </button>
+
+          <button class="quick" onclick="go('stops')">
+            <span class="ico">🚏</span>
+            <b>Истгоҳҳо</b>
+          </button>
+
+          <button class="quick" onclick="go('places')">
+            <span class="ico">🏙️</span>
+            <b>Душанбе</b>
+          </button>
+
+          <button class="quick" onclick="go('cityRoutes')">
+            <span class="ico">🚌</span>
+            <b>Роҳҳо</b>
+          </button>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="grid">
-
-        <div class="card">
-            <div class="cardBody">
-                <h3>🧭 Навигатсия</h3>
-                <p>Нуқтаи A ва B-ро интихоб карда, маршрут созед.</p>
-                <br>
-                <button class="btn" onclick="showPage('navigation')">
-                    Кушодан
-                </button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="cardBody">
-                <h3>🚏 Истгоҳҳо</h3>
-                <p>Истгоҳҳо ва нақлиёти аз онҳо гузарандаро бинед.</p>
-                <br>
-                <button class="btn" onclick="showPage('stops')">
-                    Истгоҳҳо
-                </button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="cardBody">
-                <h3>🏙️ Душанбе</h3>
-                <p>Ҷойҳои диданбоби шаҳрро пайдо кунед.</p>
-                <br>
-                <button class="btn" onclick="showPage('places')">
-                    Дидан
-                </button>
-            </div>
-        </div>
-
-    </div>
+  </div>
 
 </section>
 
 <!-- NAVIGATION -->
 
-<section class="page" id="navigation">
+<section id="navigation" class="page">
 
-    <div class="hero">
-        <h1>🧭 Навигатсия</h1>
-        <p>Нуқтаи A ва B-ро аз харита интихоб кунед.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🧭 Навигация</h1>
+      <p>Выберите точки A и B прямо на карте.</p>
     </div>
 
-    <div class="notice">
-        Аввал <b>«Интихоби A»</b>-ро пахш кунед ва ба харита нуқтаро интихоб кунед.
-        Сипас ҳамин корро барои B иҷро кунед.
+    <div class="routeControls">
+
+      <div class="pointRow">
+        <div class="pointIcon">A</div>
+        <input id="aText" readonly placeholder="Точка A">
+        <button class="btn" onclick="chooseA()">Выбрать</button>
+      </div>
+
+      <div class="pointRow">
+        <div class="pointIcon">B</div>
+        <input id="bText" readonly placeholder="Точка B">
+        <button class="btn" onclick="chooseB()">Выбрать</button>
+      </div>
+
+      <div class="routeButtons">
+
+        <button class="btn secondary" onclick="gpsRoute()">
+          📍 GPS
+        </button>
+
+        <button class="btn red" onclick="clearRoute()">
+          Очистить
+        </button>
+
+      </div>
+
+      <p id="routeStatus" class="muted" style="margin-top:12px">
+        Сначала выберите точку A.
+      </p>
+
     </div>
 
-    <div class="mapTools">
+    <div id="routeMap"></div>
 
-        <button class="btn" onclick="selectPoint('A')">
-            📍 Интихоби A
-        </button>
-
-        <button class="btn" onclick="selectPoint('B')">
-            📍 Интихоби B
-        </button>
-
-        <button class="btn secondary" onclick="useGPS()">
-            🛰️ GPS
-        </button>
-
-        <button class="btn danger" onclick="clearRoute()">
-            Очистить
-        </button>
-
-    </div>
-
-    <div id="routeInfo" class="notice">
-        A: не выбрана<br>
-        B: не выбрана
-    </div>
-
-    <div id="map"></div>
+  </div>
 
 </section>
 
 <!-- CITY ROUTES -->
 
-<section class="page" id="cityRoutes">
+<section id="cityRoutes" class="page">
 
-    <div class="hero">
-        <h1>🚌 Маршрут дар дохили шаҳр</h1>
-        <p>Маршрутҳои дохили шаҳр.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🚌 Маршрут дар дохили шаҳр</h1>
+      <p>Городские маршруты и общественный транспорт.</p>
     </div>
 
     <div class="grid">
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>Автобус №1</h3>
-                <p>Маршрути шаҳрӣ.</p>
-                <span class="routeBadge">1</span>
-                <span class="routeBadge">Автобус</span>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚌 Автобус №1</h3>
+          <p class="muted">Городской маршрут.</p>
+          <div class="badges">
+            <span class="badge">№1</span>
+            <span class="badge">Автобус</span>
+          </div>
         </div>
+      </div>
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>Автобус №2</h3>
-                <p>Маршрути шаҳрӣ.</p>
-                <span class="routeBadge">2</span>
-                <span class="routeBadge">Автобус</span>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚌 Автобус №2</h3>
+          <p class="muted">Городской маршрут.</p>
+          <div class="badges">
+            <span class="badge">№2</span>
+            <span class="badge">Автобус</span>
+          </div>
         </div>
+      </div>
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>Маршрутка</h3>
-                <p>Маълумотро метавонед баъдтар пурра кунед.</p>
-                <span class="routeBadge">Маршрутка</span>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚐 Маршрутка</h3>
+          <p class="muted">Здесь позже можно добавить полный список.</p>
+          <div class="badges">
+            <span class="badge">Маршрутка</span>
+          </div>
         </div>
+      </div>
 
     </div>
+
+  </div>
 
 </section>
 
 <!-- INTERCITY -->
 
-<section class="page" id="intercity">
+<section id="intercity" class="page">
 
-    <div class="hero">
-        <h1>🛣️ Маршрут ба берун аз шаҳр</h1>
-        <p>
-            Нуқтаҳое, ки аз онҳо ба дигар шаҳрҳо равона мешаванд.
-        </p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🛣️ Маршрут ба беруни шаҳр</h1>
+      <p>Междугородние направления и точки отправления.</p>
     </div>
 
     <div class="grid">
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>🚍 Душанбе → Хуҷанд</h3>
-                <p>Нуқтаи равонашавӣ ба Хуҷанд.</p>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚍 Душанбе → Хуҷанд</h3>
+          <p class="muted">Точка отправления в сторону Хуҷанда.</p>
+          <br>
+          <button class="btn" onclick="go('navigation')">
+            🧭 Маршрут
+          </button>
         </div>
+      </div>
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>🚍 Душанбе → Кӯлоб</h3>
-                <p>Нуқтаи равонашавӣ ба Кӯлоб.</p>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚍 Душанбе → Кӯлоб</h3>
+          <p class="muted">Точка отправления в сторону Кӯлоба.</p>
+          <br>
+          <button class="btn" onclick="go('navigation')">
+            🧭 Маршрут
+          </button>
         </div>
+      </div>
 
-        <div class="card">
-            <div class="cardBody">
-                <h3>🚍 Душанбе → Бохтар</h3>
-                <p>Нуқтаи равонашавӣ ба Бохтар.</p>
-            </div>
+      <div class="card">
+        <div class="cardBody">
+          <h3>🚍 Душанбе → Бохтар</h3>
+          <p class="muted">Точка отправления в сторону Бохтара.</p>
+          <br>
+          <button class="btn" onclick="go('navigation')">
+            🧭 Маршрут
+          </button>
         </div>
+      </div>
 
     </div>
 
-</section>
-
-<!-- ADD ROUTE -->
-
-<section class="page" id="addRoute">
-
-    <div class="hero">
-        <h1>➕ Иловаи маршрут</h1>
-        <p>Маршрути A → B-ро пешниҳод кунед.</p>
-    </div>
-
-    <div class="form">
-
-        <div class="formGroup">
-            <label>Номи маршрут</label>
-            <input id="routeName" placeholder="Масалан: Душанбе → Варзоб">
-        </div>
-
-        <div class="formGroup">
-            <label>Нақлиёт</label>
-            <input id="routeTransport" placeholder="Автобус №..., маршрутка №...">
-        </div>
-
-        <div class="formGroup">
-            <label>Маълумоти иловагӣ</label>
-            <textarea id="routeDescription"
-            placeholder="Маълумоти маршрут..."></textarea>
-        </div>
-
-        <button class="btn" onclick="showPage('navigation')">
-            🗺️ Аввал нуқтаҳоро аз карта интихоб кунед
-        </button>
-
-        <br><br>
-
-        <button class="btn" onclick="submitRoute()">
-            📤 Пешниҳод кардан
-        </button>
-
-    </div>
+  </div>
 
 </section>
 
 <!-- STOPS -->
 
-<section class="page" id="stops">
+<section id="stops" class="page">
 
-    <div class="hero">
-        <h1>🚏 Истгоҳҳо</h1>
-        <p>
-            Истгоҳҳои расмии SHOHIN ROHNAMO ва пешниҳодҳои корбарон.
-        </p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🚏 Истгоҳҳо</h1>
+      <p>Найдите остановку и узнайте, какой транспорт здесь проходит.</p>
     </div>
 
-    <div class="notice">
-        Истгоҳи навро ҳар кас метавонад пешниҳод кунад.
-        Пас аз санҷиши шумо онро ба версияи расмии сайт илова мекунед.
-    </div>
-
-    <button class="btn" onclick="showPage('addStop')">
-        ➕ Иловаи истгоҳ
+    <button class="btn full" onclick="go('addStop')">
+      ➕ Предложить новую остановку
     </button>
 
     <br><br>
 
     <div id="stopsList" class="grid"></div>
 
+  </div>
+
 </section>
 
 <!-- ADD STOP -->
 
-<section class="page" id="addStop">
+<section id="addStop" class="page">
 
-    <div class="hero">
-        <h1>🚏 Иловаи истгоҳ</h1>
-        <p>Нуқтаи истгоҳро ҳатман аз карта интихоб кунед.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🚏 Иловаи истгоҳ</h1>
+      <p>Выберите точку на карте и заполните информацию.</p>
+    </div>
+
+    <div class="notice">
+      Важно: точку остановки обязательно нужно выбрать на карте.
+      После отправки предложение попадёт на проверку.
     </div>
 
     <div class="form">
 
-        <div class="notice">
-            Қадами 1: тугмаи поёнро пахш карда, баъд нуқтаи истгоҳро дар карта интихоб кунед.
-        </div>
+      <button class="btn full" onclick="startStopSelection()">
+        📍 Выбрать место на карте
+      </button>
 
-        <button class="btn" onclick="selectStopPoint()">
-            📍 Интихоби нуқтаи истгоҳ
-        </button>
+      <p id="stopPointText" class="muted" style="margin:10px 0">
+        Точка пока не выбрана.
+      </p>
 
-        <p id="stopCoords" style="margin-top:10px;color:#68756d">
-            Нуқта интихоб нашудааст.
-        </p>
+      <div id="stopMap"
+           style="height:350px;border-radius:18px;overflow:hidden;margin-bottom:15px">
+      </div>
 
-        <br>
+      <div class="field">
+        <label>Название остановки *</label>
+        <input id="stopName" placeholder="Например: Площадь Исмоили Сомони">
+      </div>
 
-        <div class="formGroup">
-            <label>Номи истгоҳ *</label>
-            <input id="stopName"
-            placeholder="Масалан: Площади Исмоили Сомони">
-        </div>
+      <div class="field">
+        <label>🚌 Автобусы</label>
+        <input id="stopBuses" placeholder="1, 2, 8, 18">
+      </div>
 
-        <div class="formGroup">
-            <label>Автобусҳо</label>
-            <input id="stopBuses"
-            placeholder="Масалан: 1, 2, 8, 18">
-        </div>
+      <div class="field">
+        <label>🚐 Маршрутки</label>
+        <input id="stopMinibus" placeholder="7, 11, 33">
+      </div>
 
-        <div class="formGroup">
-            <label>Маршруткаҳо</label>
-            <input id="stopMinibus"
-            placeholder="Масалан: 7, 11, 33">
-        </div>
+      <div class="field">
+        <label>Описание</label>
+        <textarea id="stopDescription"
+          placeholder="Дополнительная информация об остановке"></textarea>
+      </div>
 
-        <div class="formGroup">
-            <label>Описание</label>
-            <textarea id="stopDescription"
-            placeholder="Маълумоти иловагӣ дар бораи истгоҳ..."></textarea>
-        </div>
+      <div class="field">
+        <label>📷 Фото остановки</label>
+        <input id="stopPhoto" type="file" accept="image/*" onchange="previewPhoto(event)">
+      </div>
 
-        <div class="formGroup">
-            <label>📷 Фото истгоҳ</label>
-            <input
-                type="file"
-                id="stopPhoto"
-                accept="image/*"
-                onchange="previewStopPhoto(event)"
-            >
-        </div>
+      <img id="photoPreview"
+           class="photo hide"
+           style="border-radius:15px;margin-bottom:15px">
 
-        <img id="stopPreview"
-             class="photo hidden"
-             style="border-radius:15px;margin-bottom:15px">
-
-        <button class="btn" onclick="submitStop()">
-            📤 Отправить предложение
-        </button>
+      <button class="btn full" onclick="submitStop()">
+        📤 Отправить предложение
+      </button>
 
     </div>
+
+  </div>
 
 </section>
 
 <!-- PLACES -->
 
-<section class="page" id="places">
+<section id="places" class="page">
 
-    <div class="hero">
-        <h1>🏙️ Ҷойҳои диданбоби Душанбе</h1>
-        <p>Ҷойҳои машҳур ва диданбоби пойтахт.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>🏙️ Ҷойҳои диданбоби Душанбе</h1>
+      <p>Красивые и интересные места столицы.</p>
     </div>
 
     <div id="placesList" class="grid"></div>
+
+  </div>
+
+</section>
+
+<!-- ADD ROUTE -->
+
+<section id="addRoute" class="page">
+
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>➕ Иловаи маршрут A → B</h1>
+      <p>Предложите новый маршрут для SHOHIN ROHNAMO.</p>
+    </div>
+
+    <div class="form">
+
+      <div class="field">
+        <label>Название маршрута *</label>
+        <input id="newRouteName"
+          placeholder="Например: Душанбе → Варзоб">
+      </div>
+
+      <div class="field">
+        <label>🚌 Транспорт</label>
+        <input id="newRouteTransport"
+          placeholder="Автобус №..., маршрутка №...">
+      </div>
+
+      <div class="field">
+        <label>Описание</label>
+        <textarea id="newRouteDescription"
+          placeholder="Дополнительная информация"></textarea>
+      </div>
+
+      <div class="notice">
+        Сначала выберите A и B на странице навигации.
+      </div>
+
+      <button class="btn full" onclick="go('navigation')">
+        🗺️ Выбрать A и B на карте
+      </button>
+
+      <br>
+
+      <button class="btn secondary full" onclick="submitRoute()">
+        📤 Отправить маршрут
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
 
 <!-- CONTACTS -->
 
-<section class="page" id="contacts">
+<section id="contacts" class="page">
 
-    <div class="hero">
-        <h1>📞 Тамосҳои мо</h1>
-        <p>Барои тағйир, илова ва пешниҳодҳо.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>📞 Тамосҳои мо</h1>
+      <p>Для изменений, добавлений и предложений.</p>
     </div>
 
     <div class="card">
-        <div class="cardBody">
+      <div class="cardBody">
 
-            <h3>📱 Instagram</h3>
-            <p>
-                Барои пешниҳодҳо метавонед ба Instagram-и SHOHIN нависед.
-            </p>
+        <h3>Instagram</h3>
 
-            <br>
+        <p class="muted" style="margin:10px 0 15px">
+          Напишите нам через Instagram.
+        </p>
 
-            <a
-              href="https://www.instagram.com/shohin_tajikistan/"
-              target="_blank"
-              class="btn"
-              style="display:inline-block;text-decoration:none"
-            >
-              Instagram
-            </a>
+        <a
+          href="https://www.instagram.com/shohin_tajikistan/"
+          target="_blank"
+          class="btn"
+          style="display:inline-block;text-decoration:none">
+          📷 Instagram
+        </a>
 
-        </div>
+      </div>
     </div>
+
+  </div>
 
 </section>
 
 <!-- AGREEMENT -->
 
-<section class="page" id="agreement">
+<section id="agreement" class="page">
 
-    <div class="hero">
-        <h1>📄 Созишномаи истифодабарӣ</h1>
-        <p>Шартҳои истифодаи SHOHIN ROHNAMO.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>📄 Созишномаи истифодабарӣ</h1>
+      <p>Условия использования SHOHIN ROHNAMO.</p>
     </div>
 
     <div class="card">
-        <div class="cardBody">
+      <div class="cardBody">
 
-            <h3>Созишномаи истифодабарӣ</h3>
+        <h3>1. Общие положения</h3>
+        <br>
+        <p class="muted">
+          SHOHIN ROHNAMO предназначен для предоставления пользователям
+          информации о дорогах, маршрутах, остановках и местах.
+        </p>
 
-            <br>
+        <br>
 
-            <p>
-                Бо истифода аз SHOHIN ROHNAMO шумо розӣ мешавед,
-                ки маълумоти пешниҳодшаванда бояд дуруст ва барои
-                истифодаи умумӣ мувофиқ бошад.
-            </p>
+        <h3>2. Пользовательские предложения</h3>
+        <br>
+        <p class="muted">
+          Пользователь должен предоставлять достоверную информацию.
+          Предложения могут быть проверены, изменены или отклонены
+          администрацией.
+        </p>
 
-            <br>
+        <br>
 
-            <p>
-                Маълумоти маршрутҳо, истгоҳҳо ва ҷойҳо метавонад
-                аз ҷониби маъмурият санҷида, тағйир ё нест карда шавад.
-            </p>
+        <h3>3. Информация о маршрутах</h3>
+        <br>
+        <p class="muted">
+          Информация может меняться. Пользователь должен учитывать
+          дорожную ситуацию и официальные знаки.
+        </p>
 
-            <br>
+        <br>
 
-            <p>
-                Корбар барои маълумоти нодуруст ё қасдан гумроҳкунанда
-                масъулият дорад.
-            </p>
+        <h3>4. Изменение сервиса</h3>
+        <br>
+        <p class="muted">
+          SHOHIN ROHNAMO может изменять интерфейс, функции и содержание
+          приложения для улучшения сервиса.
+        </p>
 
-            <br>
-
-            <p>
-                SHOHIN ROHNAMO метавонад функсияҳо ва маълумотро
-                бе огоҳии пешакӣ тағйир диҳад.
-            </p>
-
-        </div>
+      </div>
     </div>
+
+  </div>
 
 </section>
 
 <!-- SETTINGS -->
 
-<section class="page" id="settings">
+<section id="settings" class="page">
 
-    <div class="hero">
-        <h1>⚙️ Танзимот</h1>
-        <p>Интерфейси худро интихоб кунед.</p>
+  <div class="section">
+
+    <div class="pageHero">
+      <h1>⚙️ Танзимот</h1>
+      <p>Настройте интерфейс приложения.</p>
     </div>
 
-    <div class="card">
-        <div class="cardBody">
+    <div class="form">
 
-            <div class="settingRow">
-                <b>🌙 Тёмная тема</b>
-                <button class="btn" onclick="toggleDark()">
-                    Тағйир додан
-                </button>
-            </div>
+      <div class="field">
+        <label>🎨 Интерфейс</label>
 
-            <div class="settingRow">
-                <b>🔤 Размер текста</b>
+        <button class="btn full" onclick="toggleDark()">
+          🌙 Светлый / тёмный
+        </button>
+      </div>
 
-                <select id="fontSize"
-                        onchange="changeFontSize(this.value)"
-                        style="width:130px">
-                    <option value="15">Обычный</option>
-                    <option value="17">Большой</option>
-                    <option value="19">Очень большой</option>
-                </select>
-            </div>
+      <div class="field">
+        <label>🔤 Размер текста</label>
 
-        </div>
+        <select id="fontSelect" onchange="setFontSize(this.value)">
+          <option value="15">Обычный</option>
+          <option value="17">Большой</option>
+          <option value="19">Очень большой</option>
+        </select>
+      </div>
+
     </div>
+
+  </div>
 
 </section>
 
 </main>
 
-<footer>
-    © 2026 SHOHIN ROHNAMO
-</footer>
+<!-- BOTTOM -->
+
+<nav class="bottomNav">
+
+  <button class="navBtn active" onclick="go('home',this)">
+    <span>🏠</span>
+    Главная
+  </button>
+
+  <button class="navBtn" onclick="go('navigation',this)">
+    <span>🧭</span>
+    Навигация
+  </button>
+
+  <button class="navBtn" onclick="go('stops',this)">
+    <span>🚏</span>
+    Истгоҳҳо
+  </button>
+
+  <button class="navBtn" onclick="openMenu()">
+    <span>☰</span>
+    Меню
+  </button>
+
+</nav>
 
 <!-- MODAL -->
 
-<div class="modal" id="modal">
+<div id="modal" class="modal">
 
-    <div class="modalBox">
+  <div class="modalBox">
 
-        <div class="modalHead">
-            <h2 id="modalTitle">Маълумот</h2>
-            <button class="close" onclick="closeModal()">✕</button>
-        </div>
-
-        <div id="modalContent"></div>
-
+    <div class="modalHead">
+      <h2 id="modalTitle">Информация</h2>
+      <button class="close" onclick="closeModal()">✕</button>
     </div>
+
+    <div id="modalContent"></div>
+
+  </div>
 
 </div>
 
@@ -1051,812 +1409,920 @@ body.dark .notice{
 <script>
 
 /* =========================
-   BASIC
+   DATA
 ========================= */
 
-let map = null;
-let mapInitialized = false;
+const officialStops = [
+  {
+    name:"Площадь Исмоили Сомони",
+    buses:"1, 2, 8",
+    minibus:"7, 11",
+    description:"Центральная остановка.",
+    lat:38.5736,
+    lng:68.7864,
+    photo:""
+  },
+  {
+    name:"Центр Душанбе",
+    buses:"2, 18",
+    minibus:"33",
+    description:"Остановка в центральной части города.",
+    lat:38.5598,
+    lng:68.7870,
+    photo:""
+  }
+];
 
-let selecting = null;
+const places = [
+  {
+    name:"Парк Рудаки",
+    description:"Один из самых известных парков Душанбе.",
+    image:"https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    name:"Городской парк",
+    description:"Место для прогулок и отдыха.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    name:"Центр Душанбе",
+    description:"Центральная часть столицы.",
+    image:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    name:"Городской пейзаж",
+    description:"Красивые места столицы.",
+    image:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80"
+  }
+];
 
-let pointA = null;
-let pointB = null;
+/* =========================
+   STATE
+========================= */
 
-let markerA = null;
-let markerB = null;
-let routeLine = null;
+let homeMap=null;
+let routeMap=null;
+let stopMap=null;
 
-let stopSelecting = false;
-let stopPoint = null;
-let stopMarker = null;
+let A=null;
+let B=null;
 
-let stopPhotoData = "";
+let markerA=null;
+let markerB=null;
+let routeLine=null;
 
-const DEFAULT_CENTER = [38.5598,68.7870];
+let choosing=null;
+
+let stopPoint=null;
+let stopMarker=null;
+
+let stopPhotoData="";
 
 /* =========================
    MENU
 ========================= */
 
 function openMenu(){
-    document.getElementById("sideMenu").classList.add("open");
-    document.getElementById("overlay").classList.add("show");
+  document.getElementById("sideMenu").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
 }
 
 function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("open");
-    document.getElementById("overlay").classList.remove("show");
+  document.getElementById("sideMenu").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
 }
 
 /* =========================
-   PAGES
+   NAVIGATION
 ========================= */
 
-function showPage(id){
+function go(id,btn){
 
-    document.querySelectorAll(".page").forEach(p=>{
-        p.classList.remove("active");
-    });
+  document.querySelectorAll(".page")
+    .forEach(x=>x.classList.remove("active"));
 
-    const page=document.getElementById(id);
+  const page=document.getElementById(id);
 
-    if(page){
-        page.classList.add("active");
-    }
+  if(page) page.classList.add("active");
 
-    closeMenu();
+  closeMenu();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+  document.querySelectorAll(".navBtn")
+    .forEach(x=>x.classList.remove("active"));
 
-    if(id==="navigation" || id==="addStop"){
-        setTimeout(initMap,100);
-    }
+  if(btn) btn.classList.add("active");
 
-    if(id==="stops"){
-        renderStops();
-    }
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-    if(id==="places"){
-        renderPlaces();
-    }
+  if(id==="home"){
+    setTimeout(initHomeMap,100);
+  }
+
+  if(id==="navigation"){
+    setTimeout(initRouteMap,100);
+  }
+
+  if(id==="addStop"){
+    setTimeout(initStopMap,100);
+  }
+
+  if(id==="stops"){
+    renderStops();
+  }
+
+  if(id==="places"){
+    renderPlaces();
+  }
 }
 
 /* =========================
-   MAP
+   MAP TILE
 ========================= */
 
-function initMap(){
+function tileLayer(map){
 
-    if(mapInitialized){
-        setTimeout(()=>{
-            map.invalidateSize();
-        },100);
-        return;
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom:19,
+      attribution:"© OpenStreetMap"
     }
+  ).addTo(map);
+}
 
-    map = L.map("map").setView(DEFAULT_CENTER,13);
+/* =========================
+   HOME MAP
+========================= */
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            maxZoom:19,
-            attribution:"© OpenStreetMap"
-        }
+function initHomeMap(){
+
+  if(homeMap){
+    setTimeout(()=>homeMap.invalidateSize(),100);
+    return;
+  }
+
+  homeMap=L.map("homeMap",{
+    zoomControl:false
+  }).setView([38.5598,68.7870],13);
+
+  tileLayer(homeMap);
+
+  setTimeout(()=>{
+    addStopMarkers(homeMap);
+  },300);
+}
+
+/* =========================
+   STOP MARKERS
+========================= */
+
+function addStopMarkers(map){
+
+  getStops().forEach(stop=>{
+
+    const marker=L.circleMarker(
+      [stop.lat,stop.lng],
+      {
+        radius:8,
+        color:"#087b42",
+        fillColor:"#18b866",
+        fillOpacity:1,
+        weight:3
+      }
     ).addTo(map);
 
-    map.on("click",function(e){
+    marker.bindPopup(`
+      <b>🚏 ${escapeHtml(stop.name)}</b><br>
+      <small>
+      🚌 ${escapeHtml(stop.buses||"нет данных")}
+      </small>
+      <br><br>
+      <button
+        onclick="showStop('${escapeHtml(stop.name)}')"
+        style="
+          border:0;
+          padding:8px 12px;
+          border-radius:9px;
+          background:#0b8f4d;
+          color:white;
+          font-weight:bold">
+        Подробнее
+      </button>
+    `);
 
-        if(selecting==="A"){
-            setPointA(e.latlng);
-        }
+  });
+}
 
-        if(selecting==="B"){
-            setPointB(e.latlng);
-        }
+/* =========================
+   ROUTE MAP
+========================= */
 
-        if(stopSelecting){
-            setStopPoint(e.latlng);
-        }
+function initRouteMap(){
 
-    });
+  if(routeMap){
+    setTimeout(()=>routeMap.invalidateSize(),100);
+    return;
+  }
 
-    mapInitialized=true;
+  routeMap=L.map("routeMap")
+    .setView([38.5598,68.7870],13);
 
-    setTimeout(()=>{
-        map.invalidateSize();
-    },200);
+  tileLayer(routeMap);
+
+  routeMap.on("click",e=>{
+
+    if(choosing==="A"){
+      setA(e.latlng);
+    }
+
+    if(choosing==="B"){
+      setB(e.latlng);
+    }
+
+  });
 }
 
 /* =========================
    A / B
 ========================= */
 
-function selectPoint(type){
+function chooseA(){
 
-    initMap();
+  initRouteMap();
 
-    selecting=type;
-    stopSelecting=false;
+  choosing="A";
 
-    alert(
-        "Теперь выберите точку "+
-        type+
-        " на карте."
-    );
+  document.getElementById("routeStatus")
+    .textContent="Нажмите на карте, чтобы выбрать точку A.";
 }
 
-function setPointA(latlng){
+function chooseB(){
 
-    pointA=latlng;
+  initRouteMap();
 
-    if(markerA){
-        map.removeLayer(markerA);
+  choosing="B";
+
+  document.getElementById("routeStatus")
+    .textContent="Нажмите на карте, чтобы выбрать точку B.";
+}
+
+function setA(latlng){
+
+  A=latlng;
+
+  if(markerA) routeMap.removeLayer(markerA);
+
+  markerA=L.marker(latlng)
+    .addTo(routeMap)
+    .bindPopup("📍 Точка A")
+    .openPopup();
+
+  document.getElementById("aText").value=
+    latlng.lat.toFixed(5)+", "+latlng.lng.toFixed(5);
+
+  choosing=null;
+
+  if(B) drawRoute();
+
+  document.getElementById("routeStatus")
+    .textContent=B
+    ?"Маршрут готов."
+    :"Теперь выберите точку B.";
+}
+
+function setB(latlng){
+
+  B=latlng;
+
+  if(markerB) routeMap.removeLayer(markerB);
+
+  markerB=L.marker(latlng)
+    .addTo(routeMap)
+    .bindPopup("📍 Точка B")
+    .openPopup();
+
+  document.getElementById("bText").value=
+    latlng.lat.toFixed(5)+", "+latlng.lng.toFixed(5);
+
+  choosing=null;
+
+  if(A) drawRoute();
+
+  document.getElementById("routeStatus")
+    .textContent=A
+    ?"Маршрут готов."
+    :"Теперь выберите точку A.";
+}
+
+function drawRoute(){
+
+  if(!A || !B) return;
+
+  if(routeLine)
+    routeMap.removeLayer(routeLine);
+
+  routeLine=L.polyline(
+    [A,B],
+    {
+      color:"#0b8f4d",
+      weight:6,
+      opacity:.9,
+      dashArray:"10 8"
     }
+  ).addTo(routeMap);
 
-    markerA=L.marker(latlng)
-        .addTo(map)
-        .bindPopup("📍 Точка A")
-        .openPopup();
-
-    selecting=null;
-
-    updateRouteInfo();
-
-    drawStraightRoute();
-}
-
-function setPointB(latlng){
-
-    pointB=latlng;
-
-    if(markerB){
-        map.removeLayer(markerB);
-    }
-
-    markerB=L.marker(latlng)
-        .addTo(map)
-        .bindPopup("📍 Точка B")
-        .openPopup();
-
-    selecting=null;
-
-    updateRouteInfo();
-
-    drawStraightRoute();
-}
-
-function drawStraightRoute(){
-
-    if(!pointA || !pointB) return;
-
-    if(routeLine){
-        map.removeLayer(routeLine);
-    }
-
-    routeLine=L.polyline(
-        [pointA,pointB],
-        {
-            color:"#168a45",
-            weight:6,
-            opacity:.8,
-            dashArray:"10 8"
-        }
-    ).addTo(map);
-
-    map.fitBounds(routeLine.getBounds(),{
-        padding:[30,30]
-    });
-}
-
-function updateRouteInfo(){
-
-    document.getElementById("routeInfo").innerHTML=
-        "A: "+
-        (pointA
-        ? pointA.lat.toFixed(5)+", "+pointA.lng.toFixed(5)
-        :"не выбрана")
-        +"<br>"+
-        "B: "+
-        (pointB
-        ? pointB.lat.toFixed(5)+", "+pointB.lng.toFixed(5)
-        :"не выбрана");
+  routeMap.fitBounds(
+    routeLine.getBounds(),
+    {padding:[30,30]}
+  );
 }
 
 function clearRoute(){
 
-    pointA=null;
-    pointB=null;
-    selecting=null;
+  A=null;
+  B=null;
+  choosing=null;
 
-    if(markerA) map.removeLayer(markerA);
-    if(markerB) map.removeLayer(markerB);
-    if(routeLine) map.removeLayer(routeLine);
+  if(markerA) routeMap.removeLayer(markerA);
+  if(markerB) routeMap.removeLayer(markerB);
+  if(routeLine) routeMap.removeLayer(routeLine);
 
-    markerA=null;
-    markerB=null;
-    routeLine=null;
+  markerA=null;
+  markerB=null;
+  routeLine=null;
 
-    updateRouteInfo();
+  document.getElementById("aText").value="";
+  document.getElementById("bText").value="";
+
+  document.getElementById("routeStatus")
+    .textContent="Сначала выберите точку A.";
 }
 
 /* =========================
    GPS
 ========================= */
 
-function useGPS(){
+function getGPS(callback){
 
-    initMap();
+  if(!navigator.geolocation){
 
-    if(!navigator.geolocation){
-        alert("GPS не поддерживается.");
-        return;
+    alert("Ваш браузер не поддерживает GPS.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      callback({
+        lat:p.coords.latitude,
+        lng:p.coords.longitude
+      });
+    },
+    ()=>{
+      alert(
+        "Не удалось получить GPS. Разрешите доступ к местоположению."
+      );
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:10000,
+      maximumAge:30000
     }
+  );
+}
 
-    navigator.geolocation.getCurrentPosition(
-        position=>{
+function gpsHome(){
 
-            const lat=position.coords.latitude;
-            const lng=position.coords.longitude;
+  getGPS(pos=>{
 
-            const pos=[lat,lng];
+    initHomeMap();
 
-            map.setView(pos,16);
-
-            L.marker(pos)
-                .addTo(map)
-                .bindPopup("📍 Ваше местоположение")
-                .openPopup();
-
-        },
-        ()=>{
-            alert(
-                "Не удалось получить местоположение. "+
-                "Разрешите доступ к GPS."
-            );
-        },
-        {
-            enableHighAccuracy:true,
-            timeout:10000
-        }
+    homeMap.setView(
+      [pos.lat,pos.lng],
+      16
     );
+
+    L.marker([pos.lat,pos.lng])
+      .addTo(homeMap)
+      .bindPopup("📍 Вы здесь")
+      .openPopup();
+
+  });
+}
+
+function gpsRoute(){
+
+  getGPS(pos=>{
+
+    initRouteMap();
+
+    setA(pos);
+
+    routeMap.setView(
+      [pos.lat,pos.lng],
+      16
+    );
+
+  });
 }
 
 /* =========================
-   STOP POINT
+   STOPS
 ========================= */
 
-function selectStopPoint(){
+function getStops(){
 
-    showPage("addStop");
+  const suggestions=
+    JSON.parse(
+      localStorage.getItem("shohinStopSuggestions")||"[]"
+    );
 
-    setTimeout(()=>{
+  return [
+    ...officialStops,
+    ...suggestions
+  ];
+}
 
-        initMap();
+function renderStops(){
 
-        stopSelecting=true;
-        selecting=null;
+  const box=document.getElementById("stopsList");
 
-        alert(
-            "Теперь нажмите на карте место, "+
-            "где находится остановка."
-        );
+  const stops=getStops();
 
-    },200);
+  box.innerHTML=stops.map((s,i)=>{
+
+    const buses=(s.buses||"")
+      .split(",")
+      .filter(Boolean)
+      .map(x=>`<span class="badge">🚌 ${escapeHtml(x.trim())}</span>`)
+      .join("");
+
+    const minibuses=(s.minibus||"")
+      .split(",")
+      .filter(Boolean)
+      .map(x=>`<span class="badge">🚐 ${escapeHtml(x.trim())}</span>`)
+      .join("");
+
+    return `
+      <article class="card stopCard">
+
+        ${
+          s.status
+          ? `<div class="status">${escapeHtml(s.status)}</div>`
+          :""
+        }
+
+        ${
+          s.photo
+          ? `<img class="photo" src="${s.photo}" loading="lazy">`
+          : `
+            <div
+              class="photo"
+              style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:60px">
+              🚏
+            </div>
+          `
+        }
+
+        <div class="cardBody">
+
+          <h3>🚏 ${escapeHtml(s.name)}</h3>
+
+          <p class="muted">
+            ${escapeHtml(s.description||"Остановка SHOHIN ROHNAMO.")}
+          </p>
+
+          <div class="badges">
+            ${buses}
+            ${minibuses}
+          </div>
+
+          <button
+            class="btn full"
+            onclick="showStopByIndex(${i})">
+            📍 Показать на карте
+          </button>
+
+        </div>
+
+      </article>
+    `;
+
+  }).join("");
+}
+
+function showStopByIndex(index){
+
+  const stops=getStops();
+  const stop=stops[index];
+
+  openModal(
+    "🚏 "+stop.name,
+    `
+      ${
+        stop.photo
+        ? `<img class="photo" src="${stop.photo}" style="border-radius:16px">`
+        :""
+      }
+
+      <br>
+
+      <p class="muted">
+        ${escapeHtml(stop.description||"")}
+      </p>
+
+      <br>
+
+      <b>🚌 Автобусы</b>
+
+      <div class="badges">
+        ${
+          (stop.buses||"нет данных")
+          .split(",")
+          .map(x=>`<span class="badge">${escapeHtml(x.trim())}</span>`)
+          .join("")
+        }
+      </div>
+
+      <b>🚐 Маршрутки</b>
+
+      <div class="badges">
+        ${
+          (stop.minibus||"нет данных")
+          .split(",")
+          .map(x=>`<span class="badge">${escapeHtml(x.trim())}</span>`)
+          .join("")
+        }
+      </div>
+
+      <br>
+
+      <button class="btn full"
+        onclick="closeModal();showStopOnHome(${stop.lat},${stop.lng})">
+        🗺️ Открыть на карте
+      </button>
+
+      <br><br>
+
+      <button class="btn secondary full"
+        onclick="closeModal();setNavigationToStop(${stop.lat},${stop.lng})">
+        🧭 Проложить маршрут
+      </button>
+    `
+  );
+}
+
+function showStop(name){
+
+  const stops=getStops();
+  const index=stops.findIndex(x=>x.name===name);
+
+  if(index>=0)
+    showStopByIndex(index);
+}
+
+function showStopOnHome(lat,lng){
+
+  go("home");
+
+  setTimeout(()=>{
+
+    initHomeMap();
+
+    homeMap.setView(
+      [lat,lng],
+      17
+    );
+
+    L.marker([lat,lng])
+      .addTo(homeMap)
+      .bindPopup("🚏 Истгоҳ")
+      .openPopup();
+
+  },200);
+}
+
+function setNavigationToStop(lat,lng){
+
+  go("navigation");
+
+  setTimeout(()=>{
+
+    initRouteMap();
+
+    setB({
+      lat:lat,
+      lng:lng
+    });
+
+  },250);
+}
+
+/* =========================
+   ADD STOP
+========================= */
+
+function initStopMap(){
+
+  if(stopMap){
+    setTimeout(()=>stopMap.invalidateSize(),100);
+    return;
+  }
+
+  stopMap=L.map("stopMap")
+    .setView([38.5598,68.7870],14);
+
+  tileLayer(stopMap);
+
+  stopMap.on("click",e=>{
+
+    setStopPoint(e.latlng);
+
+  });
+}
+
+function startStopSelection(){
+
+  initStopMap();
+
+  alert(
+    "Теперь нажмите на карте место, где находится остановка."
+  );
 }
 
 function setStopPoint(latlng){
 
-    stopPoint=latlng;
+  stopPoint=latlng;
 
-    if(stopMarker){
-        map.removeLayer(stopMarker);
-    }
+  if(stopMarker)
+    stopMap.removeLayer(stopMarker);
 
-    stopMarker=L.marker(latlng)
-        .addTo(map)
-        .bindPopup("🚏 Новая остановка")
-        .openPopup();
+  stopMarker=L.marker(latlng)
+    .addTo(stopMap)
+    .bindPopup("🚏 Новая остановка")
+    .openPopup();
 
-    stopSelecting=false;
-
-    document.getElementById("stopCoords").innerHTML=
-        "📍 Координаты: "+
-        latlng.lat.toFixed(6)+
-        ", "+
-        latlng.lng.toFixed(6);
+  document.getElementById("stopPointText")
+    .textContent=
+      "📍 "+
+      latlng.lat.toFixed(6)+
+      ", "+
+      latlng.lng.toFixed(6);
 }
 
-/* =========================
-   STOP PHOTO
-========================= */
+function previewPhoto(event){
 
-function previewStopPhoto(event){
+  const file=event.target.files[0];
 
-    const file=event.target.files[0];
+  if(!file) return;
 
-    if(!file) return;
+  if(file.size>5*1024*1024){
 
-    const reader=new FileReader();
+    alert("Фото слишком большое. Выберите фото до 5 MB.");
+    event.target.value="";
+    return;
+  }
 
-    reader.onload=function(e){
+  const reader=new FileReader();
 
-        stopPhotoData=e.target.result;
+  reader.onload=e=>{
 
-        const img=document.getElementById("stopPreview");
+    stopPhotoData=e.target.result;
 
-        img.src=stopPhotoData;
+    const img=document.getElementById("photoPreview");
 
-        img.classList.remove("hidden");
-    };
+    img.src=stopPhotoData;
+    img.classList.remove("hide");
 
-    reader.readAsDataURL(file);
+  };
+
+  reader.readAsDataURL(file);
 }
-
-/* =========================
-   STOP SUBMIT
-========================= */
 
 function submitStop(){
 
-    if(!stopPoint){
-        alert(
-            "Сначала обязательно выберите точку остановки на карте."
-        );
-        return;
-    }
+  if(!stopPoint){
 
-    const name=document
-        .getElementById("stopName")
-        .value.trim();
-
-    if(!name){
-        alert("Введите название остановки.");
-        return;
-    }
-
-    const stop={
-        id:Date.now(),
-        name:name,
-        buses:document
-            .getElementById("stopBuses")
-            .value.trim(),
-
-        minibus:document
-            .getElementById("stopMinibus")
-            .value.trim(),
-
-        description:document
-            .getElementById("stopDescription")
-            .value.trim(),
-
-        lat:stopPoint.lat,
-        lng:stopPoint.lng,
-
-        photo:stopPhotoData,
-
-        status:"Предложение"
-    };
-
-    const list=
-        JSON.parse(
-            localStorage.getItem("shohinStopSuggestions") || "[]"
-        );
-
-    list.push(stop);
-
-    localStorage.setItem(
-        "shohinStopSuggestions",
-        JSON.stringify(list)
+    alert(
+      "Обязательно выберите точку остановки на карте."
     );
 
-    const text=
+    return;
+  }
+
+  const name=
+    document.getElementById("stopName")
+      .value.trim();
+
+  if(!name){
+
+    alert("Введите название остановки.");
+    return;
+  }
+
+  const stop={
+    id:Date.now(),
+    name:name,
+    buses:document.getElementById("stopBuses").value.trim(),
+    minibus:document.getElementById("stopMinibus").value.trim(),
+    description:document.getElementById("stopDescription").value.trim(),
+    lat:stopPoint.lat,
+    lng:stopPoint.lng,
+    photo:stopPhotoData,
+    status:"На проверке"
+  };
+
+  const list=
+    JSON.parse(
+      localStorage.getItem("shohinStopSuggestions")||"[]"
+    );
+
+  list.push(stop);
+
+  localStorage.setItem(
+    "shohinStopSuggestions",
+    JSON.stringify(list)
+  );
+
+  const message=
 `ПРЕДЛОЖЕНИЕ ОСТАНОВКИ SHOHIN ROHNAMO
 
 Название: ${stop.name}
 
-Автобусы: ${stop.buses || "не указаны"}
+Автобусы: ${stop.buses||"не указаны"}
 
-Маршрутки: ${stop.minibus || "не указаны"}
+Маршрутки: ${stop.minibus||"не указаны"}
 
-Описание: ${stop.description || "нет"}
+Описание: ${stop.description||"нет"}
 
 Координаты:
 ${stop.lat}, ${stop.lng}
 
 Статус: На проверке`;
 
-    openModal(
-        "📤 Предложение отправлено",
-        `
-        <div class="notice">
-            Остановка сохранена как предложение.
-            После проверки вы сможете добавить её
-            в официальную версию SHOHIN ROHNAMO.
-        </div>
+  openModal(
+    "✅ Предложение сохранено",
+    `
+      <div class="notice">
+        Спасибо! Предложение сохранено.
+        Проверьте информацию и отправьте её администрации.
+      </div>
 
-        <textarea style="min-height:220px">${escapeHtml(text)}</textarea>
+      <textarea id="copyText"
+        style="min-height:240px">${escapeHtml(message)}</textarea>
 
-        <br><br>
+      <br><br>
 
-        <button class="btn"
-            onclick="copySuggestion()">
-            📋 Скопировать
-        </button>
-        `
-    );
+      <button class="btn full"
+        onclick="copyText()">
+        📋 Скопировать предложение
+      </button>
+    `
+  );
 
-    resetStopForm();
-}
+  document.getElementById("stopName").value="";
+  document.getElementById("stopBuses").value="";
+  document.getElementById("stopMinibus").value="";
+  document.getElementById("stopDescription").value="";
+  document.getElementById("stopPhoto").value="";
 
-function copySuggestion(){
+  document.getElementById("photoPreview")
+    .classList.add("hide");
 
-    const textarea=document.querySelector(
-        "#modalContent textarea"
-    );
-
-    if(!textarea) return;
-
-    navigator.clipboard.writeText(
-        textarea.value
-    ).then(()=>{
-        alert("Скопировано.");
-    }).catch(()=>{
-        textarea.select();
-        document.execCommand("copy");
-        alert("Скопировано.");
-    });
-}
-
-function resetStopForm(){
-
-    document.getElementById("stopName").value="";
-    document.getElementById("stopBuses").value="";
-    document.getElementById("stopMinibus").value="";
-    document.getElementById("stopDescription").value="";
-    document.getElementById("stopPhoto").value="";
-
-    document.getElementById("stopPreview")
-        .classList.add("hidden");
-
-    stopPhotoData="";
-    stopPoint=null;
-
-    if(stopMarker && map){
-        map.removeLayer(stopMarker);
-        stopMarker=null;
-    }
-
-    document.getElementById("stopCoords").innerHTML=
-        "Нуқта интихоб нашудааст.";
-}
-
-/* =========================
-   OFFICIAL STOPS
-========================= */
-
-const officialStops=[
-
-    {
-        name:"Остановка Душанбе",
-        buses:"1, 2",
-        minibus:"7, 11",
-        description:"Намунаи истгоҳи SHOHIN ROHNAMO.",
-        lat:38.5598,
-        lng:68.7870,
-        photo:""
-    },
-
-    {
-        name:"Маркази шаҳр",
-        buses:"2, 8",
-        minibus:"18, 33",
-        description:"Намунаи маълумоти истгоҳ.",
-        lat:38.5730,
-        lng:68.7860,
-        photo:""
-    }
-
-];
-
-function getAllStops(){
-
-    const suggestions=
-        JSON.parse(
-            localStorage.getItem("shohinStopSuggestions") || "[]"
-        );
-
-    return [
-        ...officialStops,
-        ...suggestions
-    ];
-}
-
-function renderStops(){
-
-    const container=
-        document.getElementById("stopsList");
-
-    const stops=getAllStops();
-
-    if(!stops.length){
-
-        container.innerHTML=
-            "<p>Истгоҳҳо ҳоло нестанд.</p>";
-
-        return;
-    }
-
-    container.innerHTML=stops.map((stop,index)=>{
-
-        const buses=
-            stop.buses
-            ? stop.buses
-                .split(",")
-                .map(x=>`<span class="routeBadge">🚌 ${x.trim()}</span>`)
-                .join("")
-            :"";
-
-        const minibuses=
-            stop.minibus
-            ? stop.minibus
-                .split(",")
-                .map(x=>`<span class="routeBadge">🚐 ${x.trim()}</span>`)
-                .join("")
-            :"";
-
-        return `
-        <div class="card">
-
-            ${
-                stop.photo
-                ? `<img class="photo" src="${stop.photo}">`
-                : `<div class="photo"
-                    style="display:flex;align-items:center;justify-content:center;font-size:55px">
-                    🚏
-                   </div>`
-            }
-
-            <div class="cardBody">
-
-                <h3>${escapeHtml(stop.name)}</h3>
-
-                <p>
-                    ${escapeHtml(
-                        stop.description || "Информация об остановке."
-                    )}
-                </p>
-
-                <br>
-
-                ${buses}
-                ${minibuses}
-
-                <br><br>
-
-                ${
-                    stop.status
-                    ? `<small>Статус: ${escapeHtml(stop.status)}</small><br><br>`
-                    :""
-                }
-
-                <button
-                    class="btn"
-                    onclick="openStopOnMap(${stop.lat},${stop.lng})"
-                >
-                    📍 На карте
-                </button>
-
-            </div>
-
-        </div>
-        `;
-
-    }).join("");
-}
-
-function openStopOnMap(lat,lng){
-
-    showPage("navigation");
-
-    setTimeout(()=>{
-
-        initMap();
-
-        map.setView(
-            [lat,lng],
-            17
-        );
-
-        L.marker([lat,lng])
-            .addTo(map)
-            .bindPopup("🚏 Истгоҳ")
-            .openPopup();
-
-    },150);
+  stopPhotoData="";
 }
 
 /* =========================
    PLACES
 ========================= */
 
-const places=[
-
-    {
-        name:"Парк Рудаки",
-        description:"Яке аз ҷойҳои машҳури Душанбе барои сайругашт.",
-        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7"
-    },
-
-    {
-        name:"Флагштоки Душанбе",
-        description:"Яке аз рамзҳои маъруфи пойтахти Тоҷикистон.",
-        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7"
-    },
-
-    {
-        name:"Маркази Душанбе",
-        description:"Қисми марказии шаҳр бо ҷойҳои диданбоб.",
-        image:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000"
-    }
-
-];
-
 function renderPlaces(){
 
-    const container=
-        document.getElementById("placesList");
+  const box=document.getElementById("placesList");
 
-    container.innerHTML=places.map((place,index)=>{
+  box.innerHTML=places.map((p,i)=>`
 
-        return `
-        <div
-            class="card placeCard"
-            onclick="showPlace(${index})"
-        >
+    <article class="card placeCard"
+      onclick="showPlace(${i})">
 
-            <img
-                class="photo"
-                src="${place.image}"
-                loading="lazy"
-                alt="${escapeHtml(place.name)}"
-            >
+      <img
+        class="photo"
+        src="${p.image}"
+        loading="lazy"
+        alt="${escapeHtml(p.name)}">
 
-            <div class="cardBody">
+      <div class="placeInfo">
 
-                <h3>
-                    ${escapeHtml(place.name)}
-                </h3>
+        <h3>📍 ${escapeHtml(p.name)}</h3>
 
-                <p>
-                    ${escapeHtml(place.description)}
-                </p>
+        <p class="muted" style="margin:7px 0 13px">
+          ${escapeHtml(p.description)}
+        </p>
 
-                <br>
+        <button class="btn"
+          onclick="event.stopPropagation();showPlace(${i})">
+          Подробнее
+        </button>
 
-                <button
-                    class="btn"
-                    onclick="event.stopPropagation();showPlace(${index})"
-                >
-                    Подробнее
-                </button>
+      </div>
 
-            </div>
+    </article>
 
-        </div>
-        `;
-
-    }).join("");
+  `).join("");
 }
 
 function showPlace(index){
 
-    const p=places[index];
+  const p=places[index];
 
-    openModal(
-        p.name,
-        `
-        <img
-            class="photo"
-            src="${p.image}"
-            style="border-radius:15px"
-        >
+  openModal(
+    "🏙️ "+p.name,
+    `
+      <img
+        src="${p.image}"
+        class="photo"
+        style="border-radius:16px">
 
-        <br><br>
+      <br>
 
-        <p>${escapeHtml(p.description)}</p>
+      <p class="muted">
+        ${escapeHtml(p.description)}
+      </p>
 
-        <br>
+      <br>
 
-        <button
-            class="btn"
-            onclick="showPage('navigation');closeModal()"
-        >
-            🧭 Проложить маршрут
-        </button>
-        `
-    );
+      <button class="btn full"
+        onclick="closeModal();go('navigation')">
+        🧭 Проложить маршрут
+      </button>
+    `
+  );
 }
 
 /* =========================
-   ROUTE SUBMIT
+   ADD ROUTE
 ========================= */
 
 function submitRoute(){
 
-    const name=
-        document.getElementById("routeName")
-        .value.trim();
+  const name=
+    document.getElementById("newRouteName")
+      .value.trim();
 
-    const transport=
-        document.getElementById("routeTransport")
-        .value.trim();
+  if(!name){
 
-    const description=
-        document.getElementById("routeDescription")
-        .value.trim();
+    alert("Введите название маршрута.");
+    return;
+  }
 
-    if(!name){
-        alert("Введите название маршрута.");
-        return;
-    }
+  if(!A || !B){
 
-    if(!pointA || !pointB){
-
-        alert(
-            "Сначала выберите точки A и B на карте."
-        );
-
-        showPage("navigation");
-
-        return;
-    }
-
-    const route={
-
-        name:name,
-        transport:transport,
-        description:description,
-
-        A:{
-            lat:pointA.lat,
-            lng:pointA.lng
-        },
-
-        B:{
-            lat:pointB.lat,
-            lng:pointB.lng
-        },
-
-        created:Date.now()
-
-    };
-
-    const routes=
-        JSON.parse(
-            localStorage.getItem("shohinRouteSuggestions") || "[]"
-        );
-
-    routes.push(route);
-
-    localStorage.setItem(
-        "shohinRouteSuggestions",
-        JSON.stringify(routes)
+    alert(
+      "Сначала обязательно выберите точки A и B на карте."
     );
 
-    const text=
-`ПРЕДЛОЖЕНИЕ МАРШРУТА
+    go("navigation");
+    return;
+  }
+
+  const route={
+    name:name,
+    transport:document.getElementById("newRouteTransport").value.trim(),
+    description:document.getElementById("newRouteDescription").value.trim(),
+    A:A,
+    B:B,
+    created:Date.now()
+  };
+
+  const list=
+    JSON.parse(
+      localStorage.getItem("shohinRouteSuggestions")||"[]"
+    );
+
+  list.push(route);
+
+  localStorage.setItem(
+    "shohinRouteSuggestions",
+    JSON.stringify(list)
+  );
+
+  const message=
+`ПРЕДЛОЖЕНИЕ МАРШРУТА SHOHIN ROHNAMO
 
 Название:
 ${route.name}
 
 Транспорт:
-${route.transport || "не указан"}
+${route.transport||"не указан"}
 
 Описание:
-${route.description || "нет"}
+${route.description||"нет"}
 
 A:
 ${route.A.lat}, ${route.A.lng}
@@ -1864,78 +2330,70 @@ ${route.A.lat}, ${route.A.lng}
 B:
 ${route.B.lat}, ${route.B.lng}`;
 
-    openModal(
-        "📤 Маршрут предложен",
-        `
-        <div class="notice">
-            Предложение сохранено.
-            Скопируйте его и отправьте администрации.
-        </div>
+  openModal(
+    "✅ Маршрут сохранён",
+    `
+      <div class="notice">
+        Маршрут сохранён как предложение.
+      </div>
 
-        <textarea style="min-height:240px">${escapeHtml(text)}</textarea>
+      <textarea id="copyText"
+        style="min-height:250px">${escapeHtml(message)}</textarea>
 
-        <br><br>
+      <br><br>
 
-        <button class="btn"
-            onclick="copySuggestion()">
-            📋 Скопировать
-        </button>
-        `
-    );
+      <button class="btn full"
+        onclick="copyText()">
+        📋 Скопировать
+      </button>
+    `
+  );
 }
 
 /* =========================
    SEARCH
 ========================= */
 
-function searchEverything(){
+function searchPlace(){
 
-    const q=
-        document.getElementById("mainSearch")
-        .value
-        .toLowerCase()
-        .trim();
+  const q=
+    document.getElementById("searchInput")
+      .value.toLowerCase().trim();
 
-    if(!q) return;
+  if(!q) return;
 
-    const stops=getAllStops();
+  const stops=getStops();
 
-    const foundStop=stops.find(s=>
-        s.name.toLowerCase().includes(q) ||
-        (s.buses||"").toLowerCase().includes(q) ||
-        (s.minibus||"").toLowerCase().includes(q)
+  const stop=stops.find(s=>
+    s.name.toLowerCase().includes(q) ||
+    (s.buses||"").toLowerCase().includes(q) ||
+    (s.minibus||"").toLowerCase().includes(q)
+  );
+
+  if(stop){
+
+    showStopOnHome(
+      stop.lat,
+      stop.lng
     );
 
-    const foundPlace=places.find(p=>
-        p.name.toLowerCase().includes(q)
+    return;
+  }
+
+  const place=places.find(p=>
+    p.name.toLowerCase().includes(q)
+  );
+
+  if(place){
+
+    showPlace(
+      places.indexOf(place)
     );
 
-    if(foundStop){
+    return;
+  }
 
-        showPage("stops");
-
-        setTimeout(()=>{
-            openStopOnMap(
-                foundStop.lat,
-                foundStop.lng
-            );
-        },200);
-
-        return;
-    }
-
-    if(foundPlace){
-
-        showPage("places");
-
-        const index=places.indexOf(foundPlace);
-
-        setTimeout(()=>{
-            showPlace(index);
-        },200);
-
-    }
-
+  alert("Место не найдено в локальном списке.");
 }
 
 /* =========================
@@ -1944,45 +2402,44 @@ function searchEverything(){
 
 function toggleDark(){
 
-    document.body.classList.toggle("dark");
+  document.body.classList.toggle("dark");
 
-    localStorage.setItem(
-        "shohinDark",
-        document.body.classList.contains("dark")
-    );
+  localStorage.setItem(
+    "shohinDark",
+    document.body.classList.contains("dark")
+  );
 }
 
-function changeFontSize(size){
+function setFontSize(value){
 
-    document.documentElement.style.fontSize=
-        size+"px";
+  document.documentElement.style.fontSize=
+    value+"px";
 
-    localStorage.setItem(
-        "shohinFontSize",
-        size
-    );
+  localStorage.setItem(
+    "shohinFontSize",
+    value
+  );
 }
 
 function loadSettings(){
 
-    if(
-        localStorage.getItem("shohinDark")
-        ==="true"
-    ){
-        document.body.classList.add("dark");
-    }
+  if(
+    localStorage.getItem("shohinDark")==="true"
+  ){
+    document.body.classList.add("dark");
+  }
 
-    const size=
-        localStorage.getItem("shohinFontSize");
+  const size=
+    localStorage.getItem("shohinFontSize");
 
-    if(size){
+  if(size){
 
-        document.documentElement.style.fontSize=
-            size+"px";
+    document.documentElement.style.fontSize=
+      size+"px";
 
-        document.getElementById("fontSize").value=
-            size;
-    }
+    document.getElementById("fontSelect").value=
+      size;
+  }
 }
 
 /* =========================
@@ -1991,59 +2448,77 @@ function loadSettings(){
 
 function openModal(title,content){
 
-    document.getElementById("modalTitle")
-        .textContent=title;
+  document.getElementById("modalTitle")
+    .textContent=title;
 
-    document.getElementById("modalContent")
-        .innerHTML=content;
+  document.getElementById("modalContent")
+    .innerHTML=content;
 
-    document.getElementById("modal")
-        .classList.add("show");
+  document.getElementById("modal")
+    .classList.add("show");
 }
 
 function closeModal(){
 
-    document.getElementById("modal")
-        .classList.remove("show");
+  document.getElementById("modal")
+    .classList.remove("show");
+}
+
+function copyText(){
+
+  const el=document.getElementById("copyText");
+
+  if(!el) return;
+
+  navigator.clipboard.writeText(el.value)
+    .then(()=>{
+      alert("Скопировано.");
+    })
+    .catch(()=>{
+      el.select();
+      document.execCommand("copy");
+      alert("Скопировано.");
+    });
 }
 
 /* =========================
-   SECURITY
+   ESCAPE
 ========================= */
 
 function escapeHtml(value){
 
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+  return String(value||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 /* =========================
    START
 ========================= */
 
-window.addEventListener(
-    "load",
-    ()=>{
+window.addEventListener("load",()=>{
 
-        loadSettings();
+  loadSettings();
 
-        setTimeout(()=>{
+  renderStops();
+  renderPlaces();
 
-            document
-                .getElementById("loading")
-                .classList.add("hidden");
+  /* Главная карта загружается только после интерфейса */
+  setTimeout(()=>{
+    initHomeMap();
+  },100);
 
-        },500);
+  setTimeout(()=>{
 
-        renderStops();
-        renderPlaces();
+    document.getElementById("loader")
+      .classList.add("hide");
 
-    }
-);
+  },700);
+
+});
 
 </script>
 
