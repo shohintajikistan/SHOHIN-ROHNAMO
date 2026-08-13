@@ -1,731 +1,504 @@
 <!DOCTYPE html>
-<html lang="tg">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#168a45">
 <title>SHOHIN ROHNAMO</title>
 
 <link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
 *{
     box-sizing:border-box;
     margin:0;
-    padding:0
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-html,body,#map{
-    width:100%;
-    height:100%
+:root{
+    --green:#168a45;
+    --green2:#20a957;
+    --darkgreen:#096b35;
+    --light:#f4faf6;
+    --card:#ffffff;
+    --text:#172019;
+    --muted:#68756d;
+    --border:#dce9df;
+    --shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
 body{
-    font-family:Arial,sans-serif;
-    overflow:hidden;
-    background:#07120b;
-    color:#fff
+    background:var(--light);
+    color:var(--text);
+    min-height:100vh;
 }
 
-#map{
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:2000;
+    background:linear-gradient(135deg,#087535,#20a957);
+    color:white;
+    box-shadow:0 4px 20px rgba(0,0,0,.18);
+}
+
+.top{
+    max-width:1200px;
+    margin:auto;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 18px;
+}
+
+.logo{
+    font-weight:900;
+    font-size:25px;
+    letter-spacing:1px;
+}
+
+.logo small{
+    display:block;
+    font-size:10px;
+    letter-spacing:3px;
+    opacity:.85;
+}
+
+.menuBtn{
+    border:0;
+    background:rgba(255,255,255,.15);
+    color:white;
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    font-size:23px;
+    cursor:pointer;
+}
+
+/* MENU */
+
+.sideMenu{
+    position:fixed;
+    top:0;
+    right:-330px;
+    width:320px;
+    max-width:90%;
+    height:100vh;
+    z-index:5000;
+    background:white;
+    box-shadow:-8px 0 30px rgba(0,0,0,.25);
+    transition:.3s;
+    padding:22px;
+    overflow:auto;
+}
+
+.sideMenu.open{
+    right:0;
+}
+
+.menuTitle{
+    background:linear-gradient(135deg,#087535,#20a957);
+    color:white;
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:15px;
+}
+
+.menuTitle b{
+    font-size:22px;
+}
+
+.menuItem{
+    display:block;
+    width:100%;
+    padding:15px;
+    margin:8px 0;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:white;
+    text-align:left;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.menuItem:hover{
+    background:#effaf2;
+    border-color:#8bd3a6;
+}
+
+.overlay{
     position:fixed;
     inset:0;
-    z-index:1
+    z-index:4000;
+    background:rgba(0,0,0,.4);
+    display:none;
 }
 
-/* =========================
-   LOADING
-========================= */
+.overlay.show{
+    display:block;
+}
+
+/* MAIN */
+
+main{
+    max-width:1200px;
+    margin:auto;
+    padding:18px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.hero{
+    background:linear-gradient(135deg,#087535,#20a957);
+    color:white;
+    border-radius:25px;
+    padding:28px 22px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+}
+
+.hero h1{
+    font-size:31px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    opacity:.92;
+    line-height:1.5;
+}
+
+.search{
+    width:100%;
+    margin-top:18px;
+    padding:15px 17px;
+    border:0;
+    border-radius:14px;
+    outline:none;
+    font-size:16px;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.cardBody{
+    padding:16px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.5;
+    font-size:14px;
+}
+
+.photo{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    background:#dfeee4;
+}
+
+.btn{
+    border:0;
+    background:var(--green);
+    color:white;
+    padding:13px 17px;
+    border-radius:13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:var(--darkgreen);
+}
+
+.btn.secondary{
+    background:#e8f6ec;
+    color:#087535;
+}
+
+.btn.danger{
+    background:#d83434;
+}
+
+/* MAP */
+
+#map{
+    height:470px;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.mapTools{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin:12px 0;
+}
+
+/* FORMS */
+
+.form{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+}
+
+.formGroup{
+    margin-bottom:14px;
+}
+
+.formGroup label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:13px;
+    border:1px solid #cbdace;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+    background:white;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--green);
+}
+
+/* TRANSPORT */
+
+.routeBadge{
+    display:inline-block;
+    padding:6px 9px;
+    margin:3px;
+    background:#e7f7ec;
+    color:#087535;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* PLACE */
+
+.placeCard{
+    cursor:pointer;
+    transition:.2s;
+}
+
+.placeCard:hover{
+    transform:translateY(-3px);
+}
+
+/* SETTINGS */
+
+.settingRow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid var(--border);
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:30px;
+    padding:25px 18px;
+    text-align:center;
+    color:var(--muted);
+}
+
+/* DARK */
+
+body.dark{
+    --light:#0c1510;
+    --card:#142019;
+    --text:#f0f8f2;
+    --muted:#a7b7ac;
+    --border:#263b2d;
+}
+
+body.dark .sideMenu,
+body.dark input,
+body.dark textarea,
+body.dark select{
+    background:#142019;
+    color:white;
+}
+
+body.dark .menuItem{
+    background:#142019;
+    color:white;
+    border-color:#294532;
+}
+
+body.dark .menuItem:hover{
+    background:#1b3022;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:6000;
+    background:rgba(0,0,0,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modalBox{
+    background:white;
+    color:#172019;
+    width:700px;
+    max-width:100%;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:22px;
+    padding:20px;
+}
+
+body.dark .modalBox{
+    background:#142019;
+    color:white;
+}
+
+.modalHead{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.close{
+    border:0;
+    background:#eee;
+    border-radius:10px;
+    width:40px;
+    height:40px;
+    cursor:pointer;
+}
+
+/* LOADING */
 
 #loading{
     position:fixed;
     inset:0;
-    z-index:99999;
+    z-index:10000;
+    background:linear-gradient(135deg,#087535,#20a957);
+    color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#07120b;
-    transition:.55s
+    flex-direction:column;
+    transition:.4s;
 }
 
-#loading.hide{
-    opacity:0;
-    pointer-events:none
+.loaderLogo{
+    font-size:34px;
+    font-weight:900;
 }
 
-.loader{
-    text-align:center;
-    animation:logoIn .7s ease
-}
-
-.loader-logo{
-    font-size:40px;
-    font-weight:1000;
-    letter-spacing:4px;
-    color:#39df89;
-    text-shadow:0 0 30px #39df8955
-}
-
-.loader-text{
-    margin-top:10px;
-    color:#849189;
-    font-size:9px
-}
-
-.loader-dot{
-    width:7px;
+.loaderBar{
+    width:230px;
     height:7px;
-    margin:16px auto;
-    border-radius:50%;
-    background:#39df89;
-    box-shadow:0 0 0 8px #39df8920,
-               0 0 25px #39df89;
-    animation:pulse 1s infinite
+    background:rgba(255,255,255,.25);
+    border-radius:20px;
+    margin-top:20px;
+    overflow:hidden;
 }
 
-@keyframes logoIn{
-    from{
-        opacity:0;
-        transform:scale(.8)
-    }
-    to{
-        opacity:1;
-        transform:scale(1)
-    }
-}
-
-@keyframes pulse{
-    0%,100%{
-        transform:scale(.8);
-        opacity:.5
-    }
-    50%{
-        transform:scale(1.25);
-        opacity:1
-    }
-}
-
-/* =========================
-   TOP
-========================= */
-
-.top{
-    position:fixed;
-    top:12px;
-    left:12px;
-    right:12px;
-    z-index:1000;
-    display:flex;
-    gap:8px
-}
-
-.logo{
-    width:58px;
-    height:48px;
-    border:0;
-    border-radius:16px;
-    background:#39df89;
-    color:#031008;
-    font-size:18px;
-    font-weight:1000;
-    cursor:pointer;
-    box-shadow:0 8px 30px #0008
-}
-
-.search{
-    flex:1;
-    height:48px;
-    display:flex;
-    align-items:center;
-    padding-left:14px;
-    padding-right:5px;
-    border-radius:16px;
-    background:#07120bf2;
-    border:1px solid #ffffff18;
-    backdrop-filter:blur(20px)
-}
-
-.search input{
-    flex:1;
-    min-width:0;
-    border:0;
-    outline:0;
-    background:transparent;
-    color:#fff;
-    font-size:12px
-}
-
-.search button{
-    width:38px;
-    height:38px;
-    border:0;
-    border-radius:12px;
-    background:#39df89;
-    cursor:pointer
-}
-
-/* =========================
-   MENU
-========================= */
-
-.menu{
-    position:fixed;
-    top:68px;
-    left:12px;
-    width:340px;
-    max-width:calc(100% - 24px);
-    max-height:calc(100vh - 90px);
-    overflow:auto;
-    padding:12px;
-    z-index:3000;
-    display:none;
-    border-radius:22px;
-    background:#07120bf8;
-    border:1px solid #ffffff15;
-    backdrop-filter:blur(25px);
-    box-shadow:0 20px 70px #0009
-}
-
-.menu.open{
-    display:block;
-    animation:menuIn .22s ease
-}
-
-@keyframes menuIn{
-    from{
-        opacity:0;
-        transform:translateY(-8px) scale(.98)
-    }
-    to{
-        opacity:1;
-        transform:none
-    }
-}
-
-.menu-title{
-    padding:8px 10px;
-    color:#39df89;
-    font-size:17px;
-    font-weight:1000
-}
-
-.menu-subtitle{
-    padding:0 10px 10px;
-    color:#75827a;
-    font-size:8px
-}
-
-.menu-item{
+.loaderProgress{
     width:100%;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:13px;
-    margin-top:5px;
-    border:0;
-    border-radius:14px;
-    background:#0d2114;
-    color:#fff;
-    text-align:left;
-    font-size:10px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.18s
+    height:100%;
+    background:white;
+    animation:load 1s ease;
 }
 
-.menu-item:hover{
-    background:#14351f;
-    transform:translateX(2px)
+@keyframes load{
+    from{width:0}
+    to{width:100%}
 }
 
-.menu-icon{
-    width:30px;
-    text-align:center;
-    font-size:19px
+.hidden{
+    display:none!important;
 }
 
-.separator{
-    height:1px;
-    margin:10px 0;
-    background:#ffffff12
-}
-
-/* =========================
-   PAGES
-========================= */
-
-.page{
-    position:fixed;
-    top:78px;
-    left:12px;
-    right:12px;
-    bottom:82px;
-    z-index:2500;
-    display:none;
-    overflow:auto;
-    padding:18px;
-    border-radius:24px;
-    background:#07120bf8;
-    border:1px solid #ffffff15;
-    backdrop-filter:blur(25px);
-    box-shadow:0 20px 70px #0009
-}
-
-.page.open{
-    display:block;
-    animation:pageIn .22s ease
-}
-
-@keyframes pageIn{
-    from{
-        opacity:0;
-        transform:translateY(10px)
-    }
-    to{
-        opacity:1;
-        transform:none
-    }
-}
-
-.page h2{
-    color:#39df89;
-    font-size:18px;
-    margin-bottom:8px
-}
-
-.page p{
-    color:#b3beb7;
-    font-size:11px;
-    line-height:1.7;
-    margin-bottom:12px
-}
-
-.main-btn,
-.secondary-btn,
-.point-btn{
-    width:100%;
-    padding:13px;
-    margin-top:7px;
-    border:0;
-    border-radius:13px;
-    font-size:10px;
-    font-weight:1000;
-    cursor:pointer
-}
-
-.main-btn{
-    background:#39df89;
-    color:#031008
-}
-
-.secondary-btn,
-.point-btn{
-    background:#12331f;
-    color:#39df89
-}
-
-.point-btn.active{
-    background:#39df89;
-    color:#031008
-}
-
-.field{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    padding:11px;
-    margin-bottom:7px;
-    border-radius:13px;
-    background:#0d2114
-}
-
-.field input,
-.field textarea{
-    flex:1;
-    border:0;
-    outline:0;
-    background:transparent;
-    color:#fff;
-    font-size:11px;
-    font-family:Arial;
-    resize:none
-}
-
-.field textarea{
-    min-height:70px
-}
-
-.status,
-.point-info{
-    padding:11px;
-    margin-bottom:8px;
-    border-radius:13px;
-    background:#0d2114;
-    color:#aab7af;
-    font-size:9px;
-    line-height:1.6
-}
-
-/* =========================
-   TOURIST PLACES
-========================= */
-
-.tour-card{
-    padding:13px;
-    margin-bottom:8px;
-    border-radius:16px;
-    background:#0d2114;
-    border:1px solid #ffffff0d
-}
-
-.tour-icon{
-    font-size:25px;
-    margin-bottom:6px
-}
-
-.tour-card h3{
-    color:#fff;
-    font-size:12px;
-    margin-bottom:5px
-}
-
-.tour-card p{
-    color:#91a098;
-    font-size:9px;
-    line-height:1.5;
-    margin:0 0 8px
-}
-
-.tour-btn{
-    width:100%;
-    padding:9px;
-    border:0;
-    border-radius:10px;
-    background:#39df89;
-    color:#031008;
-    font-size:9px;
-    font-weight:bold;
-    cursor:pointer
-}
-
-/* =========================
-   MAP PANEL
-========================= */
-
-.map-panel{
-    position:fixed;
-    left:12px;
-    right:12px;
-    bottom:73px;
-    z-index:1000;
-    padding:9px;
-    border-radius:18px;
-    background:#07120bf5;
-    border:1px solid #ffffff15;
-    backdrop-filter:blur(20px)
-}
-
-.layers{
-    display:flex;
-    gap:6px
-}
-
-.layers button{
-    flex:1;
-    padding:10px 4px;
-    border:0;
-    border-radius:11px;
-    background:#0d2114;
-    color:#91a098;
-    font-size:8px;
-    font-weight:bold;
-    cursor:pointer
-}
-
-.layers button.active{
-    background:#39df89;
-    color:#031008
-}
-
-/* =========================
-   GPS
-========================= */
-
-.gps{
-    position:fixed;
-    right:14px;
-    bottom:140px;
-    z-index:1000;
-    width:50px;
-    height:50px;
-    border:0;
-    border-radius:16px;
-    background:#07120bf5;
-    color:#39df89;
-    font-size:24px;
-    cursor:pointer;
-    box-shadow:0 8px 30px #0007
-}
-
-.gps.active{
-    background:#39df89;
-    color:#031008
-}
-
-/* =========================
-   BOTTOM
-========================= */
-
-.bottom{
-    position:fixed;
-    left:12px;
-    right:12px;
-    bottom:12px;
-    z-index:1000;
-    padding:9px 13px;
-    border-radius:16px;
-    background:#07120bf5;
-    border:1px solid #ffffff15;
-    backdrop-filter:blur(20px)
-}
-
-.bottom small{
-    color:#66736b;
-    font-size:7px
-}
-
-.bottom strong{
-    display:block;
-    margin-top:3px;
-    color:#39df89;
-    font-size:9px
-}
-
-/* =========================
-   MARKERS
-========================= */
-
-.point-a,
-.point-b{
-    width:42px;
-    height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    border:4px solid white;
-    font-weight:1000;
-    box-shadow:0 6px 25px #0009
-}
-
-.point-a{
-    background:#39df89;
-    color:#031008
-}
-
-.point-b{
-    background:#ff5964;
-    color:#fff
-}
-
-.gps-marker{
-    width:24px;
-    height:24px;
-    border-radius:50%;
-    background:#268cff;
-    border:4px solid white;
-    box-shadow:0 0 0 8px #268cff33,
-               0 4px 20px #0008
-}
-
-.place{
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#39df89;
-    border:3px solid white;
-    box-shadow:0 4px 15px #0007
-}
-
-.stop-marker{
-    width:34px;
-    height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#ffb52e;
-    border:3px solid white;
-    box-shadow:0 4px 18px #0008;
-    font-size:17px
-}
-
-/* =========================
-   ROUTE CARD
-========================= */
-
-.route-card{
-    position:fixed;
-    left:12px;
-    right:12px;
-    bottom:130px;
-    z-index:2200;
-    display:none;
+.notice{
     padding:14px;
-    border-radius:21px;
-    background:#07120bf7;
-    border:1px solid #39df8960;
-    backdrop-filter:blur(25px);
-    box-shadow:0 15px 60px #0009
-}
-
-.route-card.show{
-    display:block;
-    animation:routeCardIn .35s ease
-}
-
-@keyframes routeCardIn{
-    from{
-        opacity:0;
-        transform:translateY(20px)
-    }
-    to{
-        opacity:1;
-        transform:none
-    }
-}
-
-.route-title{
-    color:#39df89;
-    font-size:12px;
-    font-weight:bold
-}
-
-.route-stats{
-    display:flex;
-    gap:8px;
-    margin-top:10px
-}
-
-.route-stat{
-    flex:1;
-    padding:10px;
-    border-radius:13px;
-    background:#0d2114
-}
-
-.route-stat small{
-    display:block;
-    color:#66736b;
-    font-size:7px
-}
-
-.route-stat strong{
-    display:block;
-    margin-top:4px;
-    color:#fff;
-    font-size:12px
-}
-
-.route-info{
-    color:#aebbb3;
-    font-size:8px;
-    margin-top:9px
-}
-
-/* =========================
-   TOAST
-========================= */
-
-#toast{
-    position:fixed;
-    top:180px;
-    left:50%;
-    z-index:99999;
-    transform:translate(-50%,-10px);
-    opacity:0;
-    padding:10px 15px;
-    border-radius:13px;
-    background:#fff;
-    color:#031008;
-    font-size:9px;
-    font-weight:bold;
-    transition:.25s;
-    pointer-events:none;
-    white-space:nowrap
-}
-
-#toast.show{
-    opacity:1;
-    transform:translate(-50%,0)
-}
-
-/* =========================
-   SETTINGS
-========================= */
-
-.setting{
-    padding:13px;
-    margin-bottom:7px;
-    border-radius:14px;
-    background:#0d2114
-}
-
-.setting-title{
-    color:#39df89;
-    font-size:11px;
-    font-weight:bold;
-    margin-bottom:9px
-}
-
-.options{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap
-}
-
-.option{
-    padding:9px 12px;
-    border:0;
+    background:#eaf8ee;
+    border-left:5px solid var(--green);
     border-radius:10px;
-    background:#12331f;
-    color:#aab7af;
-    font-size:9px;
-    cursor:pointer
+    margin-bottom:15px;
+    line-height:1.5;
 }
 
-.option.selected{
-    background:#39df89;
-    color:#031008
+body.dark .notice{
+    background:#183322;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media(min-width:700px){
-
-    .top,
-    .map-panel,
-    .bottom,
-    .route-card{
-        width:430px;
-        right:auto;
-        left:20px
+@media(max-width:600px){
+    main{
+        padding:12px;
     }
 
-    .menu,
-    .page{
-        left:20px
+    .hero h1{
+        font-size:25px;
     }
 
-    .page{
-        width:430px;
-        right:auto
+    #map{
+        height:390px;
+    }
+
+    .top{
+        padding:9px 12px;
     }
 }
 </style>
@@ -733,3158 +506,1544 @@ body{
 
 <body>
 
-<!-- =========================
-     LOADING
-========================= -->
-
+<!-- FAST LOADING -->
 <div id="loading">
+    <div class="loaderLogo">SHT</div>
+    <div>SHOHIN ROHNAMO</div>
+    <div class="loaderBar">
+        <div class="loaderProgress"></div>
+    </div>
+</div>
 
-    <div class="loader">
+<!-- HEADER -->
 
-        <div class="loader-logo">
+<header>
+    <div class="top">
+        <div class="logo">
             SHT
+            <small>SHOHIN ROHNAMO</small>
         </div>
 
-        <div class="loader-text">
-            SHOHIN ROHNAMO
-        </div>
+        <button class="menuBtn" onclick="openMenu()">☰</button>
+    </div>
+</header>
 
-        <div class="loader-dot"></div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
+<!-- SIDE MENU -->
+
+<div class="sideMenu" id="sideMenu">
+
+    <div class="menuTitle">
+        <b>SHT</b>
+        <p>SHOHIN ROHNAMO</p>
     </div>
 
-</div>
-
-<div id="map"></div>
-
-<!-- =========================
-     TOP
-========================= -->
-
-<div class="top">
-
-    <button
-        class="logo"
-        onclick="toggleMenu()">
-        SHT
-    </button>
-
-    <div class="search">
-
-        <input
-            id="search"
-            placeholder="Ҷустуҷӯи ҷой, истгоҳ, роҳ..."
-            onkeydown="
-                if(event.key==='Enter')
-                searchMap()
-            "
-        >
-
-        <button onclick="searchMap()">
-            🔎
-        </button>
-
-    </div>
-
-</div>
-
-<!-- =========================
-     MENU
-========================= -->
-
-<div id="menu" class="menu">
-
-    <div class="menu-title">
-        SHOHIN ROHNAMO
-    </div>
-
-    <div class="menu-subtitle">
-        Роҳнамо барои Тоҷикистон
-    </div>
-
-    <button
-        class="menu-item"
-        onclick="openPage('cityPage')">
-
-        <span class="menu-icon">🚌</span>
-
-        Маршрут дар дохили шаҳр
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('interPage')">
-
-        <span class="menu-icon">🚐</span>
-
-        Маршрут ба беруни шаҳр
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('addPage')">
-
-        <span class="menu-icon">➕</span>
-
-        Иловаи маршрут А → Б
-
-    </button>
-
-    <!-- NEW -->
-
-    <button
-        class="menu-item"
-        onclick="openPage('addStopPage')">
-
-        <span class="menu-icon">🚌</span>
-
-        Иловаи истгоҳ
-
-    </button>
-
-    <!-- NEW -->
-
-    <button
-        class="menu-item"
-        onclick="openPage('tourismPage')">
-
-        <span class="menu-icon">🏙️</span>
-
-        Ҷойҳои диданбоби Душанбе
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('placesPage')">
-
-        <span class="menu-icon">📍</span>
-
-        Ҷойҳо
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('favoritesPage')">
-
-        <span class="menu-icon">❤️</span>
-
-        Избранное
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('settingsPage')">
-
-        <span class="menu-icon">⚙️</span>
-
-        Танзимот
-
-    </button>
-
-    <div class="separator"></div>
-
-    <button
-        class="menu-item"
-        onclick="openPage('contactPage')">
-
-        <span class="menu-icon">📞</span>
-
-        Тамос бо мо
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="openPage('agreementPage')">
-
-        <span class="menu-icon">📄</span>
-
-        Созишномаи корбар
-
-    </button>
-
-</div>
-
-<!-- =========================
-     CITY ROUTES
-========================= -->
-
-<div id="cityPage" class="page">
-
-    <h2>
+    <button class="menuItem" onclick="showPage('cityRoutes')">
         🚌 Маршрут дар дохили шаҳр
-    </h2>
-
-    <p>
-        Нуқтаи оғоз ва таъинотро мустақиман аз карта интихоб кунед.
-    </p>
-
-    <button
-        class="main-btn"
-        onclick="startMapRoute()">
-
-        📍 ИНТИХОБИ А ВА Б АЗ КАРТА
-
     </button>
 
-    <button
-        class="secondary-btn"
-        onclick="useMyLocationAsA()">
-
-        📍 ОТ МАН → Б
-
+    <button class="menuItem" onclick="showPage('intercity')">
+        🛣️ Маршрут ба берун аз шаҳр
     </button>
 
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
+    <button class="menuItem" onclick="showPage('addRoute')">
+        ➕ Иловаи маршрут A → B
     </button>
 
-</div>
-
-<!-- =========================
-     INTERCITY
-========================= -->
-
-<div id="interPage" class="page">
-
-    <h2>
-        🚐 Маршрут ба беруни шаҳр
-    </h2>
-
-    <p>
-        Нуқтаи отправка ва шаҳри таъинотро интихоб кунед.
-    </p>
-
-    <div class="field">
-
-        <span>🟢</span>
-
-        <input
-            id="interFrom"
-            placeholder="Нуқтаи отправка"
-        >
-
-    </div>
-
-    <div class="field">
-
-        <span>🔴</span>
-
-        <input
-            id="interTo"
-            placeholder="Шаҳри таъинот"
-        >
-
-    </div>
-
-    <button
-        class="main-btn"
-        onclick="searchIntercity()">
-
-        🚐 ҶУСТУҶӮ
-
+    <button class="menuItem" onclick="showPage('stops')">
+        🚏 Истгоҳҳо
     </button>
 
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     ADD ROUTE
-========================= -->
-
-<div id="addPage" class="page">
-
-    <h2>
-        ➕ Иловаи маршрут А → Б
-    </h2>
-
-    <p>
-        Нуқтаҳоро ҳатман аз карта интихоб кунед.
-    </p>
-
-    <div
-        id="routeStatus"
-        class="status">
-
-        Аввал нуқтаи А-ро интихоб кунед.
-
-    </div>
-
-    <button
-        class="main-btn"
-        onclick="useMyLocationAsA()">
-
-        📍 ОТ МАН → Б
-
-    </button>
-
-    <button
-        id="aButton"
-        class="point-btn"
-        onclick="selectA()">
-
-        🟢 ИНТИХОБИ НУҚТАИ А
-
-    </button>
-
-    <button
-        id="bButton"
-        class="point-btn"
-        onclick="selectB()">
-
-        🔴 ИНТИХОБИ НУҚТАИ Б
-
-    </button>
-
-    <div
-        id="aInfo"
-        class="point-info">
-
-        🟢 А: интихоб нашудааст
-
-    </div>
-
-    <div
-        id="bInfo"
-        class="point-info">
-
-        🔴 Б: интихоб нашудааст
-
-    </div>
-
-    <button
-        class="main-btn"
-        onclick="buildRealRoute()">
-
-        🛣️ СОХТАНИ МАРШРУТИ ВОҚЕӢ
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="resetRoute()">
-
-        ↩️ Аз нав интихоб кардан
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     ADD STOP
-========================= -->
-
-<div id="addStopPage" class="page">
-
-    <h2>
-        🚌 Иловаи истгоҳ
-    </h2>
-
-    <p>
-        Аввал нуқтаи воқеии истгоҳро аз карта интихоб кунед.
-        Баъд номи истгоҳро нависед.
-    </p>
-
-    <div
-        id="stopStatus"
-        class="status">
-
-        📍 Нуқтаи истгоҳ интихоб нашудааст.
-
-    </div>
-
-    <button
-        id="stopPointButton"
-        class="main-btn"
-        onclick="startStopSelection()">
-
-        📍 ИНТИХОБИ НУҚТА АЗ КАРТА
-
-    </button>
-
-    <div class="field">
-
-        <span>🚌</span>
-
-        <input
-            id="stopName"
-            placeholder="Номи истгоҳ"
-        >
-
-    </div>
-
-    <div class="field">
-
-        <span>📝</span>
-
-        <textarea
-            id="stopDescription"
-            placeholder="Маълумоти иловагӣ"
-        ></textarea>
-
-    </div>
-
-    <button
-        class="main-btn"
-        onclick="saveNewStop()">
-
-        💾 ЗАХИРА КАРДАНИ ИСТГОҲ
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="showStops()">
-
-        🚌 НИШОН ДОДАНИ ИСТГОҲҲО
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     TOURISM DUSHANBE
-========================= -->
-
-<div id="tourismPage" class="page">
-
-    <h2>
+    <button class="menuItem" onclick="showPage('places')">
         🏙️ Ҷойҳои диданбоби Душанбе
-    </h2>
-
-    <p>
-        Ҷойҳои машҳури Душанбе. Ҷойро интихоб кунед,
-        карта ба тарафи он мекушояд.
-    </p>
-
-    <div id="tourList"></div>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
     </button>
 
-</div>
-
-<!-- =========================
-     PLACES
-========================= -->
-
-<div id="placesPage" class="page">
-
-    <h2>
-        📍 Ҷойҳо
-    </h2>
-
-    <button
-        class="menu-item"
-        onclick="filterPlaces('hospital')">
-
-        🏥 Беморхонаҳо
-
+    <button class="menuItem" onclick="showPage('contacts')">
+        📞 Тамосҳои мо
     </button>
 
-    <button
-        class="menu-item"
-        onclick="filterPlaces('school')">
-
-        🏫 Мактабҳо
-
+    <button class="menuItem" onclick="showPage('agreement')">
+        📄 Созишномаи истифодабарӣ
     </button>
 
-    <button
-        class="menu-item"
-        onclick="filterPlaces('mosque')">
-
-        🕌 Масҷидҳо
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="filterPlaces('shop')">
-
-        🏪 Мағозаҳо
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="filterPlaces('fuel')">
-
-        ⛽ Нуқтаҳои сӯзишворӣ
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="filterPlaces('bank')">
-
-        🏦 Бонкҳо
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     FAVORITES
-========================= -->
-
-<div id="favoritesPage" class="page">
-
-    <h2>
-        ❤️ Избранное
-    </h2>
-
-    <p>
-        Ҷойҳои дӯстдошта дар хотираи браузер нигоҳ дошта мешаванд.
-    </p>
-
-    <button
-        class="menu-item"
-        onclick="saveHome()">
-
-        🏠 Хонаи ман
-
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="saveWork()">
-
-        💼 Ҷои кор
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     SETTINGS
-========================= -->
-
-<div id="settingsPage" class="page">
-
-    <h2>
+    <button class="menuItem" onclick="showPage('settings')">
         ⚙️ Танзимот
-    </h2>
-
-    <div class="setting">
-
-        <div class="setting-title">
-            🌐 Забон
-        </div>
-
-        <div class="options">
-
-            <button
-                class="option selected"
-                onclick="setLanguage('tg',this)">
-                Тоҷикӣ
-            </button>
-
-            <button
-                class="option"
-                onclick="setLanguage('ru',this)">
-                Русский
-            </button>
-
-            <button
-                class="option"
-                onclick="setLanguage('en',this)">
-                English
-            </button>
-
-            <button
-                class="option"
-                onclick="setLanguage('uz',this)">
-                O‘zbekcha
-            </button>
-
-            <button
-                class="option"
-                onclick="setLanguage('fa',this)">
-                فارسی
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="setting">
-
-        <div class="setting-title">
-            🎨 Интерфейс
-        </div>
-
-        <div class="options">
-
-            <button
-                class="option selected"
-                onclick="setTheme('dark',this)">
-                🌙 Тёмный
-            </button>
-
-            <button
-                class="option"
-                onclick="setTheme('light',this)">
-                ☀️ Светлый
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="setting">
-
-        <div class="setting-title">
-            🔤 Размер текста
-        </div>
-
-        <div class="options">
-
-            <button
-                class="option"
-                onclick="setTextSize('small')">
-                A
-            </button>
-
-            <button
-                class="option selected"
-                onclick="setTextSize('normal')">
-                A+
-            </button>
-
-            <button
-                class="option"
-                onclick="setTextSize('large')">
-                A++
-            </button>
-
-        </div>
-
-    </div>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
     </button>
 
 </div>
 
-<!-- =========================
-     CONTACT
-========================= -->
+<main>
 
-<div id="contactPage" class="page">
+<!-- HOME -->
 
-    <h2>
-        📞 Тамос бо мо
-    </h2>
+<section class="page active" id="home">
 
-    <p>
-        Барои тағйир, илова ва пешниҳодҳо бо мо тамос гиред.
-    </p>
+    <div class="hero">
+        <h1>SHOHIN ROHNAMO</h1>
+        <p>
+            Харитаи роҳҳо, истгоҳҳо ва ҷойҳои муҳими Душанбе.
+            Роҳи худро осонтар пайдо кунед.
+        </p>
 
-    <button
-        class="menu-item"
-        onclick="openInstagram()">
-
-        📸 Instagram
-        @shohin_tajikistan
-
-    </button>
-
-    <button
-        class="secondary-btn"
-        onclick="closePages()">
-
-        Бастан
-
-    </button>
-
-</div>
-
-<!-- =========================
-     AGREEMENT
-========================= -->
-
-<div id="agreementPage" class="page">
-
-    <h2>
-        📄 Созишномаи корбар
-    </h2>
-
-    <p>
-        SHOHIN ROHNAMO хизматрасонии рақамӣ барои роҳнамоӣ,
-        ҷустуҷӯи ҷойҳо ва маршрутҳо мебошад.
-    </p>
-
-    <p>
-        Маълумоти роҳҳо, ҷойҳо ва истгоҳҳо метавонад
-        аз манбаъҳои гуногун гирифта шавад.
-    </p>
-
-    <p>
-        Корбар бояд маълумоти дуруст пешниҳод кунад.
-    </p>
-
-    <p>
-        Ҳангоми ҳаракат ҳамеша қоидаҳои ҳаракат дар роҳро
-        риоя кунед ва ба аломатҳои воқеии роҳ афзалият диҳед.
-    </p>
-
-    <button
-        class="main-btn"
-        onclick="closePages()">
-
-        ҚАБУЛ
-
-    </button>
-
-</div>
-
-<!-- =========================
-     ROUTE CARD
-========================= -->
-
-<div
-    id="routeCard"
-    class="route-card">
-
-    <div class="route-title">
-        🛣️ Маршрут тайёр аст
+        <input
+            class="search"
+            id="mainSearch"
+            placeholder="🔎 Ҷустуҷӯи ҷой, истгоҳ ё маршрут..."
+            oninput="searchEverything()"
+        >
     </div>
 
-    <div class="route-stats">
+    <div class="grid">
 
-        <div class="route-stat">
-
-            <small>
-                МАСОФА
-            </small>
-
-            <strong id="routeDistance">
-                —
-            </strong>
-
+        <div class="card">
+            <div class="cardBody">
+                <h3>🧭 Навигатсия</h3>
+                <p>Нуқтаи A ва B-ро интихоб карда, маршрут созед.</p>
+                <br>
+                <button class="btn" onclick="showPage('navigation')">
+                    Кушодан
+                </button>
+            </div>
         </div>
 
-        <div class="route-stat">
+        <div class="card">
+            <div class="cardBody">
+                <h3>🚏 Истгоҳҳо</h3>
+                <p>Истгоҳҳо ва нақлиёти аз онҳо гузарандаро бинед.</p>
+                <br>
+                <button class="btn" onclick="showPage('stops')">
+                    Истгоҳҳо
+                </button>
+            </div>
+        </div>
 
-            <small>
-                ВАҚТ
-            </small>
-
-            <strong id="routeTime">
-                —
-            </strong>
-
+        <div class="card">
+            <div class="cardBody">
+                <h3>🏙️ Душанбе</h3>
+                <p>Ҷойҳои диданбоби шаҳрро пайдо кунед.</p>
+                <br>
+                <button class="btn" onclick="showPage('places')">
+                    Дидан
+                </button>
+            </div>
         </div>
 
     </div>
 
-    <div
-        id="routeInfo"
-        class="route-info">
+</section>
 
-        Роҳ аз рӯи графи воқеии роҳҳо сохта шудааст.
+<!-- NAVIGATION -->
 
+<section class="page" id="navigation">
+
+    <div class="hero">
+        <h1>🧭 Навигатсия</h1>
+        <p>Нуқтаи A ва B-ро аз харита интихоб кунед.</p>
     </div>
 
-</div>
+    <div class="notice">
+        Аввал <b>«Интихоби A»</b>-ро пахш кунед ва ба харита нуқтаро интихоб кунед.
+        Сипас ҳамин корро барои B иҷро кунед.
+    </div>
 
-<!-- =========================
-     MAP PANEL
-========================= -->
+    <div class="mapTools">
 
-<div class="map-panel">
-
-    <div class="layers">
-
-        <button
-            id="roadsBtn"
-            class="active"
-            onclick="showRoads()">
-
-            🛣️ РОҲҲО
-
+        <button class="btn" onclick="selectPoint('A')">
+            📍 Интихоби A
         </button>
 
-        <button
-            id="placesBtn"
-            onclick="showPlaces()">
-
-            📍 ҶОЙҲО
-
+        <button class="btn" onclick="selectPoint('B')">
+            📍 Интихоби B
         </button>
 
-        <button
-            id="stopsBtn"
-            onclick="showStops()">
+        <button class="btn secondary" onclick="useGPS()">
+            🛰️ GPS
+        </button>
 
-            🚌 ИСТГОҲҲО
-
+        <button class="btn danger" onclick="clearRoute()">
+            Очистить
         </button>
 
     </div>
 
+    <div id="routeInfo" class="notice">
+        A: не выбрана<br>
+        B: не выбрана
+    </div>
+
+    <div id="map"></div>
+
+</section>
+
+<!-- CITY ROUTES -->
+
+<section class="page" id="cityRoutes">
+
+    <div class="hero">
+        <h1>🚌 Маршрут дар дохили шаҳр</h1>
+        <p>Маршрутҳои дохили шаҳр.</p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>Автобус №1</h3>
+                <p>Маршрути шаҳрӣ.</p>
+                <span class="routeBadge">1</span>
+                <span class="routeBadge">Автобус</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>Автобус №2</h3>
+                <p>Маршрути шаҳрӣ.</p>
+                <span class="routeBadge">2</span>
+                <span class="routeBadge">Автобус</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>Маршрутка</h3>
+                <p>Маълумотро метавонед баъдтар пурра кунед.</p>
+                <span class="routeBadge">Маршрутка</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- INTERCITY -->
+
+<section class="page" id="intercity">
+
+    <div class="hero">
+        <h1>🛣️ Маршрут ба берун аз шаҳр</h1>
+        <p>
+            Нуқтаҳое, ки аз онҳо ба дигар шаҳрҳо равона мешаванд.
+        </p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>🚍 Душанбе → Хуҷанд</h3>
+                <p>Нуқтаи равонашавӣ ба Хуҷанд.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>🚍 Душанбе → Кӯлоб</h3>
+                <p>Нуқтаи равонашавӣ ба Кӯлоб.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardBody">
+                <h3>🚍 Душанбе → Бохтар</h3>
+                <p>Нуқтаи равонашавӣ ба Бохтар.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ADD ROUTE -->
+
+<section class="page" id="addRoute">
+
+    <div class="hero">
+        <h1>➕ Иловаи маршрут</h1>
+        <p>Маршрути A → B-ро пешниҳод кунед.</p>
+    </div>
+
+    <div class="form">
+
+        <div class="formGroup">
+            <label>Номи маршрут</label>
+            <input id="routeName" placeholder="Масалан: Душанбе → Варзоб">
+        </div>
+
+        <div class="formGroup">
+            <label>Нақлиёт</label>
+            <input id="routeTransport" placeholder="Автобус №..., маршрутка №...">
+        </div>
+
+        <div class="formGroup">
+            <label>Маълумоти иловагӣ</label>
+            <textarea id="routeDescription"
+            placeholder="Маълумоти маршрут..."></textarea>
+        </div>
+
+        <button class="btn" onclick="showPage('navigation')">
+            🗺️ Аввал нуқтаҳоро аз карта интихоб кунед
+        </button>
+
+        <br><br>
+
+        <button class="btn" onclick="submitRoute()">
+            📤 Пешниҳод кардан
+        </button>
+
+    </div>
+
+</section>
+
+<!-- STOPS -->
+
+<section class="page" id="stops">
+
+    <div class="hero">
+        <h1>🚏 Истгоҳҳо</h1>
+        <p>
+            Истгоҳҳои расмии SHOHIN ROHNAMO ва пешниҳодҳои корбарон.
+        </p>
+    </div>
+
+    <div class="notice">
+        Истгоҳи навро ҳар кас метавонад пешниҳод кунад.
+        Пас аз санҷиши шумо онро ба версияи расмии сайт илова мекунед.
+    </div>
+
+    <button class="btn" onclick="showPage('addStop')">
+        ➕ Иловаи истгоҳ
+    </button>
+
+    <br><br>
+
+    <div id="stopsList" class="grid"></div>
+
+</section>
+
+<!-- ADD STOP -->
+
+<section class="page" id="addStop">
+
+    <div class="hero">
+        <h1>🚏 Иловаи истгоҳ</h1>
+        <p>Нуқтаи истгоҳро ҳатман аз карта интихоб кунед.</p>
+    </div>
+
+    <div class="form">
+
+        <div class="notice">
+            Қадами 1: тугмаи поёнро пахш карда, баъд нуқтаи истгоҳро дар карта интихоб кунед.
+        </div>
+
+        <button class="btn" onclick="selectStopPoint()">
+            📍 Интихоби нуқтаи истгоҳ
+        </button>
+
+        <p id="stopCoords" style="margin-top:10px;color:#68756d">
+            Нуқта интихоб нашудааст.
+        </p>
+
+        <br>
+
+        <div class="formGroup">
+            <label>Номи истгоҳ *</label>
+            <input id="stopName"
+            placeholder="Масалан: Площади Исмоили Сомони">
+        </div>
+
+        <div class="formGroup">
+            <label>Автобусҳо</label>
+            <input id="stopBuses"
+            placeholder="Масалан: 1, 2, 8, 18">
+        </div>
+
+        <div class="formGroup">
+            <label>Маршруткаҳо</label>
+            <input id="stopMinibus"
+            placeholder="Масалан: 7, 11, 33">
+        </div>
+
+        <div class="formGroup">
+            <label>Описание</label>
+            <textarea id="stopDescription"
+            placeholder="Маълумоти иловагӣ дар бораи истгоҳ..."></textarea>
+        </div>
+
+        <div class="formGroup">
+            <label>📷 Фото истгоҳ</label>
+            <input
+                type="file"
+                id="stopPhoto"
+                accept="image/*"
+                onchange="previewStopPhoto(event)"
+            >
+        </div>
+
+        <img id="stopPreview"
+             class="photo hidden"
+             style="border-radius:15px;margin-bottom:15px">
+
+        <button class="btn" onclick="submitStop()">
+            📤 Отправить предложение
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PLACES -->
+
+<section class="page" id="places">
+
+    <div class="hero">
+        <h1>🏙️ Ҷойҳои диданбоби Душанбе</h1>
+        <p>Ҷойҳои машҳур ва диданбоби пойтахт.</p>
+    </div>
+
+    <div id="placesList" class="grid"></div>
+
+</section>
+
+<!-- CONTACTS -->
+
+<section class="page" id="contacts">
+
+    <div class="hero">
+        <h1>📞 Тамосҳои мо</h1>
+        <p>Барои тағйир, илова ва пешниҳодҳо.</p>
+    </div>
+
+    <div class="card">
+        <div class="cardBody">
+
+            <h3>📱 Instagram</h3>
+            <p>
+                Барои пешниҳодҳо метавонед ба Instagram-и SHOHIN нависед.
+            </p>
+
+            <br>
+
+            <a
+              href="https://www.instagram.com/shohin_tajikistan/"
+              target="_blank"
+              class="btn"
+              style="display:inline-block;text-decoration:none"
+            >
+              Instagram
+            </a>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- AGREEMENT -->
+
+<section class="page" id="agreement">
+
+    <div class="hero">
+        <h1>📄 Созишномаи истифодабарӣ</h1>
+        <p>Шартҳои истифодаи SHOHIN ROHNAMO.</p>
+    </div>
+
+    <div class="card">
+        <div class="cardBody">
+
+            <h3>Созишномаи истифодабарӣ</h3>
+
+            <br>
+
+            <p>
+                Бо истифода аз SHOHIN ROHNAMO шумо розӣ мешавед,
+                ки маълумоти пешниҳодшаванда бояд дуруст ва барои
+                истифодаи умумӣ мувофиқ бошад.
+            </p>
+
+            <br>
+
+            <p>
+                Маълумоти маршрутҳо, истгоҳҳо ва ҷойҳо метавонад
+                аз ҷониби маъмурият санҷида, тағйир ё нест карда шавад.
+            </p>
+
+            <br>
+
+            <p>
+                Корбар барои маълумоти нодуруст ё қасдан гумроҳкунанда
+                масъулият дорад.
+            </p>
+
+            <br>
+
+            <p>
+                SHOHIN ROHNAMO метавонад функсияҳо ва маълумотро
+                бе огоҳии пешакӣ тағйир диҳад.
+            </p>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- SETTINGS -->
+
+<section class="page" id="settings">
+
+    <div class="hero">
+        <h1>⚙️ Танзимот</h1>
+        <p>Интерфейси худро интихоб кунед.</p>
+    </div>
+
+    <div class="card">
+        <div class="cardBody">
+
+            <div class="settingRow">
+                <b>🌙 Тёмная тема</b>
+                <button class="btn" onclick="toggleDark()">
+                    Тағйир додан
+                </button>
+            </div>
+
+            <div class="settingRow">
+                <b>🔤 Размер текста</b>
+
+                <select id="fontSize"
+                        onchange="changeFontSize(this.value)"
+                        style="width:130px">
+                    <option value="15">Обычный</option>
+                    <option value="17">Большой</option>
+                    <option value="19">Очень большой</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    © 2026 SHOHIN ROHNAMO
+</footer>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modalBox">
+
+        <div class="modalHead">
+            <h2 id="modalTitle">Маълумот</h2>
+            <button class="close" onclick="closeModal()">✕</button>
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
 </div>
-
-<!-- GPS -->
-
-<button
-    id="gpsButton"
-    class="gps"
-    onclick="locateMe()">
-
-    ◎
-
-</button>
-
-<!-- BOTTOM -->
-
-<div class="bottom">
-
-    <small>
-        SHOHIN ROHNAMO
-    </small>
-
-    <strong>
-        Душанбе • Тоҷикистон
-    </strong>
-
-</div>
-
-<div id="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =====================================================
-   FILES
-===================================================== */
+/* =========================
+   BASIC
+========================= */
 
-const ROADS_FILE="export (1).geojson";
-const PLACES_FILE="export (2).geojson";
-const STOPS_FILE="export (3).geojson";
+let map = null;
+let mapInitialized = false;
 
+let selecting = null;
 
-/* =====================================================
-   MAP
-===================================================== */
+let pointA = null;
+let pointB = null;
 
-const map=L.map("map",{
-    center:[38.5598,68.7870],
-    zoom:13,
-    minZoom:10,
-    maxZoom:19,
-    zoomControl:true
-});
+let markerA = null;
+let markerB = null;
+let routeLine = null;
 
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        maxZoom:19,
-        attribution:"© OpenStreetMap contributors"
-    }
-).addTo(map);
+let stopSelecting = false;
+let stopPoint = null;
+let stopMarker = null;
 
+let stopPhotoData = "";
 
-/* =====================================================
-   DATA
-===================================================== */
+const DEFAULT_CENTER = [38.5598,68.7870];
 
-let roadsData=null;
-let placesData=null;
-let stopsData=null;
+/* =========================
+   MENU
+========================= */
 
-let roadsLayer=null;
-let placesLayer=null;
-let stopsLayer=null;
-
-
-/* =====================================================
-   GRAPH
-===================================================== */
-
-const graph=new Map();
-
-let graphNodes=[];
-
-const SNAP_METERS=18;
-
-
-function coordinateKey(lat,lon){
-
-    return Number(lat).toFixed(5)+","+
-           Number(lon).toFixed(5);
-
+function openMenu(){
+    document.getElementById("sideMenu").classList.add("open");
+    document.getElementById("overlay").classList.add("show");
 }
 
-
-function getOrCreateNode(lat,lon){
-
-    const key=coordinateKey(lat,lon);
-
-    if(!graph.has(key)){
-
-        graph.set(
-            key,
-            {
-                id:key,
-                lat:Number(lat),
-                lon:Number(lon),
-                neighbors:new Map()
-            }
-        );
-
-    }
-
-    return graph.get(key);
+function closeMenu(){
+    document.getElementById("sideMenu").classList.remove("open");
+    document.getElementById("overlay").classList.remove("show");
 }
 
+/* =========================
+   PAGES
+========================= */
 
-function haversine(lat1,lon1,lat2,lon2){
+function showPage(id){
 
-    const R=6371000;
-
-    const p1=lat1*Math.PI/180;
-    const p2=lat2*Math.PI/180;
-
-    const dp=(lat2-lat1)*Math.PI/180;
-    const dl=(lon2-lon1)*Math.PI/180;
-
-    const a=
-        Math.sin(dp/2)**2+
-        Math.cos(p1)*
-        Math.cos(p2)*
-        Math.sin(dl/2)**2;
-
-    return 2*R*
-        Math.atan2(
-            Math.sqrt(a),
-            Math.sqrt(1-a)
-        );
-}
-
-
-function addEdge(a,b){
-
-    if(!a||!b||a.id===b.id)
-        return;
-
-    const d=
-        haversine(
-            a.lat,
-            a.lon,
-            b.lat,
-            b.lon
-        );
-
-    a.neighbors.set(
-        b.id,
-        Math.min(
-            a.neighbors.get(b.id)??Infinity,
-            d
-        )
-    );
-
-    b.neighbors.set(
-        a.id,
-        Math.min(
-            b.neighbors.get(a.id)??Infinity,
-            d
-        )
-    );
-}
-
-
-function addLineString(coords){
-
-    if(!Array.isArray(coords))
-        return;
-
-    let previous=null;
-
-    for(const c of coords){
-
-        if(!Array.isArray(c)||c.length<2)
-            continue;
-
-        const lon=Number(c[0]);
-        const lat=Number(c[1]);
-
-        if(!Number.isFinite(lat)||
-           !Number.isFinite(lon))
-            continue;
-
-        const node=
-            getOrCreateNode(lat,lon);
-
-        if(previous)
-            addEdge(previous,node);
-
-        previous=node;
-    }
-}
-
-
-function processGeometry(g){
-
-    if(!g)
-        return;
-
-    if(g.type==="LineString"){
-
-        addLineString(g.coordinates);
-
-    }else if(g.type==="MultiLineString"){
-
-        for(const line of g.coordinates||[])
-            addLineString(line);
-
-    }else if(g.type==="GeometryCollection"){
-
-        for(const x of g.geometries||[])
-            processGeometry(x);
-    }
-}
-
-
-function connectNearbyNodes(){
-
-    const cells=new Map();
-
-    const size=.00018;
-
-    function cellKey(lat,lon){
-
-        return Math.floor(lat/size)+","+
-               Math.floor(lon/size);
-    }
-
-    for(const node of graphNodes){
-
-        const key=
-            cellKey(node.lat,node.lon);
-
-        if(!cells.has(key))
-            cells.set(key,[]);
-
-        cells.get(key).push(node);
-    }
-
-    const directions=[
-        [-1,-1],[-1,0],[-1,1],
-        [0,-1],[0,0],[0,1],
-        [1,-1],[1,0],[1,1]
-    ];
-
-    for(const node of graphNodes){
-
-        const baseLat=
-            Math.floor(node.lat/size);
-
-        const baseLon=
-            Math.floor(node.lon/size);
-
-        for(const [dy,dx] of directions){
-
-            const list=
-                cells.get(
-                    (baseLat+dy)+","+
-                    (baseLon+dx)
-                );
-
-            if(!list)
-                continue;
-
-            for(const other of list){
-
-                if(node===other)
-                    continue;
-
-                if(node.neighbors.has(other.id))
-                    continue;
-
-                const d=
-                    haversine(
-                        node.lat,
-                        node.lon,
-                        other.lat,
-                        other.lon
-                    );
-
-                if(d<=SNAP_METERS)
-                    addEdge(node,other);
-            }
-        }
-    }
-}
-
-
-async function buildGraph(data){
-
-    graph.clear();
-
-    for(
-        let i=0;
-        i<data.features.length;
-        i++
-    ){
-
-        const feature=data.features[i];
-
-        if(feature.geometry)
-            processGeometry(feature.geometry);
-
-        if(i%150===0)
-            await new Promise(r=>setTimeout(r,0));
-    }
-
-    graphNodes=
-        Array.from(graph.values());
-
-    connectNearbyNodes();
-
-    console.log(
-        "Graph nodes:",
-        graphNodes.length
-    );
-}
-
-
-/* =====================================================
-   LOAD JSON
-===================================================== */
-
-async function loadJSON(file){
-
-    const response=
-        await fetch(
-            file+"?v="+Date.now()
-        );
-
-    if(!response.ok)
-        throw new Error(
-            file+" HTTP "+response.status
-        );
-
-    return response.json();
-}
-
-
-async function loadRoads(){
-
-    roadsData=
-        await loadJSON(ROADS_FILE);
-
-    roadsLayer=
-        L.geoJSON(
-            roadsData,
-            {
-                style:{
-                    color:"#19c979",
-                    weight:3,
-                    opacity:.7
-                }
-            }
-        ).addTo(map);
-
-    setTimeout(
-        async()=>{
-
-            await buildGraph(roadsData);
-
-            toast(
-                "✓ Навигация готова"
-            );
-
-        },
-        50
-    );
-}
-
-
-async function loadPlaces(){
-
-    try{
-
-        placesData=
-            await loadJSON(PLACES_FILE);
-
-        placesLayer=
-            L.geoJSON(
-                placesData,
-                {
-                    pointToLayer:(f,ll)=>
-                        L.marker(
-                            ll,
-                            {
-                                icon:
-                                    L.divIcon({
-                                        className:"",
-                                        html:
-                                            '<div class="place">📍</div>',
-                                        iconSize:[30,30],
-                                        iconAnchor:[15,15]
-                                    })
-                            }
-                        )
-                }
-            );
-
-    }catch(e){
-
-        console.warn(e);
-    }
-}
-
-
-async function loadStops(){
-
-    try{
-
-        stopsData=
-            await loadJSON(STOPS_FILE);
-
-        stopsLayer=
-            L.geoJSON(
-                stopsData,
-                {
-                    pointToLayer:(f,ll)=>{
-
-                        const name=
-                            f.properties?.name||
-                            f.properties?.NAME||
-                            "Истгоҳ";
-
-                        const marker=
-                            L.marker(
-                                ll,
-                                {
-                                    icon:
-                                        L.divIcon({
-                                            className:"",
-                                            html:
-                                                '<div class="stop-marker">🚌</div>',
-                                            iconSize:[34,34],
-                                            iconAnchor:[17,17]
-                                        })
-                                }
-                            );
-
-                        marker.bindPopup(
-                            "<b>🚌 "+
-                            name+
-                            "</b>"
-                        );
-
-                        return marker;
-                    }
-                }
-            );
-
-    }catch(e){
-
-        console.warn(e);
-    }
-}
-
-
-/* =====================================================
-   ROUTE POINTS
-===================================================== */
-
-let selecting=null;
-
-let pointA=null;
-let pointB=null;
-
-let markerA=null;
-let markerB=null;
-
-let routeLine=null;
-let routeShadow=null;
-
-
-/* =====================================================
-   ROUTE MARKERS
-===================================================== */
-
-function createPointMarker(p,type){
-
-    return L.marker(
-        [p.lat,p.lon],
-        {
-            icon:
-                L.divIcon({
-                    className:"",
-                    html:
-                        type==="A"
-                        ?
-                        '<div class="point-a">А</div>'
-                        :
-                        '<div class="point-b">Б</div>',
-                    iconSize:[42,42],
-                    iconAnchor:[21,21]
-                })
-        }
-    ).addTo(map);
-}
-
-
-function selectA(){
-
-    closePages();
-
-    openPage("addPage");
-
-    selecting="A";
-
-    document
-        .getElementById("aButton")
-        .classList.add("active");
-
-    document
-        .getElementById("bButton")
-        .classList.remove("active");
-
-    setRouteStatus(
-        "📍 Нажмите на карте, чтобы выбрать А."
-    );
-}
-
-
-function selectB(){
-
-    if(!pointA){
-
-        toast(
-            "Сначала выберите А"
-        );
-
-        return;
-    }
-
-    closePages();
-
-    openPage("addPage");
-
-    selecting="B";
-
-    document
-        .getElementById("bButton")
-        .classList.add("active");
-
-    document
-        .getElementById("aButton")
-        .classList.remove("active");
-
-    setRouteStatus(
-        "📍 Нажмите на карте, чтобы выбрать Б."
-    );
-}
-
-
-/* =====================================================
-   MAP CLICK
-===================================================== */
-
-map.on(
-    "click",
-    e=>{
-
-        /* STOP SELECTION */
-
-        if(stopSelecting){
-
-            const p={
-                lat:e.latlng.lat,
-                lon:e.latlng.lng
-            };
-
-            newStopPoint=p;
-
-            stopSelecting=false;
-
-            document
-                .getElementById(
-                    "stopPointButton"
-                )
-                .classList.remove("point-btn");
-
-            document
-                .getElementById(
-                    "stopStatus"
-                )
-                .innerHTML=
-                    "🟢 Нуқтаи истгоҳ интихоб шуд:<br>"+
-                    p.lat.toFixed(6)+
-                    ", "+
-                    p.lon.toFixed(6);
-
-            if(newStopMarker)
-                map.removeLayer(
-                    newStopMarker
-                );
-
-            newStopMarker=
-                L.marker(
-                    [p.lat,p.lon],
-                    {
-                        icon:
-                            L.divIcon({
-                                className:"",
-                                html:
-                                    '<div class="stop-marker">🚌</div>',
-                                iconSize:[34,34],
-                                iconAnchor:[17,17]
-                            })
-                    }
-                ).addTo(map);
-
-            toast(
-                "🚌 Нуқтаи истгоҳ интихоб шуд"
-            );
-
-            return;
-        }
-
-
-        /* ROUTE SELECTION */
-
-        if(!selecting)
-            return;
-
-        const p={
-            lat:e.latlng.lat,
-            lon:e.latlng.lng
-        };
-
-        if(selecting==="A"){
-
-            pointA=p;
-
-            if(markerA)
-                map.removeLayer(markerA);
-
-            markerA=
-                createPointMarker(p,"A");
-
-            document
-                .getElementById("aInfo")
-                .innerHTML=
-                    "🟢 <b>А:</b> "+
-                    p.lat.toFixed(6)+
-                    ", "+
-                    p.lon.toFixed(6);
-
-            selecting=null;
-
-            document
-                .getElementById("aButton")
-                .classList.remove("active");
-
-            setRouteStatus(
-                "🟢 А выбрана. Теперь выберите Б."
-            );
-
-            toast(
-                "🟢 А выбрана"
-            );
-
-        }else{
-
-            pointB=p;
-
-            if(markerB)
-                map.removeLayer(markerB);
-
-            markerB=
-                createPointMarker(p,"B");
-
-            document
-                .getElementById("bInfo")
-                .innerHTML=
-                    "🔴 <b>Б:</b> "+
-                    p.lat.toFixed(6)+
-                    ", "+
-                    p.lon.toFixed(6);
-
-            selecting=null;
-
-            document
-                .getElementById("bButton")
-                .classList.remove("active");
-
-            setRouteStatus(
-                "🧠 Маршрут строится..."
-            );
-
-            setTimeout(
-                ()=>{
-                    buildRealRoute();
-                },
-                100
-            );
-        }
-    }
-);
-
-
-/* =====================================================
-   GRAPH ROUTING
-===================================================== */
-
-function nearestNodes(lat,lon,count=8){
-
-    return graphNodes
-        .map(
-            node=>({
-                node,
-                distance:
-                    haversine(
-                        lat,
-                        lon,
-                        node.lat,
-                        node.lon
-                    )
-            })
-        )
-        .sort(
-            (a,b)=>
-                a.distance-b.distance
-        )
-        .slice(0,count);
-}
-
-
-function heuristic(a,b){
-
-    return haversine(
-        a.lat,
-        a.lon,
-        b.lat,
-        b.lon
-    );
-}
-
-
-class MinHeap{
-
-    constructor(){
-        this.data=[];
-    }
-
-    push(item){
-
-        this.data.push(item);
-
-        let i=
-            this.data.length-1;
-
-        while(i>0){
-
-            const p=
-                Math.floor((i-1)/2);
-
-            if(
-                this.data[p].priority<=
-                this.data[i].priority
-            )
-                break;
-
-            [
-                this.data[p],
-                this.data[i]
-            ]=[
-                this.data[i],
-                this.data[p]
-            ];
-
-            i=p;
-        }
-    }
-
-    pop(){
-
-        if(!this.data.length)
-            return null;
-
-        const result=this.data[0];
-
-        const last=this.data.pop();
-
-        if(this.data.length){
-
-            this.data[0]=last;
-
-            let i=0;
-
-            while(true){
-
-                let s=i;
-
-                const l=i*2+1;
-                const r=i*2+2;
-
-                if(
-                    l<this.data.length&&
-                    this.data[l].priority<
-                    this.data[s].priority
-                )
-                    s=l;
-
-                if(
-                    r<this.data.length&&
-                    this.data[r].priority<
-                    this.data[s].priority
-                )
-                    s=r;
-
-                if(s===i)
-                    break;
-
-                [
-                    this.data[i],
-                    this.data[s]
-                ]=[
-                    this.data[s],
-                    this.data[i]
-                ];
-
-                i=s;
-            }
-        }
-
-        return result;
-    }
-
-    get size(){
-        return this.data.length;
-    }
-}
-
-
-async function aStar(startId,goalId){
-
-    const start=graph.get(startId);
-    const goal=graph.get(goalId);
-
-    if(!start||!goal)
-        return null;
-
-    const open=new MinHeap();
-
-    const gScore=new Map();
-    const cameFrom=new Map();
-
-    gScore.set(startId,0);
-
-    open.push({
-        id:startId,
-        priority:heuristic(start,goal)
+    document.querySelectorAll(".page").forEach(p=>{
+        p.classList.remove("active");
     });
 
-    let iterations=0;
+    const page=document.getElementById(id);
 
-    while(
-        open.size&&
-        iterations<1000000
-    ){
-
-        iterations++;
-
-        const current=open.pop();
-
-        if(!current)
-            break;
-
-        if(current.id===goalId){
-
-            const path=[
-                current.id
-            ];
-
-            let x=current.id;
-
-            while(cameFrom.has(x)){
-
-                x=cameFrom.get(x);
-
-                path.push(x);
-            }
-
-            path.reverse();
-
-            return path.map(
-                id=>graph.get(id)
-            );
-        }
-
-        const node=
-            graph.get(current.id);
-
-        if(!node)
-            continue;
-
-        for(
-            const [
-                neighborId,
-                distance
-            ]
-            of node.neighbors
-        ){
-
-            const score=
-                (gScore.get(current.id)??Infinity)+
-                distance;
-
-            if(
-                score<
-                (gScore.get(neighborId)??Infinity)
-            ){
-
-                cameFrom.set(
-                    neighborId,
-                    current.id
-                );
-
-                gScore.set(
-                    neighborId,
-                    score
-                );
-
-                const n=
-                    graph.get(neighborId);
-
-                open.push({
-                    id:neighborId,
-                    priority:
-                        score+
-                        heuristic(n,goal)
-                });
-            }
-        }
-
-        if(iterations%10000===0)
-            await new Promise(
-                r=>setTimeout(r,0)
-            );
+    if(page){
+        page.classList.add("active");
     }
 
-    return null;
+    closeMenu();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(id==="navigation" || id==="addStop"){
+        setTimeout(initMap,100);
+    }
+
+    if(id==="stops"){
+        renderStops();
+    }
+
+    if(id==="places"){
+        renderPlaces();
+    }
 }
 
+/* =========================
+   MAP
+========================= */
 
-/* =====================================================
-   BUILD ROUTE
-===================================================== */
+function initMap(){
 
-async function buildRealRoute(){
-
-    if(!pointA||!pointB)
-        return;
-
-    if(!graphNodes.length){
-
-        setRouteStatus(
-            "⏳ Граф дорог ещё загружается..."
-        );
-
-        setTimeout(
-            buildRealRoute,
-            500
-        );
-
+    if(mapInitialized){
+        setTimeout(()=>{
+            map.invalidateSize();
+        },100);
         return;
     }
 
-    removeRoute();
+    map = L.map("map").setView(DEFAULT_CENTER,13);
 
-    setRouteStatus(
-        "🔎 Ищем дорогу..."
-    );
-
-    const A=
-        nearestNodes(
-            pointA.lat,
-            pointA.lon,
-            8
-        );
-
-    const B=
-        nearestNodes(
-            pointB.lat,
-            pointB.lon,
-            8
-        );
-
-    let bestPath=null;
-    let bestScore=Infinity;
-
-    for(const aa of A){
-
-        for(const bb of B){
-
-            const path=
-                await aStar(
-                    aa.node.id,
-                    bb.node.id
-                );
-
-            if(
-                path&&
-                path.length>1
-            ){
-
-                let d=
-                    aa.distance+
-                    bb.distance;
-
-                for(
-                    let i=1;
-                    i<path.length;
-                    i++
-                ){
-
-                    d+=
-                        haversine(
-                            path[i-1].lat,
-                            path[i-1].lon,
-                            path[i].lat,
-                            path[i].lon
-                        );
-                }
-
-                if(d<bestScore){
-
-                    bestScore=d;
-                    bestPath=path;
-                }
-            }
-        }
-    }
-
-    if(!bestPath){
-
-        setRouteStatus(
-            "❌ Маршрут не найден. Выберите точки ближе к дороге."
-        );
-
-        toast(
-            "Маршрут не найден"
-        );
-
-        return;
-    }
-
-    drawBeautifulRoute(bestPath);
-}
-
-
-/* =====================================================
-   DRAW ROUTE
-===================================================== */
-
-function drawBeautifulRoute(path){
-
-    const coords=[
-        [pointA.lat,pointA.lon]
-    ];
-
-    for(const node of path){
-
-        coords.push([
-            node.lat,
-            node.lon
-        ]);
-    }
-
-    coords.push([
-        pointB.lat,
-        pointB.lon
-    ]);
-
-    routeShadow=
-        L.polyline(
-            coords,
-            {
-                color:"#031008",
-                weight:12,
-                opacity:.8,
-                lineJoin:"round",
-                lineCap:"round"
-            }
-        ).addTo(map);
-
-    routeLine=
-        L.polyline(
-            [],
-            {
-                color:"#39df89",
-                weight:7,
-                opacity:1,
-                lineJoin:"round",
-                lineCap:"round"
-            }
-        ).addTo(map);
-
-    let i=0;
-
-    const timer=
-        setInterval(
-            ()=>{
-
-                if(i>=coords.length){
-
-                    clearInterval(timer);
-
-                    finishRoute(coords);
-
-                    return;
-                }
-
-                routeLine.addLatLng(
-                    coords[i]
-                );
-
-                i++;
-
-            },
-            8
-        );
-}
-
-
-function finishRoute(coords){
-
-    routeShadow.setLatLngs(coords);
-    routeLine.setLatLngs(coords);
-
-    map.flyToBounds(
-        routeLine.getBounds(),
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-            paddingTopLeft:[40,100],
-            paddingBottomRight:[40,180],
-            duration:1.1
+            maxZoom:19,
+            attribution:"© OpenStreetMap"
         }
-    );
+    ).addTo(map);
 
-    let distance=0;
+    map.on("click",function(e){
 
-    for(
-        let i=1;
-        i<coords.length;
-        i++
-    ){
+        if(selecting==="A"){
+            setPointA(e.latlng);
+        }
 
-        distance+=
-            haversine(
-                coords[i-1][0],
-                coords[i-1][1],
-                coords[i][0],
-                coords[i][1]
-            );
-    }
+        if(selecting==="B"){
+            setPointB(e.latlng);
+        }
 
-    const speedKmh=30;
+        if(stopSelecting){
+            setStopPoint(e.latlng);
+        }
 
-    const minutes=
-        Math.max(
-            1,
-            Math.round(
-                distance/1000/
-                speedKmh*
-                60
-            )
-        );
+    });
 
-    document
-        .getElementById("routeDistance")
-        .textContent=
-            distance>=1000
-            ?
-            (distance/1000).toFixed(1)+" км"
-            :
-            Math.round(distance)+" м";
+    mapInitialized=true;
 
-    document
-        .getElementById("routeTime")
-        .textContent=
-            minutes+" мин";
+    setTimeout(()=>{
+        map.invalidateSize();
+    },200);
+}
 
-    document
-        .getElementById("routeInfo")
-        .textContent=
-            "🟢 А → 🔴 Б • Роҳ аз рӯи графи воқеии роҳҳо";
+/* =========================
+   A / B
+========================= */
 
-    document
-        .getElementById("routeCard")
-        .classList.add("show");
+function selectPoint(type){
 
-    setRouteStatus(
-        "🟢 Маршрут омода шуд."
-    );
+    initMap();
 
-    toast(
-        "🛣️ Маршрут омода"
+    selecting=type;
+    stopSelecting=false;
+
+    alert(
+        "Теперь выберите точку "+
+        type+
+        " на карте."
     );
 }
 
+function setPointA(latlng){
 
-function removeRoute(){
+    pointA=latlng;
+
+    if(markerA){
+        map.removeLayer(markerA);
+    }
+
+    markerA=L.marker(latlng)
+        .addTo(map)
+        .bindPopup("📍 Точка A")
+        .openPopup();
+
+    selecting=null;
+
+    updateRouteInfo();
+
+    drawStraightRoute();
+}
+
+function setPointB(latlng){
+
+    pointB=latlng;
+
+    if(markerB){
+        map.removeLayer(markerB);
+    }
+
+    markerB=L.marker(latlng)
+        .addTo(map)
+        .bindPopup("📍 Точка B")
+        .openPopup();
+
+    selecting=null;
+
+    updateRouteInfo();
+
+    drawStraightRoute();
+}
+
+function drawStraightRoute(){
+
+    if(!pointA || !pointB) return;
 
     if(routeLine){
-
         map.removeLayer(routeLine);
-
-        routeLine=null;
     }
 
-    if(routeShadow){
+    routeLine=L.polyline(
+        [pointA,pointB],
+        {
+            color:"#168a45",
+            weight:6,
+            opacity:.8,
+            dashArray:"10 8"
+        }
+    ).addTo(map);
 
-        map.removeLayer(routeShadow);
-
-        routeShadow=null;
-    }
-
-    document
-        .getElementById("routeCard")
-        .classList.remove("show");
+    map.fitBounds(routeLine.getBounds(),{
+        padding:[30,30]
+    });
 }
 
+function updateRouteInfo(){
 
-/* =====================================================
+    document.getElementById("routeInfo").innerHTML=
+        "A: "+
+        (pointA
+        ? pointA.lat.toFixed(5)+", "+pointA.lng.toFixed(5)
+        :"не выбрана")
+        +"<br>"+
+        "B: "+
+        (pointB
+        ? pointB.lat.toFixed(5)+", "+pointB.lng.toFixed(5)
+        :"не выбрана");
+}
+
+function clearRoute(){
+
+    pointA=null;
+    pointB=null;
+    selecting=null;
+
+    if(markerA) map.removeLayer(markerA);
+    if(markerB) map.removeLayer(markerB);
+    if(routeLine) map.removeLayer(routeLine);
+
+    markerA=null;
+    markerB=null;
+    routeLine=null;
+
+    updateRouteInfo();
+}
+
+/* =========================
    GPS
-===================================================== */
+========================= */
 
-let currentGPS=null;
+function useGPS(){
 
-let gpsMarker=null;
-let gpsAccuracyCircle=null;
-let gpsWatchId=null;
-
-
-function locateMe(){
+    initMap();
 
     if(!navigator.geolocation){
-
-        toast(
-            "GPS недоступен"
-        );
-
+        alert("GPS не поддерживается.");
         return;
     }
 
     navigator.geolocation.getCurrentPosition(
-
         position=>{
 
-            updateGPS(position);
+            const lat=position.coords.latitude;
+            const lng=position.coords.longitude;
 
-            map.flyTo(
-                [
-                    position.coords.latitude,
-                    position.coords.longitude
-                ],
-                16,
-                {
-                    duration:1
-                }
-            );
+            const pos=[lat,lng];
 
-            startGPSWatch();
+            map.setView(pos,16);
 
-            toast(
-                "📍 Вы здесь"
-            );
+            L.marker(pos)
+                .addTo(map)
+                .bindPopup("📍 Ваше местоположение")
+                .openPopup();
+
         },
-
         ()=>{
-            toast(
-                "⚠️ Разрешите доступ к GPS"
+            alert(
+                "Не удалось получить местоположение. "+
+                "Разрешите доступ к GPS."
             );
         },
-
         {
             enableHighAccuracy:true,
-            timeout:20000,
-            maximumAge:3000
+            timeout:10000
         }
     );
 }
 
+/* =========================
+   STOP POINT
+========================= */
 
-function startGPSWatch(){
+function selectStopPoint(){
 
-    if(gpsWatchId!==null)
-        return;
+    showPage("addStop");
 
-    gpsWatchId=
-        navigator.geolocation.watchPosition(
-            position=>{
-                updateGPS(position);
-            },
-            ()=>{},
-            {
-                enableHighAccuracy:true,
-                timeout:20000,
-                maximumAge:3000
-            }
+    setTimeout(()=>{
+
+        initMap();
+
+        stopSelecting=true;
+        selecting=null;
+
+        alert(
+            "Теперь нажмите на карте место, "+
+            "где находится остановка."
         );
 
-    document
-        .getElementById("gpsButton")
-        .classList.add("active");
+    },200);
 }
 
+function setStopPoint(latlng){
 
-function updateGPS(position){
+    stopPoint=latlng;
 
-    const lat=
-        position.coords.latitude;
+    if(stopMarker){
+        map.removeLayer(stopMarker);
+    }
 
-    const lon=
-        position.coords.longitude;
+    stopMarker=L.marker(latlng)
+        .addTo(map)
+        .bindPopup("🚏 Новая остановка")
+        .openPopup();
 
-    const accuracy=
-        position.coords.accuracy||0;
+    stopSelecting=false;
 
-    currentGPS={
-        lat,
-        lon,
-        accuracy
+    document.getElementById("stopCoords").innerHTML=
+        "📍 Координаты: "+
+        latlng.lat.toFixed(6)+
+        ", "+
+        latlng.lng.toFixed(6);
+}
+
+/* =========================
+   STOP PHOTO
+========================= */
+
+function previewStopPhoto(event){
+
+    const file=event.target.files[0];
+
+    if(!file) return;
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+
+        stopPhotoData=e.target.result;
+
+        const img=document.getElementById("stopPreview");
+
+        img.src=stopPhotoData;
+
+        img.classList.remove("hidden");
     };
 
-    if(!gpsMarker){
-
-        gpsMarker=
-            L.marker(
-                [lat,lon],
-                {
-                    icon:
-                        L.divIcon({
-                            className:"",
-                            html:
-                                '<div class="gps-marker"></div>',
-                            iconSize:[24,24],
-                            iconAnchor:[12,12]
-                        })
-                }
-            ).addTo(map);
-
-    }else{
-
-        gpsMarker.setLatLng(
-            [lat,lon]
-        );
-    }
-
-    if(!gpsAccuracyCircle){
-
-        gpsAccuracyCircle=
-            L.circle(
-                [lat,lon],
-                {
-                    radius:accuracy,
-                    color:"#268cff",
-                    fillColor:"#268cff",
-                    fillOpacity:.08,
-                    weight:1
-                }
-            ).addTo(map);
-
-    }else{
-
-        gpsAccuracyCircle.setLatLng(
-            [lat,lon]
-        );
-
-        gpsAccuracyCircle.setRadius(
-            accuracy
-        );
-    }
+    reader.readAsDataURL(file);
 }
 
+/* =========================
+   STOP SUBMIT
+========================= */
 
-function useMyLocationAsA(){
+function submitStop(){
 
-    if(!currentGPS){
-
-        locateMe();
-
-        setTimeout(
-            ()=>{
-                if(currentGPS)
-                    useMyLocationAsA();
-            },
-            1500
+    if(!stopPoint){
+        alert(
+            "Сначала обязательно выберите точку остановки на карте."
         );
-
         return;
     }
 
-    pointA={
-        lat:currentGPS.lat,
-        lon:currentGPS.lon
-    };
-
-    if(markerA)
-        map.removeLayer(markerA);
-
-    markerA=
-        createPointMarker(
-            pointA,
-            "A"
-        );
-
-    document
-        .getElementById("aInfo")
-        .innerHTML=
-            "🟢 <b>А: МОЁ МЕСТОПОЛОЖЕНИЕ</b><br>"+
-            pointA.lat.toFixed(6)+
-            ", "+
-            pointA.lon.toFixed(6);
-
-    closePages();
-
-    openPage("addPage");
-
-    setRouteStatus(
-        "📍 А = ваше местоположение. Выберите Б."
-    );
-
-    selectB();
-}
-
-
-/* =====================================================
-   ADD STOP
-===================================================== */
-
-let stopSelecting=false;
-
-let newStopPoint=null;
-
-let newStopMarker=null;
-
-let customStops=[];
-
-
-function startStopSelection(){
-
-    closePages();
-
-    openPage("addStopPage");
-
-    stopSelecting=true;
-
-    document
-        .getElementById("stopStatus")
-        .innerHTML=
-            "📍 Ҳоло дар карта нуқтаи истгоҳро интихоб кунед.";
-
-    toast(
-        "📍 Нуқтаи истгоҳро дар карта интихоб кунед"
-    );
-}
-
-
-function saveNewStop(){
-
-    if(!newStopPoint){
-
-        toast(
-            "Аввал нуқтаи истгоҳро интихоб кунед"
-        );
-
-        return;
-    }
-
-    const name=
-        document
-            .getElementById("stopName")
-            .value
-            .trim();
-
-    const description=
-        document
-            .getElementById("stopDescription")
-            .value
-            .trim();
+    const name=document
+        .getElementById("stopName")
+        .value.trim();
 
     if(!name){
-
-        toast(
-            "Номи истгоҳро нависед"
-        );
-
+        alert("Введите название остановки.");
         return;
     }
 
     const stop={
-        id:
-            "custom-"+Date.now(),
-        name,
-        description,
-        lat:newStopPoint.lat,
-        lon:newStopPoint.lon
+        id:Date.now(),
+        name:name,
+        buses:document
+            .getElementById("stopBuses")
+            .value.trim(),
+
+        minibus:document
+            .getElementById("stopMinibus")
+            .value.trim(),
+
+        description:document
+            .getElementById("stopDescription")
+            .value.trim(),
+
+        lat:stopPoint.lat,
+        lng:stopPoint.lng,
+
+        photo:stopPhotoData,
+
+        status:"Предложение"
     };
 
-    customStops.push(stop);
-
-    localStorage.setItem(
-        "shohin_custom_stops",
-        JSON.stringify(customStops)
-    );
-
-    addCustomStopToMap(stop);
-
-    document
-        .getElementById("stopName")
-        .value="";
-
-    document
-        .getElementById("stopDescription")
-        .value="";
-
-    newStopPoint=null;
-
-    document
-        .getElementById("stopStatus")
-        .innerHTML=
-            "✅ Истгоҳ захира шуд.";
-
-    toast(
-        "🚌 Истгоҳ илова шуд"
-    );
-}
-
-
-function addCustomStopToMap(stop){
-
-    const marker=
-        L.marker(
-            [stop.lat,stop.lon],
-            {
-                icon:
-                    L.divIcon({
-                        className:"",
-                        html:
-                            '<div class="stop-marker">🚌</div>',
-                        iconSize:[34,34],
-                        iconAnchor:[17,17]
-                    })
-            }
-        ).addTo(map);
-
-    marker.bindPopup(
-        "<b>🚌 "+
-        escapeHTML(stop.name)+
-        "</b><br>"+
-        escapeHTML(stop.description||"")+
-        "<br><small>"+
-        stop.lat.toFixed(6)+
-        ", "+
-        stop.lon.toFixed(6)+
-        "</small>"
-    );
-}
-
-
-function loadCustomStops(){
-
-    try{
-
-        customStops=
-            JSON.parse(
-                localStorage.getItem(
-                    "shohin_custom_stops"
-                )||"[]"
-            );
-
-        customStops.forEach(
-            addCustomStopToMap
+    const list=
+        JSON.parse(
+            localStorage.getItem("shohinStopSuggestions") || "[]"
         );
 
-    }catch(e){
+    list.push(stop);
 
-        customStops=[];
+    localStorage.setItem(
+        "shohinStopSuggestions",
+        JSON.stringify(list)
+    );
+
+    const text=
+`ПРЕДЛОЖЕНИЕ ОСТАНОВКИ SHOHIN ROHNAMO
+
+Название: ${stop.name}
+
+Автобусы: ${stop.buses || "не указаны"}
+
+Маршрутки: ${stop.minibus || "не указаны"}
+
+Описание: ${stop.description || "нет"}
+
+Координаты:
+${stop.lat}, ${stop.lng}
+
+Статус: На проверке`;
+
+    openModal(
+        "📤 Предложение отправлено",
+        `
+        <div class="notice">
+            Остановка сохранена как предложение.
+            После проверки вы сможете добавить её
+            в официальную версию SHOHIN ROHNAMO.
+        </div>
+
+        <textarea style="min-height:220px">${escapeHtml(text)}</textarea>
+
+        <br><br>
+
+        <button class="btn"
+            onclick="copySuggestion()">
+            📋 Скопировать
+        </button>
+        `
+    );
+
+    resetStopForm();
+}
+
+function copySuggestion(){
+
+    const textarea=document.querySelector(
+        "#modalContent textarea"
+    );
+
+    if(!textarea) return;
+
+    navigator.clipboard.writeText(
+        textarea.value
+    ).then(()=>{
+        alert("Скопировано.");
+    }).catch(()=>{
+        textarea.select();
+        document.execCommand("copy");
+        alert("Скопировано.");
+    });
+}
+
+function resetStopForm(){
+
+    document.getElementById("stopName").value="";
+    document.getElementById("stopBuses").value="";
+    document.getElementById("stopMinibus").value="";
+    document.getElementById("stopDescription").value="";
+    document.getElementById("stopPhoto").value="";
+
+    document.getElementById("stopPreview")
+        .classList.add("hidden");
+
+    stopPhotoData="";
+    stopPoint=null;
+
+    if(stopMarker && map){
+        map.removeLayer(stopMarker);
+        stopMarker=null;
     }
+
+    document.getElementById("stopCoords").innerHTML=
+        "Нуқта интихоб нашудааст.";
 }
 
+/* =========================
+   OFFICIAL STOPS
+========================= */
 
-function escapeHTML(text){
-
-    return String(text)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-
-/* =====================================================
-   DUSHANBE TOURIST PLACES
-===================================================== */
-
-/*
-   Координаты ориентировочные для демонстрации.
-   Позже можно заменить их точными координатами.
-*/
-
-const DUSHANBE_PLACES=[
+const officialStops=[
 
     {
-        id:"rudaki",
-        icon:"🌳",
-        name:"Боғи Рӯдакӣ",
-        description:
-            "Яке аз боғҳои машҳури маркази Душанбе.",
-        lat:38.5748,
-        lon:68.7805
+        name:"Остановка Душанбе",
+        buses:"1, 2",
+        minibus:"7, 11",
+        description:"Намунаи истгоҳи SHOHIN ROHNAMO.",
+        lat:38.5598,
+        lng:68.7870,
+        photo:""
     },
 
     {
-        id:"national_museum",
-        icon:"🏛️",
-        name:"Осорхонаи миллии Тоҷикистон",
-        description:
-            "Осорхонаи асосии таърихию фарҳангии Тоҷикистон.",
-        lat:38.5707,
-        lon:68.7758
-    },
-
-    {
-        id:"navruz_palace",
-        icon:"🏛️",
-        name:"Қасри Наврӯз",
-        description:
-            "Маҷмааи фарҳангӣ ва яке аз ҷойҳои машҳури Душанбе.",
-        lat:38.5897,
-        lon:68.7834
-    },
-
-    {
-        id:"flag",
-        icon:"🇹🇯",
-        name:"Нишони давлатии Тоҷикистон",
-        description:
-            "Яке аз рамзҳои шинохтаи пойтахт.",
-        lat:38.5769,
-        lon:68.7868
-    },
-
-    {
-        id:"national_library",
-        icon:"📚",
-        name:"Китобхонаи миллии Тоҷикистон",
-        description:
-            "Китобхонаи миллӣ дар маркази Душанбе.",
-        lat:38.5763,
-        lon:68.7809
-    },
-
-    {
-        id:"iram",
-        icon:"🌿",
-        name:"Боғи Ирам",
-        description:
-            "Боғи сабз ва машҳур барои истироҳат.",
-        lat:38.5869,
-        lon:68.7862
-    },
-
-    {
-        id:"central_mosque",
-        icon:"🕌",
-        name:"Масҷиди марказии Душанбе",
-        description:
-            "Яке аз калонтарин масҷидҳои Душанбе.",
-        lat:38.5812,
-        lon:68.7798
-    },
-
-    {
-        id:"somoni",
-        icon:"🗿",
-        name:"Муҷассамаи Исмоили Сомонӣ",
-        description:
-            "Муҷассамаи машҳур дар маркази Душанбе.",
-        lat:38.5742,
-        lon:68.7860
+        name:"Маркази шаҳр",
+        buses:"2, 8",
+        minibus:"18, 33",
+        description:"Намунаи маълумоти истгоҳ.",
+        lat:38.5730,
+        lng:68.7860,
+        photo:""
     }
 
 ];
 
+function getAllStops(){
 
-function renderTourism(){
-
-    const container=
-        document.getElementById(
-            "tourList"
+    const suggestions=
+        JSON.parse(
+            localStorage.getItem("shohinStopSuggestions") || "[]"
         );
 
-    container.innerHTML="";
+    return [
+        ...officialStops,
+        ...suggestions
+    ];
+}
 
-    DUSHANBE_PLACES.forEach(
-        place=>{
+function renderStops(){
 
-            const card=
-                document.createElement("div");
+    const container=
+        document.getElementById("stopsList");
 
-            card.className="tour-card";
+    const stops=getAllStops();
 
-            card.innerHTML=
-                `
-                <div class="tour-icon">
-                    ${place.icon}
-                </div>
+    if(!stops.length){
+
+        container.innerHTML=
+            "<p>Истгоҳҳо ҳоло нестанд.</p>";
+
+        return;
+    }
+
+    container.innerHTML=stops.map((stop,index)=>{
+
+        const buses=
+            stop.buses
+            ? stop.buses
+                .split(",")
+                .map(x=>`<span class="routeBadge">🚌 ${x.trim()}</span>`)
+                .join("")
+            :"";
+
+        const minibuses=
+            stop.minibus
+            ? stop.minibus
+                .split(",")
+                .map(x=>`<span class="routeBadge">🚐 ${x.trim()}</span>`)
+                .join("")
+            :"";
+
+        return `
+        <div class="card">
+
+            ${
+                stop.photo
+                ? `<img class="photo" src="${stop.photo}">`
+                : `<div class="photo"
+                    style="display:flex;align-items:center;justify-content:center;font-size:55px">
+                    🚏
+                   </div>`
+            }
+
+            <div class="cardBody">
+
+                <h3>${escapeHtml(stop.name)}</h3>
+
+                <p>
+                    ${escapeHtml(
+                        stop.description || "Информация об остановке."
+                    )}
+                </p>
+
+                <br>
+
+                ${buses}
+                ${minibuses}
+
+                <br><br>
+
+                ${
+                    stop.status
+                    ? `<small>Статус: ${escapeHtml(stop.status)}</small><br><br>`
+                    :""
+                }
+
+                <button
+                    class="btn"
+                    onclick="openStopOnMap(${stop.lat},${stop.lng})"
+                >
+                    📍 На карте
+                </button>
+
+            </div>
+
+        </div>
+        `;
+
+    }).join("");
+}
+
+function openStopOnMap(lat,lng){
+
+    showPage("navigation");
+
+    setTimeout(()=>{
+
+        initMap();
+
+        map.setView(
+            [lat,lng],
+            17
+        );
+
+        L.marker([lat,lng])
+            .addTo(map)
+            .bindPopup("🚏 Истгоҳ")
+            .openPopup();
+
+    },150);
+}
+
+/* =========================
+   PLACES
+========================= */
+
+const places=[
+
+    {
+        name:"Парк Рудаки",
+        description:"Яке аз ҷойҳои машҳури Душанбе барои сайругашт.",
+        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7"
+    },
+
+    {
+        name:"Флагштоки Душанбе",
+        description:"Яке аз рамзҳои маъруфи пойтахти Тоҷикистон.",
+        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7"
+    },
+
+    {
+        name:"Маркази Душанбе",
+        description:"Қисми марказии шаҳр бо ҷойҳои диданбоб.",
+        image:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000"
+    }
+
+];
+
+function renderPlaces(){
+
+    const container=
+        document.getElementById("placesList");
+
+    container.innerHTML=places.map((place,index)=>{
+
+        return `
+        <div
+            class="card placeCard"
+            onclick="showPlace(${index})"
+        >
+
+            <img
+                class="photo"
+                src="${place.image}"
+                loading="lazy"
+                alt="${escapeHtml(place.name)}"
+            >
+
+            <div class="cardBody">
 
                 <h3>
-                    ${escapeHTML(place.name)}
+                    ${escapeHtml(place.name)}
                 </h3>
 
                 <p>
-                    ${escapeHTML(place.description)}
+                    ${escapeHtml(place.description)}
                 </p>
 
+                <br>
+
                 <button
-                    class="tour-btn"
-                    onclick="
-                        goToTouristPlace('${place.id}')
-                    ">
-
-                    🧭 Ба ин ҷо маршрут
-
+                    class="btn"
+                    onclick="event.stopPropagation();showPlace(${index})"
+                >
+                    Подробнее
                 </button>
-                `;
 
-            container.appendChild(card);
-        }
+            </div>
+
+        </div>
+        `;
+
+    }).join("");
+}
+
+function showPlace(index){
+
+    const p=places[index];
+
+    openModal(
+        p.name,
+        `
+        <img
+            class="photo"
+            src="${p.image}"
+            style="border-radius:15px"
+        >
+
+        <br><br>
+
+        <p>${escapeHtml(p.description)}</p>
+
+        <br>
+
+        <button
+            class="btn"
+            onclick="showPage('navigation');closeModal()"
+        >
+            🧭 Проложить маршрут
+        </button>
+        `
     );
 }
 
+/* =========================
+   ROUTE SUBMIT
+========================= */
 
-function goToTouristPlace(id){
+function submitRoute(){
 
-    const place=
-        DUSHANBE_PLACES.find(
-            p=>p.id===id
+    const name=
+        document.getElementById("routeName")
+        .value.trim();
+
+    const transport=
+        document.getElementById("routeTransport")
+        .value.trim();
+
+    const description=
+        document.getElementById("routeDescription")
+        .value.trim();
+
+    if(!name){
+        alert("Введите название маршрута.");
+        return;
+    }
+
+    if(!pointA || !pointB){
+
+        alert(
+            "Сначала выберите точки A и B на карте."
         );
 
-    if(!place)
+        showPage("navigation");
+
         return;
+    }
 
-    closePages();
+    const route={
 
-    map.flyTo(
-        [place.lat,place.lon],
-        16,
-        {
-            duration:1.2
-        }
-    );
+        name:name,
+        transport:transport,
+        description:description,
 
-    L.popup()
-        .setLatLng(
-            [place.lat,place.lon]
-        )
-        .setContent(
-            "<b>"+
-            place.icon+
-            " "+
-            escapeHTML(place.name)+
-            "</b><br>"+
-            escapeHTML(place.description)+
-            "<br><br>"+
-            "<button onclick=\"routeToPlace('"+
-            place.id+
-            "')\" style=\"padding:8px;border:0;border-radius:8px;background:#39df89;font-weight:bold;cursor:pointer\">"+
-            "🧭 Маршрут аз ман"+
-            "</button>"
-        )
-        .openOn(map);
+        A:{
+            lat:pointA.lat,
+            lng:pointA.lng
+        },
 
-    toast(
-        "📍 "+place.name
-    );
-}
+        B:{
+            lat:pointB.lat,
+            lng:pointB.lng
+        },
 
+        created:Date.now()
 
-function routeToPlace(id){
-
-    const place=
-        DUSHANBE_PLACES.find(
-            p=>p.id===id
-        );
-
-    if(!place)
-        return;
-
-    pointB={
-        lat:place.lat,
-        lon:place.lon
     };
 
-    if(markerB)
-        map.removeLayer(markerB);
-
-    markerB=
-        createPointMarker(
-            pointB,
-            "B"
+    const routes=
+        JSON.parse(
+            localStorage.getItem("shohinRouteSuggestions") || "[]"
         );
 
-    if(currentGPS){
+    routes.push(route);
 
-        pointA={
-            lat:currentGPS.lat,
-            lon:currentGPS.lon
-        };
-
-        if(markerA)
-            map.removeLayer(markerA);
-
-        markerA=
-            createPointMarker(
-                pointA,
-                "A"
-            );
-
-        buildRealRoute();
-
-    }else{
-
-        toast(
-            "📍 Аввал GPS-ро фаъол кунед"
-        );
-
-        locateMe();
-
-        setTimeout(
-            ()=>{
-                if(currentGPS)
-                    routeToPlace(id);
-            },
-            1800
-        );
-    }
-}
-
-
-/* =====================================================
-   LAYERS
-===================================================== */
-
-function hideLayers(){
-
-    if(roadsLayer)
-        map.removeLayer(roadsLayer);
-
-    if(placesLayer)
-        map.removeLayer(placesLayer);
-
-    if(stopsLayer)
-        map.removeLayer(stopsLayer);
-}
-
-
-function activateLayer(id){
-
-    document
-        .querySelectorAll(".layers button")
-        .forEach(
-            b=>
-                b.classList.remove("active")
-        );
-
-    document
-        .getElementById(id)
-        .classList.add("active");
-}
-
-
-function showRoads(){
-
-    hideLayers();
-
-    if(roadsLayer)
-        roadsLayer.addTo(map);
-
-    activateLayer("roadsBtn");
-}
-
-
-function showPlaces(){
-
-    hideLayers();
-
-    if(placesLayer)
-        placesLayer.addTo(map);
-
-    activateLayer("placesBtn");
-}
-
-
-function showStops(){
-
-    hideLayers();
-
-    if(stopsLayer)
-        stopsLayer.addTo(map);
-
-    customStops.forEach(
-        stop=>{
-
-            /* custom markers are already on map */
-        }
+    localStorage.setItem(
+        "shohinRouteSuggestions",
+        JSON.stringify(routes)
     );
 
-    activateLayer("stopsBtn");
-}
+    const text=
+`ПРЕДЛОЖЕНИЕ МАРШРУТА
 
+Название:
+${route.name}
 
-/* =====================================================
-   MENU
-===================================================== */
+Транспорт:
+${route.transport || "не указан"}
 
-function toggleMenu(){
+Описание:
+${route.description || "нет"}
 
-    document
-        .getElementById("menu")
-        .classList.toggle("open");
-}
+A:
+${route.A.lat}, ${route.A.lng}
 
+B:
+${route.B.lat}, ${route.B.lng}`;
 
-function openPage(id){
+    openModal(
+        "📤 Маршрут предложен",
+        `
+        <div class="notice">
+            Предложение сохранено.
+            Скопируйте его и отправьте администрации.
+        </div>
 
-    document
-        .getElementById("menu")
-        .classList.remove("open");
+        <textarea style="min-height:240px">${escapeHtml(text)}</textarea>
 
-    closePages();
+        <br><br>
 
-    document
-        .getElementById(id)
-        .classList.add("open");
-}
-
-
-function closePages(){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            p=>
-                p.classList.remove("open")
-        );
-}
-
-
-function startMapRoute(){
-
-    openPage("addPage");
-
-    selectA();
-}
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetRoute(){
-
-    pointA=null;
-    pointB=null;
-
-    selecting=null;
-
-    removeRoute();
-
-    if(markerA)
-        map.removeLayer(markerA);
-
-    if(markerB)
-        map.removeLayer(markerB);
-
-    markerA=null;
-    markerB=null;
-
-    document
-        .getElementById("aInfo")
-        .innerHTML=
-            "🟢 А: интихоб нашудааст";
-
-    document
-        .getElementById("bInfo")
-        .innerHTML=
-            "🔴 Б: интихоб нашудааст";
-
-    setRouteStatus(
-        "Аввал нуқтаи А-ро интихоб кунед."
+        <button class="btn"
+            onclick="copySuggestion()">
+            📋 Скопировать
+        </button>
+        `
     );
 }
 
-
-/* =====================================================
+/* =========================
    SEARCH
-===================================================== */
+========================= */
 
-function searchMap(){
+function searchEverything(){
 
-    const value=
-        document
-            .getElementById("search")
-            .value
-            .trim()
-            .toLowerCase();
+    const q=
+        document.getElementById("mainSearch")
+        .value
+        .toLowerCase()
+        .trim();
 
-    if(!value){
+    if(!q) return;
 
-        toast(
-            "Ҷустуҷӯро нависед"
-        );
+    const stops=getAllStops();
+
+    const foundStop=stops.find(s=>
+        s.name.toLowerCase().includes(q) ||
+        (s.buses||"").toLowerCase().includes(q) ||
+        (s.minibus||"").toLowerCase().includes(q)
+    );
+
+    const foundPlace=places.find(p=>
+        p.name.toLowerCase().includes(q)
+    );
+
+    if(foundStop){
+
+        showPage("stops");
+
+        setTimeout(()=>{
+            openStopOnMap(
+                foundStop.lat,
+                foundStop.lng
+            );
+        },200);
 
         return;
     }
 
-    for(
-        const data of
-        [placesData,stopsData]
-    ){
+    if(foundPlace){
 
-        if(!data||!data.features)
-            continue;
+        showPage("places");
 
-        for(
-            const feature of data.features
-        ){
+        const index=places.indexOf(foundPlace);
 
-            const text=
-                Object
-                    .values(
-                        feature.properties||{}
-                    )
-                    .join(" ")
-                    .toLowerCase();
+        setTimeout(()=>{
+            showPlace(index);
+        },200);
 
-            if(text.includes(value)){
-
-                const layer=
-                    L.geoJSON(feature);
-
-                const bounds=
-                    layer.getBounds();
-
-                if(bounds.isValid()){
-
-                    map.fitBounds(
-                        bounds,
-                        {
-                            padding:[80,80]
-                        }
-                    );
-                }
-
-                toast(
-                    "📍 Ёфт шуд"
-                );
-
-                return;
-            }
-        }
     }
 
-    const tourist=
-        DUSHANBE_PLACES.find(
-            p=>
-                p.name
-                    .toLowerCase()
-                    .includes(value)
-        );
-
-    if(tourist){
-
-        goToTouristPlace(
-            tourist.id
-        );
-
-        return;
-    }
-
-    toast(
-        "Ҳеҷ чиз ёфт нашуд"
-    );
 }
 
+/* =========================
+   SETTINGS
+========================= */
 
-/* =====================================================
-   OTHER
-===================================================== */
+function toggleDark(){
 
-function searchIntercity(){
-
-    toast(
-        "🚐 Ҷустуҷӯи байнишаҳрӣ омода карда мешавад"
-    );
-}
-
-
-function filterPlaces(category){
-
-    showPlaces();
-
-    closePages();
-
-    toast(
-        "📍 "+category
-    );
-}
-
-
-function saveHome(){
+    document.body.classList.toggle("dark");
 
     localStorage.setItem(
-        "shohin_home",
-        "saved"
-    );
-
-    toast(
-        "🏠 Хона нигоҳ дошта шуд"
+        "shohinDark",
+        document.body.classList.contains("dark")
     );
 }
 
+function changeFontSize(size){
 
-function saveWork(){
-
-    localStorage.setItem(
-        "shohin_work",
-        "saved"
-    );
-
-    toast(
-        "💼 Ҷои кор нигоҳ дошта шуд"
-    );
-}
-
-
-function setLanguage(lang,button){
+    document.documentElement.style.fontSize=
+        size+"px";
 
     localStorage.setItem(
-        "language",
-        lang
-    );
-
-    button
-        .parentElement
-        .querySelectorAll(".option")
-        .forEach(
-            x=>
-                x.classList.remove("selected")
-        );
-
-    button.classList.add("selected");
-}
-
-
-function setTheme(theme,button){
-
-    localStorage.setItem(
-        "theme",
-        theme
-    );
-
-    button
-        .parentElement
-        .querySelectorAll(".option")
-        .forEach(
-            x=>
-                x.classList.remove("selected")
-        );
-
-    button.classList.add("selected");
-
-    if(theme==="light"){
-
-        document.body.style.background="#f5f7f6";
-
-    }else{
-
-        document.body.style.background="#07120b";
-    }
-}
-
-
-function setTextSize(size){
-
-    const values={
-        small:"90%",
-        normal:"100%",
-        large:"115%"
-    };
-
-    document.body.style.fontSize=
-        values[size];
-
-    localStorage.setItem(
-        "textSize",
+        "shohinFontSize",
         size
     );
 }
 
+function loadSettings(){
 
-function openInstagram(){
+    if(
+        localStorage.getItem("shohinDark")
+        ==="true"
+    ){
+        document.body.classList.add("dark");
+    }
 
-    window.open(
-        "https://www.instagram.com/shohin_tajikistan/",
-        "_blank"
-    );
-}
+    const size=
+        localStorage.getItem("shohinFontSize");
 
+    if(size){
 
-/* =====================================================
-   STATUS
-===================================================== */
+        document.documentElement.style.fontSize=
+            size+"px";
 
-function setRouteStatus(text){
-
-    const el=
-        document.getElementById(
-            "routeStatus"
-        );
-
-    if(el)
-        el.textContent=text;
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer=null;
-
-function toast(text){
-
-    const el=
-        document.getElementById("toast");
-
-    el.textContent=text;
-
-    el.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer=
-        setTimeout(
-            ()=>{
-                el.classList.remove("show");
-            },
-            2500
-        );
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-async function start(){
-
-    setTimeout(
-        ()=>{
-            document
-                .getElementById("loading")
-                .classList.add("hide");
-        },
-        650
-    );
-
-    renderTourism();
-
-    loadCustomStops();
-
-    try{
-
-        await Promise.all([
-            loadRoads(),
-            loadPlaces(),
-            loadStops()
-        ]);
-
-        showRoads();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Некоторые данные не загрузились"
-        );
+        document.getElementById("fontSize").value=
+            size;
     }
 }
 
-start();
+/* =========================
+   MODAL
+========================= */
+
+function openModal(title,content){
+
+    document.getElementById("modalTitle")
+        .textContent=title;
+
+    document.getElementById("modalContent")
+        .innerHTML=content;
+
+    document.getElementById("modal")
+        .classList.add("show");
+}
+
+function closeModal(){
+
+    document.getElementById("modal")
+        .classList.remove("show");
+}
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        loadSettings();
+
+        setTimeout(()=>{
+
+            document
+                .getElementById("loading")
+                .classList.add("hidden");
+
+        },500);
+
+        renderStops();
+        renderPlaces();
+
+    }
+);
 
 </script>
 
