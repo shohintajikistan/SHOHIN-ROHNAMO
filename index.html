@@ -2,21 +2,25 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 
 <title>SHOHIN ROHNAMO</title>
 
 <link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
 }
 
-html,body,#map{
+html,
+body,
+#map{
     width:100%;
     height:100%;
 }
@@ -25,7 +29,12 @@ body{
     overflow:hidden;
     font-family:Arial,sans-serif;
     background:#06120b;
+    color:white;
 }
+
+/* =========================
+   MAP
+========================= */
 
 #map{
     position:fixed;
@@ -33,14 +42,18 @@ body{
     z-index:1;
 }
 
-/* TOP */
+/* =========================
+   TOP
+========================= */
 
 .top{
     position:fixed;
     top:12px;
     left:12px;
     right:12px;
+
     z-index:1000;
+
     display:flex;
     gap:8px;
 }
@@ -48,6 +61,7 @@ body{
 .logo{
     width:48px;
     height:48px;
+
     flex:none;
 
     display:flex;
@@ -56,18 +70,21 @@ body{
 
     border-radius:16px;
 
-    background:linear-gradient(
-        145deg,
-        #62ffab,
-        #0a9b57
-    );
+    background:
+        linear-gradient(
+            145deg,
+            #62ffab,
+            #0a9b57
+        );
 
     color:#031008;
 
     font-size:22px;
     font-weight:900;
 
-    box-shadow:0 8px 30px rgba(0,0,0,.4);
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.45);
 }
 
 .search{
@@ -78,19 +95,31 @@ body{
     display:flex;
     align-items:center;
 
-    padding:5px 6px 5px 14px;
+    padding:
+        5px
+        6px
+        5px
+        14px;
 
-    background:rgba(5,15,9,.94);
+    background:
+        rgba(5,15,9,.95);
 
-    border:1px solid rgba(255,255,255,.1);
+    border:
+        1px solid
+        rgba(255,255,255,.1);
 
     border-radius:16px;
 
     backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.25);
 }
 
 .search input{
     flex:1;
+
     min-width:0;
 
     border:0;
@@ -104,7 +133,7 @@ body{
 }
 
 .search input::placeholder{
-    color:#7b8980;
+    color:#718078;
 }
 
 .search button{
@@ -112,6 +141,7 @@ body{
     height:38px;
 
     border:0;
+
     border-radius:12px;
 
     background:#39df89;
@@ -119,9 +149,13 @@ body{
     color:#031008;
 
     font-size:17px;
+
+    cursor:pointer;
 }
 
-/* PANEL */
+/* =========================
+   MAIN PANEL
+========================= */
 
 .panel{
     position:fixed;
@@ -134,26 +168,38 @@ body{
 
     padding:12px;
 
-    background:rgba(5,15,9,.95);
+    background:
+        rgba(5,15,9,.95);
 
-    border:1px solid rgba(255,255,255,.1);
+    border:
+        1px solid
+        rgba(255,255,255,.1);
 
     border-radius:20px;
 
     backdrop-filter:blur(20px);
 
-    box-shadow:0 10px 40px rgba(0,0,0,.3);
+    box-shadow:
+        0 10px 40px
+        rgba(0,0,0,.3);
 }
+
+/* =========================
+   STATUS
+========================= */
 
 .status{
     display:flex;
     align-items:center;
+
     gap:10px;
 }
 
 .status-icon{
     width:38px;
     height:38px;
+
+    flex:none;
 
     display:flex;
     align-items:center;
@@ -168,6 +214,7 @@ body{
 
 .status-text{
     flex:1;
+    min-width:0;
 }
 
 .status-text small{
@@ -177,7 +224,7 @@ body{
 
     font-size:7px;
 
-    letter-spacing:1px;
+    letter-spacing:1.5px;
 }
 
 .status-text strong{
@@ -185,13 +232,21 @@ body{
 
     margin-top:4px;
 
-    color:white;
+    color:#fff;
 
-    font-size:11px;
+    font-size:10px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .badge{
-    padding:8px 10px;
+    flex:none;
+
+    padding:
+        8px
+        10px;
 
     border-radius:11px;
 
@@ -204,65 +259,96 @@ body{
     font-weight:bold;
 }
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
 
 .buttons{
-    margin-top:10px;
-
     display:flex;
-    gap:7px;
+
+    gap:6px;
+
+    margin-top:10px;
 }
 
 .buttons button{
     flex:1;
 
-    padding:10px 6px;
+    min-width:0;
 
-    border:1px solid rgba(255,255,255,.08);
+    padding:10px 5px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 
     border-radius:12px;
 
     background:#0d1d12;
 
-    color:#aebbb3;
+    color:#9ca9a1;
 
-    font-size:9px;
+    font-size:8px;
 
     font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.buttons button:active{
+    transform:scale(.97);
 }
 
 .buttons button.active{
     background:#39df89;
+
     color:#031008;
 }
 
-/* GPS */
+/* =========================
+   GPS
+========================= */
 
 .gps{
     position:fixed;
 
     right:13px;
-    bottom:90px;
+    bottom:88px;
 
     z-index:1000;
 
     width:52px;
     height:52px;
 
-    border:1px solid rgba(255,255,255,.1);
+    border:
+        1px solid
+        rgba(255,255,255,.1);
 
     border-radius:17px;
 
-    background:rgba(5,15,9,.95);
+    background:
+        rgba(5,15,9,.95);
 
     color:#39df89;
 
     font-size:24px;
 
-    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.35);
+
+    cursor:pointer;
 }
 
-/* BOTTOM */
+.gps:active{
+    transform:scale(.94);
+}
+
+/* =========================
+   BOTTOM
+========================= */
 
 .bottom{
     position:fixed;
@@ -275,25 +361,41 @@ body{
 
     padding:12px;
 
-    border-radius:20px;
+    border-radius:18px;
 
-    background:rgba(5,15,9,.95);
+    background:
+        rgba(5,15,9,.95);
 
-    border:1px solid rgba(255,255,255,.1);
+    border:
+        1px solid
+        rgba(255,255,255,.1);
 
     backdrop-filter:blur(20px);
 }
 
-.bottom-text{
-    color:#8d9b93;
-    font-size:8px;
+.bottom small{
+    display:block;
+
+    color:#718078;
+
+    font-size:7px;
+
+    letter-spacing:1px;
 }
 
-.bottom-text b{
+.bottom strong{
+    display:block;
+
+    margin-top:4px;
+
     color:#39df89;
+
+    font-size:9px;
 }
 
-/* TOAST */
+/* =========================
+   TOAST
+========================= */
 
 #toast{
     position:fixed;
@@ -303,11 +405,14 @@ body{
 
     z-index:9999;
 
-    transform:translate(-50%,-10px);
+    transform:
+        translate(-50%,-10px);
 
     opacity:0;
 
-    padding:10px 15px;
+    padding:
+        10px
+        15px;
 
     border-radius:13px;
 
@@ -326,24 +431,61 @@ body{
 
 #toast.show{
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+        translate(-50%,0);
 }
 
-/* LEAFLET */
+/* =========================
+   PLACE MARKER
+========================= */
+
+.place-marker{
+    width:30px;
+    height:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#39df89;
+
+    border:
+        3px solid
+        white;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.5);
+
+    font-size:13px;
+}
+
+/* =========================
+   LEAFLET
+========================= */
 
 .leaflet-control-zoom{
-    margin-top:360px!important;
+    margin-top:350px!important;
 }
 
 .leaflet-control-zoom a{
-    background:rgba(5,15,9,.95)!important;
+    background:
+        rgba(5,15,9,.95)!important;
+
     color:#39df89!important;
+
     border:0!important;
 }
 
 .leaflet-control-attribution{
-    background:rgba(5,15,9,.7)!important;
+    background:
+        rgba(5,15,9,.7)!important;
+
     color:#aaa!important;
+
     font-size:7px!important;
 }
 
@@ -351,15 +493,35 @@ body{
     color:#39df89!important;
 }
 
-/* MOBILE */
+/* =========================
+   DESKTOP
+========================= */
 
-@media(max-width:600px){
+@media(min-width:700px){
+
+    .top,
+    .panel{
+        width:430px;
+        right:auto;
+    }
+
+    .top{
+        left:20px;
+    }
 
     .panel{
-        top:70px;
+        left:20px;
+    }
+
+    .bottom{
+        width:430px;
+
+        left:20px;
+        right:auto;
     }
 
 }
+
 </style>
 </head>
 
@@ -367,7 +529,10 @@ body{
 
 <div id="map"></div>
 
-<!-- TOP -->
+
+<!-- =========================
+     TOP
+========================= -->
 
 <div class="top">
 
@@ -379,10 +544,18 @@ body{
 
         <input
             id="search"
-            placeholder="Найти дорогу..."
+            type="search"
+            autocomplete="off"
+            placeholder="Найти объект или дорогу..."
+            onkeydown="
+                if(event.key==='Enter'){
+                    searchMap();
+                }
+            "
         >
 
-        <button onclick="searchMap()">
+        <button
+            onclick="searchMap()">
             🔎
         </button>
 
@@ -391,7 +564,9 @@ body{
 </div>
 
 
-<!-- PANEL -->
+<!-- =========================
+     PANEL
+========================= -->
 
 <div class="panel">
 
@@ -407,15 +582,15 @@ body{
                 SHOHIN ROHNAMO
             </small>
 
-            <strong id="statusText">
-                Загрузка карты...
+            <strong id="status">
+                Загрузка данных...
             </strong>
 
         </div>
 
         <div
-            class="badge"
-            id="badge">
+            id="badge"
+            class="badge">
 
             LOAD
 
@@ -427,6 +602,7 @@ body{
     <div class="buttons">
 
         <button
+            id="roadsBtn"
             class="active"
             onclick="showRoads()">
 
@@ -435,16 +611,17 @@ body{
         </button>
 
         <button
-            onclick="locateMe()">
+            id="placesBtn"
+            onclick="showPlaces()">
 
-            📍 GPS
+            📍 ОБЪЕКТЫ
 
         </button>
 
         <button
-            onclick="resetMap()">
+            onclick="locateMe()">
 
-            🗺️ ОБЗОР
+            ◎ GPS
 
         </button>
 
@@ -453,7 +630,9 @@ body{
 </div>
 
 
-<!-- GPS -->
+<!-- =========================
+     GPS
+========================= -->
 
 <button
     class="gps"
@@ -464,17 +643,19 @@ body{
 </button>
 
 
-<!-- BOTTOM -->
+<!-- =========================
+     BOTTOM
+========================= -->
 
 <div class="bottom">
 
-    <div class="bottom-text">
+    <small>
+        SHOHIN GREEN • DUSHANBE
+    </small>
 
-        <b>SHOHIN GREEN</b>
-        • DUSHANBE
-        • OFFLINE MAP
-
-    </div>
+    <strong>
+        Карта Душанбе
+    </strong>
 
 </div>
 
@@ -484,12 +665,15 @@ body{
 </div>
 
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
 
 <script>
 
 /* ==========================================
-   MAP
+   CONFIG
 ========================================== */
 
 const DUSHANBE = [
@@ -497,27 +681,45 @@ const DUSHANBE = [
     68.7870
 ];
 
-const map = L.map(
-    "map",
-    {
-        center:DUSHANBE,
-        zoom:13,
-        minZoom:10,
-        maxZoom:19
-    }
-);
+const ROADS_FILE =
+    "export(1).geojson";
+
+const PLACES_FILE =
+    "export(2).geojson";
+
+
+/* ==========================================
+   MAP
+========================================== */
+
+const map =
+    L.map(
+        "map",
+        {
+            center:DUSHANBE,
+
+            zoom:13,
+
+            minZoom:10,
+
+            maxZoom:19,
+
+            zoomControl:true
+        }
+    );
 
 
 /* ==========================================
    BASE MAP
 ========================================== */
 
-const baseMap = L.tileLayer(
+L.tileLayer(
 
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 
     {
         maxZoom:19,
+
         attribution:
         "&copy; OpenStreetMap contributors"
     }
@@ -526,71 +728,97 @@ const baseMap = L.tileLayer(
 
 
 /* ==========================================
-   VARIABLES
+   DATA
 ========================================== */
 
-let geoLayer = null;
+let roadsData = null;
 
-let originalData = null;
+let placesData = null;
 
-let currentGPS = null;
+let roadsLayer = null;
+
+let placesLayer = null;
+
+let gpsMarker = null;
 
 
 /* ==========================================
-   LOAD GEOJSON
+   LOAD JSON
 ========================================== */
 
-async function loadGeoJSON(){
+async function loadJSON(
+    file
+){
 
-    setStatus(
-        "Загрузка дорог...",
-        "LOAD"
-    );
+    const response =
+        await fetch(
+            file,
+            {
+                cache:"no-store"
+            }
+        );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            file +
+            " HTTP " +
+            response.status
+        );
+
+    }
+
+
+    return await response.json();
+
+}
+
+
+/* ==========================================
+   LOAD ROADS
+========================================== */
+
+async function loadRoads(){
 
     try{
 
-        const response =
-            await fetch(
-                "export(1).geojson"
+        roadsData =
+            await loadJSON(
+                ROADS_FILE
             );
 
-        if(!response.ok){
 
-            throw new Error(
-                "HTTP " +
-                response.status
+        roadsLayer =
+            L.geoJSON(
+                roadsData,
+                {
+                    style:{
+                        color:"#16c978",
+
+                        weight:3,
+
+                        opacity:.85
+                    }
+                }
             );
 
-        }
 
-        const data =
-            await response.json();
-
-        originalData = data;
-
-        showGeoJSON(data);
-
-        setStatus(
-            "Дороги загружены",
-            "READY"
+        roadsLayer.addTo(
+            map
         );
 
-        toast(
-            "GeoJSON успешно загружен"
-        );
+
+        return true;
 
     }catch(error){
 
-        console.error(error);
-
-        setStatus(
-            "Ошибка загрузки GeoJSON",
-            "ERROR"
+        console.error(
+            "ROADS:",
+            error
         );
 
-        toast(
-            "Не удалось загрузить GeoJSON"
-        );
+        return false;
 
     }
 
@@ -598,91 +826,121 @@ async function loadGeoJSON(){
 
 
 /* ==========================================
-   SHOW GEOJSON
+   LOAD PLACES
 ========================================== */
 
-function showGeoJSON(data){
+async function loadPlaces(){
 
-    if(geoLayer){
+    try{
 
-        map.removeLayer(
-            geoLayer
-        );
+        placesData =
+            await loadJSON(
+                PLACES_FILE
+            );
 
-    }
 
-    geoLayer =
-        L.geoJSON(
+        placesLayer =
+            L.geoJSON(
 
-            data,
+                placesData,
 
-            {
+                {
 
-                style:function(){
-
-                    return {
-
-                        color:"#16c978",
-
-                        weight:3,
-
-                        opacity:.9
-
-                    };
-
-                },
-
-                onEachFeature:function(
-                    feature,
-                    layer
-                ){
-
-                    let name = "";
-
-                    if(
-                        feature.properties
+                    pointToLayer:
+                    function(
+                        feature,
+                        latlng
                     ){
 
-                        name =
-                            feature.properties.name ||
-                            feature.properties.ref ||
-                            feature.properties.highway ||
-                            "";
+                        return L.marker(
 
-                    }
+                            latlng,
 
-                    if(name){
+                            {
+
+                                icon:
+                                L.divIcon({
+
+                                    className:"",
+
+                                    html:
+                                    '<div class="place-marker">📍</div>',
+
+                                    iconSize:[
+                                        30,
+                                        30
+                                    ],
+
+                                    iconAnchor:[
+                                        15,
+                                        15
+                                    ]
+
+                                })
+
+                            }
+
+                        );
+
+                    },
+
+
+                    onEachFeature:
+                    function(
+                        feature,
+                        layer
+                    ){
+
+                        const p =
+                            feature.properties ||
+                            {};
+
+
+                        const name =
+                            p.name ||
+                            p["name:ru"] ||
+                            p["name:tg"] ||
+                            p.amenity ||
+                            p.shop ||
+                            p.tourism ||
+                            "Объект";
+
 
                         layer.bindPopup(
-                            "<b>" +
-                            name +
-                            "</b>"
+
+                            `
+                            <div
+                            style="
+                            font-family:Arial;
+                            font-size:13px;
+                            ">
+
+                                <b>
+                                    ${escapeHTML(name)}
+                                </b>
+
+                            </div>
+                            `
+
                         );
 
                     }
 
                 }
 
-            }
-
-        ).addTo(map);
+            );
 
 
-    const bounds =
-        geoLayer.getBounds();
+        return true;
 
+    }catch(error){
 
-    if(bounds.isValid()){
-
-        map.fitBounds(
-            bounds,
-            {
-                padding:[
-                    40,
-                    40
-                ]
-            }
+        console.error(
+            "PLACES:",
+            error
         );
+
+        return false;
 
     }
 
@@ -690,23 +948,73 @@ function showGeoJSON(data){
 
 
 /* ==========================================
-   ROADS
+   HTML SAFETY
+========================================== */
+
+function escapeHTML(
+    value
+){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   SHOW ROADS
 ========================================== */
 
 function showRoads(){
 
-    if(!originalData){
+    if(!roadsLayer){
 
         toast(
-            "Карта ещё загружается"
+            "Дороги ещё загружаются"
         );
 
         return;
+
     }
 
-    showGeoJSON(
-        originalData
+
+    if(placesLayer){
+
+        map.removeLayer(
+            placesLayer
+        );
+
+    }
+
+
+    roadsLayer.addTo(
+        map
     );
+
+
+    setActive(
+        "roadsBtn"
+    );
+
 
     setStatus(
         "Дороги Душанбе",
@@ -717,17 +1025,98 @@ function showRoads(){
 
 
 /* ==========================================
+   SHOW PLACES
+========================================== */
+
+function showPlaces(){
+
+    if(!placesLayer){
+
+        toast(
+            "Объекты ещё загружаются"
+        );
+
+        return;
+
+    }
+
+
+    if(roadsLayer){
+
+        map.removeLayer(
+            roadsLayer
+        );
+
+    }
+
+
+    placesLayer.addTo(
+        map
+    );
+
+
+    setActive(
+        "placesBtn"
+    );
+
+
+    setStatus(
+        "Объекты Душанбе",
+        "READY"
+    );
+
+}
+
+
+/* ==========================================
+   BUTTON STATE
+========================================== */
+
+function setActive(
+    id
+){
+
+    document
+        .querySelectorAll(
+            ".buttons button"
+        )
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            id
+        )
+        .classList.add(
+            "active"
+        );
+
+}
+
+
+/* ==========================================
    SEARCH
 ========================================== */
 
 function searchMap(){
 
-    const query =
+    const input =
         document
         .getElementById(
             "search"
-        )
-        .value
+        );
+
+
+    const query =
+        input.value
         .trim()
         .toLowerCase();
 
@@ -739,47 +1128,98 @@ function searchMap(){
         );
 
         return;
-    }
 
-
-    if(!originalData){
-
-        toast(
-            "Данные ещё загружаются"
-        );
-
-        return;
     }
 
 
     let found = null;
 
 
-    for(
-        const feature
-        of originalData.features || []
+    /* PLACES */
+
+    if(
+        placesData &&
+        Array.isArray(
+            placesData.features
+        )
     ){
 
-        const props =
-            feature.properties || {};
-
-
-        const text =
-            Object.values(props)
-            .join(" ")
-            .toLowerCase();
-
-
-        if(
-            text.includes(
-                query
-            )
+        for(
+            const feature
+            of placesData.features
         ){
 
-            found =
-                feature;
+            const properties =
+                feature.properties ||
+                {};
 
-            break;
+
+            const text =
+                Object.values(
+                    properties
+                )
+                .join(" ")
+                .toLowerCase();
+
+
+            if(
+                text.includes(
+                    query
+                )
+            ){
+
+                found =
+                    feature;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /* ROADS */
+
+    if(
+        !found &&
+        roadsData &&
+        Array.isArray(
+            roadsData.features
+        )
+    ){
+
+        for(
+            const feature
+            of roadsData.features
+        ){
+
+            const properties =
+                feature.properties ||
+                {};
+
+
+            const text =
+                Object.values(
+                    properties
+                )
+                .join(" ")
+                .toLowerCase();
+
+
+            if(
+                text.includes(
+                    query
+                )
+            ){
+
+                found =
+                    feature;
+
+                break;
+
+            }
 
         }
 
@@ -793,20 +1233,24 @@ function searchMap(){
         );
 
         return;
+
     }
 
 
-    const temp =
+    const temporaryLayer =
         L.geoJSON(
             found
         );
 
 
     const bounds =
-        temp.getBounds();
+        temporaryLayer.getBounds();
 
 
-    if(bounds.isValid()){
+    if(
+        bounds &&
+        bounds.isValid()
+    ){
 
         map.fitBounds(
             bounds,
@@ -821,9 +1265,22 @@ function searchMap(){
     }
 
 
-    toast(
-        "Найдено"
-    );
+    if(
+        found.properties &&
+        found.properties.name
+    ){
+
+        toast(
+            found.properties.name
+        );
+
+    }else{
+
+        toast(
+            "Объект найден"
+        );
+
+    }
 
 }
 
@@ -843,6 +1300,7 @@ function locateMe(){
         );
 
         return;
+
     }
 
 
@@ -863,25 +1321,29 @@ function locateMe(){
                 position.coords.longitude;
 
 
-            currentGPS =
+            if(gpsMarker){
+
+                map.removeLayer(
+                    gpsMarker
+                );
+
+            }
+
+
+            gpsMarker =
                 L.marker(
                     [
                         lat,
                         lon
-                    ],
-                    {
-                        title:
-                        "Вы здесь"
-                    }
+                    ]
                 )
                 .addTo(map);
 
 
-            currentGPS
-                .bindPopup(
-                    "📍 Вы здесь"
-                )
-                .openPopup();
+            gpsMarker.bindPopup(
+                "📍 Вы здесь"
+            )
+            .openPopup();
 
 
             map.flyTo(
@@ -897,18 +1359,38 @@ function locateMe(){
 
 
             toast(
-                "GPS найден"
+                "Местоположение найдено"
             );
 
         },
 
-        function(){
 
-            toast(
-                "Разрешите доступ к GPS"
+        function(error){
+
+            console.error(
+                "GPS:",
+                error
             );
 
+
+            if(
+                error.code === 1
+            ){
+
+                toast(
+                    "Разрешите доступ к GPS"
+                );
+
+            }else{
+
+                toast(
+                    "Не удалось определить GPS"
+                );
+
+            }
+
         },
+
 
         {
 
@@ -926,23 +1408,6 @@ function locateMe(){
 
 
 /* ==========================================
-   RESET
-========================================== */
-
-function resetMap(){
-
-    map.flyTo(
-        DUSHANBE,
-        13,
-        {
-            duration:1
-        }
-    );
-
-}
-
-
-/* ==========================================
    STATUS
 ========================================== */
 
@@ -953,7 +1418,7 @@ function setStatus(
 
     document
         .getElementById(
-            "statusText"
+            "status"
         )
         .textContent =
         text;
@@ -973,25 +1438,25 @@ function setStatus(
    TOAST
 ========================================== */
 
-let toastTimer;
+let toastTimer = null;
 
 
 function toast(
     text
 ){
 
-    const el =
+    const element =
         document
         .getElementById(
             "toast"
         );
 
 
-    el.textContent =
+    element.textContent =
         text;
 
 
-    el.classList.add(
+    element.classList.add(
         "show"
     );
 
@@ -1005,7 +1470,7 @@ function toast(
         setTimeout(
             function(){
 
-                el.classList.remove(
+                element.classList.remove(
                     "show"
                 );
 
@@ -1020,9 +1485,100 @@ function toast(
    START
 ========================================== */
 
-loadGeoJSON();
+async function start(){
+
+    setStatus(
+        "Загрузка данных...",
+        "LOAD"
+    );
+
+
+    const results =
+        await Promise.all([
+            loadRoads(),
+            loadPlaces()
+        ]);
+
+
+    const roadsOK =
+        results[0];
+
+    const placesOK =
+        results[1];
+
+
+    if(
+        roadsOK &&
+        placesOK
+    ){
+
+        setStatus(
+            "Карта готова",
+            "READY"
+        );
+
+        toast(
+            "SHOHIN ROHNAMO готов"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        roadsOK &&
+        !placesOK
+    ){
+
+        setStatus(
+            "Дороги загружены",
+            "PART"
+        );
+
+        toast(
+            "Объекты не загрузились"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !roadsOK &&
+        placesOK
+    ){
+
+        setStatus(
+            "Объекты загружены",
+            "PART"
+        );
+
+        toast(
+            "Дороги не загрузились"
+        );
+
+        return;
+
+    }
+
+
+    setStatus(
+        "Ошибка загрузки",
+        "ERROR"
+    );
+
+    toast(
+        "Проверь GeoJSON-файлы"
+    );
+
+}
+
+
+start();
 
 </script>
 
 </body>
-      </html>
+</html>
