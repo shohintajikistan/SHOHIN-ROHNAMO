@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b8f4d">
+<meta name="theme-color" content="#087f46">
 <title>SHOHIN ROHNAMO</title>
 
 <link rel="stylesheet"
@@ -11,712 +11,878 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
 :root{
- --green:#0b8f4d;
- --green2:#18b866;
- --dark:#07110b;
- --text:#142019;
- --muted:#748078;
- --white:#fff;
- --panel:rgba(255,255,255,.96);
- --shadow:0 12px 35px rgba(0,0,0,.15);
+  --green:#087f46;
+  --green2:#12a85c;
+  --light:#f3f8f4;
+  --white:#fff;
+  --text:#142019;
+  --muted:#748079;
+  --blue:#287fe8;
+  --cyan:#00a9d8;
+  --orange:#f39a28;
+  --gold:#d9a72c;
+  --shadow:0 12px 35px rgba(0,0,0,.14);
+  --radius:20px;
 }
 
 *{
- box-sizing:border-box;
- margin:0;
- padding:0;
- font-family:Arial,Helvetica,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Inter,Arial,sans-serif;
 }
 
 body{
- background:#edf5ef;
- color:var(--text);
- overflow-x:hidden;
+  background:#edf4ef;
+  color:var(--text);
+  overflow:hidden;
 }
 
 button,input{
- font:inherit;
+  font:inherit;
 }
 
 button{
- cursor:pointer;
- border:0;
+  border:0;
+  cursor:pointer;
 }
 
+/* LOADER */
+
 #loader{
- position:fixed;
- inset:0;
- z-index:99999;
- background:linear-gradient(145deg,#064a2a,#0b8f4d,#18b866);
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
- color:white;
- transition:.5s;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  transition:.5s;
 }
 
 #loader.hide{
- opacity:0;
- pointer-events:none;
+  opacity:0;
+  pointer-events:none;
 }
 
-.loaderLogo{
- font-size:50px;
- font-weight:1000;
- letter-spacing:4px;
+.logoBig{
+  font-size:52px;
+  font-weight:1000;
+  letter-spacing:5px;
 }
 
-.loaderName{
- margin-top:7px;
- letter-spacing:3px;
- font-size:11px;
+.logoSub{
+  font-size:10px;
+  letter-spacing:3px;
+  margin-top:5px;
+  opacity:.8;
 }
 
-.loaderBar{
- width:170px;
- height:4px;
- background:rgba(255,255,255,.3);
- border-radius:10px;
- margin-top:22px;
- overflow:hidden;
+.loaderLine{
+  width:170px;
+  height:4px;
+  border-radius:10px;
+  background:rgba(255,255,255,.3);
+  margin-top:24px;
+  overflow:hidden;
 }
 
-.loaderBar span{
- display:block;
- width:100%;
- height:100%;
- background:white;
- animation:load 1s;
+.loaderLine span{
+  display:block;
+  height:100%;
+  width:100%;
+  background:white;
+  animation:loading 1.2s;
 }
 
-@keyframes load{
- from{width:0}
- to{width:100%}
+@keyframes loading{
+  from{width:0}
+  to{width:100%}
 }
 
 /* MAP */
 
 #map{
- position:fixed;
- inset:0;
- z-index:1;
+  position:fixed;
+  inset:0;
+  z-index:1;
 }
 
 .leaflet-control-attribution{
- font-size:8px!important;
+  font-size:8px!important;
 }
 
 /* TOP */
 
 .top{
- position:fixed;
- top:0;
- left:0;
- right:0;
- z-index:1000;
- padding:12px;
- pointer-events:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  padding:12px;
+  pointer-events:none;
 }
 
-.topbar{
- max-width:760px;
- margin:auto;
- display:flex;
- justify-content:space-between;
- align-items:center;
+.topRow{
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.logo{
- pointer-events:auto;
- display:flex;
- align-items:center;
- gap:9px;
- padding:8px 12px;
- background:rgba(255,255,255,.94);
- backdrop-filter:blur(15px);
- border-radius:17px;
- box-shadow:var(--shadow);
+.brand{
+  pointer-events:auto;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(18px);
+  padding:7px 11px 7px 7px;
+  border-radius:17px;
+  box-shadow:var(--shadow);
 }
 
-.logoMark{
- width:40px;
- height:40px;
- border-radius:12px;
- display:flex;
- justify-content:center;
- align-items:center;
- color:white;
- background:linear-gradient(145deg,#087a42,#18b866);
- font-size:15px;
- font-weight:1000;
+.brandLogo{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:14px;
+  font-weight:1000;
+  background:linear-gradient(145deg,#056337,#13b866);
 }
 
-.logoText b{
- display:block;
- font-size:13px;
+.brandText b{
+  display:block;
+  font-size:12px;
 }
 
-.logoText small{
- color:#7b867f;
- font-size:8px;
- letter-spacing:1.8px;
+.brandText small{
+  display:block;
+  color:#7b867f;
+  font-size:7px;
+  letter-spacing:1.5px;
+  margin-top:3px;
 }
 
-.menuBtn{
- pointer-events:auto;
- width:46px;
- height:46px;
- border-radius:15px;
- background:rgba(255,255,255,.96);
- box-shadow:var(--shadow);
- font-size:21px;
+.langs{
+  pointer-events:auto;
+  display:flex;
+  gap:3px;
+  background:rgba(255,255,255,.95);
+  padding:5px;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+
+.langs button{
+  padding:7px 8px;
+  border-radius:9px;
+  background:transparent;
+  color:#68756d;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.langs button.active{
+  background:var(--green);
+  color:white;
+}
+
+.menuButton{
+  pointer-events:auto;
+  width:43px;
+  height:43px;
+  margin-left:6px;
+  border-radius:14px;
+  background:white;
+  box-shadow:var(--shadow);
+  font-size:20px;
+}
+
+/* SEARCH AREA */
+
+.searchArea{
+  position:fixed;
+  top:68px;
+  left:12px;
+  right:12px;
+  z-index:900;
+  max-width:900px;
+  margin:auto;
+}
+
+.searchBox{
+  height:54px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(18px);
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  padding:0 7px 0 15px;
+}
+
+.searchIcon{
+  font-size:19px;
+  margin-right:8px;
+}
+
+#search{
+  flex:1;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  font-size:14px;
+}
+
+.searchGo{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+  font-size:18px;
+}
+
+/* CHIPS */
+
+.chips{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:8px 1px;
+  scrollbar-width:none;
+}
+
+.chips::-webkit-scrollbar{
+  display:none;
+}
+
+.chip{
+  flex:none;
+  background:rgba(255,255,255,.95);
+  border-radius:13px;
+  padding:9px 12px;
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+  color:#425048;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.chip.hot{
+  background:#e7f6ed;
+  color:var(--green);
 }
 
 /* GPS */
 
 .gps{
- position:fixed;
- z-index:1000;
- right:15px;
- bottom:275px;
- width:50px;
- height:50px;
- border-radius:17px;
- background:white;
- box-shadow:var(--shadow);
- color:var(--green);
- font-size:22px;
+  position:fixed;
+  z-index:1000;
+  right:14px;
+  bottom:315px;
+  width:50px;
+  height:50px;
+  border-radius:17px;
+  background:white;
+  box-shadow:var(--shadow);
+  color:var(--green);
+  font-size:22px;
 }
 
-/* BOTTOM PANEL */
+/* BOTTOM */
 
 .bottom{
- position:fixed;
- z-index:900;
- left:0;
- right:0;
- bottom:0;
- padding:10px;
- pointer-events:none;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:1000;
+  pointer-events:none;
+  padding:10px;
 }
 
-.panel{
- max-width:650px;
- margin:auto;
- pointer-events:auto;
- background:var(--panel);
- backdrop-filter:blur(18px);
- border-radius:25px 25px 0 0;
- padding:12px;
- box-shadow:0 -10px 35px rgba(0,0,0,.12);
-}
-
-/* SEARCH */
-
-.search{
- height:52px;
- display:flex;
- align-items:center;
- gap:8px;
- border-radius:16px;
- background:#f1f5f2;
- padding:0 8px 0 15px;
-}
-
-.search span{
- font-size:19px;
-}
-
-.search input{
- flex:1;
- border:0;
- outline:0;
- background:transparent;
- font-size:15px;
-}
-
-.search button{
- width:40px;
- height:40px;
- border-radius:13px;
- color:white;
- background:var(--green);
-}
-
-/* ROUTE */
-
-.routeBox{
- margin-top:8px;
- display:none;
- background:#f6faf7;
- border-radius:17px;
- padding:8px;
-}
-
-.routeBox.show{
- display:block;
-}
-
-.point{
- display:flex;
- align-items:center;
- gap:9px;
- height:42px;
-}
-
-.dot{
- width:27px;
- height:27px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- color:white;
- font-size:11px;
- font-weight:bold;
- background:var(--green);
-}
-
-.point input{
- flex:1;
- border:0;
- outline:0;
- background:transparent;
- font-size:13px;
-}
-
-.point button{
- background:#e5f3e9;
- color:var(--green);
- border-radius:10px;
- padding:7px 10px;
- font-size:11px;
- font-weight:bold;
-}
-
-.transport{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:6px;
- margin-top:7px;
-}
-
-.transport button{
- padding:10px;
- border-radius:12px;
- background:#e9f4ec;
- color:#42604e;
- font-size:12px;
- font-weight:bold;
-}
-
-.transport button.active{
- color:white;
- background:var(--green);
-}
-
-.build{
- width:100%;
- margin-top:7px;
- padding:14px;
- border-radius:14px;
- background:linear-gradient(145deg,#087b42,#18b866);
- color:white;
- font-weight:900;
-}
-
-/* INFO */
-
-.info{
- display:none;
- margin-top:8px;
- border-radius:16px;
- background:white;
- padding:13px;
- box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
-
-.info.show{
- display:block;
-}
-
-.infoTop{
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
-
-.infoTime{
- font-size:24px;
- font-weight:900;
-}
-
-.infoDistance{
- color:var(--muted);
- font-size:12px;
-}
-
-.infoLine{
- margin-top:10px;
- height:4px;
- border-radius:10px;
- background:linear-gradient(90deg,var(--green),#8dd5a9);
-}
-
-.startNav{
- width:100%;
- margin-top:10px;
- padding:13px;
- border-radius:13px;
- background:var(--green);
- color:white;
- font-weight:bold;
+.bottomPanel{
+  max-width:700px;
+  margin:auto;
+  pointer-events:auto;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(20px);
+  border-radius:25px 25px 0 0;
+  padding:12px;
+  box-shadow:0 -10px 35px rgba(0,0,0,.12);
 }
 
 /* QUICK */
 
 .quick{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:6px;
- margin-top:8px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
 }
 
 .quick button{
- background:white;
- border-radius:14px;
- padding:9px 3px;
- color:#52635a;
- font-size:10px;
- box-shadow:0 3px 12px rgba(0,0,0,.06);
+  background:#f4f8f5;
+  border-radius:14px;
+  padding:9px 4px;
+  color:#46544c;
+  font-size:9px;
+  font-weight:bold;
 }
 
 .quick button span{
- display:block;
- font-size:19px;
- margin-bottom:3px;
+  display:block;
+  font-size:19px;
+  margin-bottom:3px;
 }
 
-/* SIDE MENU */
+/* ROUTE PANEL */
+
+.routePanel{
+  display:none;
+  margin-bottom:8px;
+  background:#f5f9f6;
+  border-radius:17px;
+  padding:9px;
+}
+
+.routePanel.show{
+  display:block;
+}
+
+.pointRow{
+  height:42px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.pointIcon{
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.pointA{
+  background:#12a85c;
+}
+
+.pointB{
+  background:#e84b4b;
+}
+
+.pointInput{
+  flex:1;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-size:12px;
+  min-width:0;
+}
+
+.mapChoose{
+  padding:7px 9px;
+  border-radius:9px;
+  background:#e4f3e9;
+  color:var(--green);
+  font-size:10px;
+  font-weight:bold;
+}
+
+.transport{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  margin-top:5px;
+}
+
+.transport button{
+  padding:10px 4px;
+  border-radius:11px;
+  font-size:10px;
+  font-weight:bold;
+  color:#56645b;
+  background:white;
+}
+
+.transport button.active.car{
+  background:var(--green);
+  color:white;
+}
+
+.transport button.active.foot{
+  background:#8a6a35;
+  color:white;
+}
+
+.transport button.active.bike{
+  background:#287fe8;
+  color:white;
+}
+
+.shadowMode{
+  margin-top:7px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  border-radius:12px;
+  background:#fff9df;
+}
+
+.shadowText b{
+  display:block;
+  font-size:11px;
+}
+
+.shadowText small{
+  color:#8b7a42;
+  font-size:9px;
+}
+
+.switch{
+  width:43px;
+  height:24px;
+  background:#d8ded9;
+  border-radius:20px;
+  padding:3px;
+}
+
+.switch i{
+  display:block;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+.switch.on{
+  background:#d6a72d;
+}
+
+.switch.on i{
+  transform:translateX(19px);
+}
+
+.build{
+  width:100%;
+  margin-top:7px;
+  padding:14px;
+  border-radius:13px;
+  color:white;
+  font-size:12px;
+  font-weight:900;
+  background:linear-gradient(145deg,#06743f,#12a85c);
+}
+
+/* ROUTE RESULT */
+
+.routeResult{
+  display:none;
+  background:white;
+  border-radius:18px;
+  padding:12px;
+  margin-bottom:8px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.routeResult.show{
+  display:block;
+}
+
+.routeStats{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.big{
+  font-size:22px;
+  font-weight:1000;
+}
+
+.small{
+  font-size:9px;
+  color:var(--muted);
+}
+
+.routeLine{
+  height:5px;
+  border-radius:10px;
+  margin:10px 0;
+  background:linear-gradient(90deg,#12a85c,#d9a72c,#287fe8);
+}
+
+.start{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+  font-weight:bold;
+}
+
+/* MENU */
 
 .overlay{
- position:fixed;
- inset:0;
- z-index:5000;
- background:rgba(0,0,0,.45);
- display:none;
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(0,0,0,.45);
+  display:none;
 }
 
 .overlay.show{
- display:block;
+  display:block;
 }
 
-.menu{
- position:fixed;
- z-index:6000;
- top:0;
- right:-380px;
- width:350px;
- max-width:90%;
- height:100%;
- background:white;
- padding:15px;
- overflow:auto;
- transition:.3s;
- box-shadow:-15px 0 40px rgba(0,0,0,.25);
+.drawer{
+  position:fixed;
+  z-index:6000;
+  top:0;
+  right:-390px;
+  width:360px;
+  max-width:91%;
+  height:100%;
+  background:white;
+  padding:14px;
+  overflow:auto;
+  transition:.3s;
+  box-shadow:-15px 0 40px rgba(0,0,0,.22);
 }
 
-.menu.open{
- right:0;
+.drawer.open{
+  right:0;
 }
 
-.menuHead{
- padding:22px;
- border-radius:22px;
- color:white;
- background:linear-gradient(145deg,#075d35,#0b8f4d,#18b866);
- margin-bottom:10px;
+.drawerHead{
+  padding:21px;
+  border-radius:22px;
+  color:white;
+  background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
+  margin-bottom:10px;
 }
 
-.menuHead strong{
- font-size:28px;
+.drawerHead h1{
+  font-size:28px;
 }
 
-.menuHead small{
- display:block;
- margin-top:5px;
- opacity:.8;
+.drawerHead p{
+  font-size:10px;
+  opacity:.8;
+  margin-top:4px;
 }
 
-.closeMenu{
- float:right;
- width:36px;
- height:36px;
- border-radius:11px;
+.closeDrawer{
+  float:right;
+  width:34px;
+  height:34px;
+  border-radius:10px;
 }
 
 .menuItem{
- width:100%;
- padding:14px;
- margin:4px 0;
- border-radius:14px;
- text-align:left;
- background:white;
- font-weight:bold;
- color:#233229;
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  text-align:left;
+  background:white;
+  color:#25342b;
+  font-weight:bold;
+  font-size:13px;
+  margin:2px 0;
 }
 
 .menuItem:hover{
- background:#eaf7ee;
+  background:#edf8f1;
 }
 
 .menuItem span{
- display:inline-block;
- width:32px;
-}
-
-/* MODAL */
-
-.modal{
- position:fixed;
- z-index:9000;
- inset:0;
- display:none;
- align-items:flex-end;
- background:rgba(0,0,0,.55);
- padding:10px;
-}
-
-.modal.show{
- display:flex;
-}
-
-.modalBox{
- width:700px;
- max-width:100%;
- max-height:90vh;
- overflow:auto;
- margin:auto;
- background:white;
- border-radius:25px;
- padding:18px;
-}
-
-.modalHead{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:15px;
-}
-
-.close{
- width:38px;
- height:38px;
- border-radius:12px;
- background:#edf3ef;
-}
-
-.modalBtn{
- width:100%;
- padding:13px;
- border-radius:13px;
- background:var(--green);
- color:white;
- font-weight:bold;
- margin-top:10px;
+  display:inline-block;
+  width:30px;
+  font-size:18px;
 }
 
 /* PAGES */
 
 .page{
- display:none;
- position:fixed;
- inset:0;
- z-index:3000;
- background:#edf5ef;
- overflow:auto;
- padding:80px 15px 30px;
+  position:fixed;
+  inset:0;
+  z-index:4000;
+  display:none;
+  overflow:auto;
+  background:#f0f6f2;
+  padding:75px 14px 30px;
 }
 
-.page.active{
- display:block;
+.page.show{
+  display:block;
 }
 
 .pageInner{
- max-width:900px;
- margin:auto;
+  max-width:900px;
+  margin:auto;
 }
 
-.hero{
- padding:22px;
- border-radius:24px;
- color:white;
- background:linear-gradient(145deg,#075d35,#0b8f4d,#18b866);
- margin-bottom:14px;
+.pageHero{
+  padding:23px;
+  border-radius:23px;
+  color:white;
+  background:linear-gradient(145deg,#034c2b,#087f46,#13b866);
+  margin-bottom:13px;
 }
 
-.hero h1{
- font-size:27px;
+.pageHero h1{
+  font-size:26px;
 }
 
-.hero p{
- margin-top:7px;
- opacity:.85;
+.pageHero p{
+  margin-top:6px;
+  opacity:.85;
+  font-size:12px;
 }
 
 .card{
- background:white;
- border-radius:20px;
- padding:17px;
- margin-bottom:12px;
- box-shadow:0 7px 25px rgba(0,0,0,.08);
+  background:white;
+  border-radius:19px;
+  padding:16px;
+  margin-bottom:11px;
+  box-shadow:0 6px 25px rgba(0,0,0,.07);
 }
 
-.btn{
- border:0;
- padding:13px 16px;
- border-radius:13px;
- color:white;
- background:var(--green);
- font-weight:bold;
-}
-
-.full{
- width:100%;
-}
-
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:12px;
-}
-
-.photo{
- width:100%;
- height:180px;
- object-fit:cover;
- border-radius:15px;
+.card h3{
+  margin-bottom:7px;
 }
 
 .muted{
- color:var(--muted);
- line-height:1.5;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
 }
 
 .badge{
- display:inline-block;
- margin:5px 3px 0 0;
- padding:6px 9px;
- border-radius:9px;
- background:#e7f6eb;
- color:var(--green);
- font-size:11px;
- font-weight:bold;
+  display:inline-block;
+  padding:6px 9px;
+  border-radius:9px;
+  font-size:10px;
+  font-weight:bold;
+  margin:3px;
+}
+
+.bus{
+  background:#e8f0ff;
+  color:var(--blue);
+}
+
+.trolley{
+  background:#e3f9ff;
+  color:#008db7;
+}
+
+.mini{
+  background:#fff1df;
+  color:#d77d0b;
+}
+
+.primary{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  color:white;
+  background:var(--green);
+  font-weight:bold;
+}
+
+.placeGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:11px;
+}
+
+.placeCard{
+  background:white;
+  border-radius:19px;
+  padding:17px;
+  box-shadow:0 6px 25px rgba(0,0,0,.07);
+}
+
+.placeEmoji{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  display:none;
+  align-items:flex-end;
+  background:rgba(0,0,0,.5);
+  padding:10px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  width:700px;
+  max-width:100%;
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:24px;
+  padding:18px;
+  margin:auto;
+}
+
+.modalHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#edf3ef;
 }
 
 /* FORMS */
 
 .field{
- margin-bottom:13px;
+  margin-bottom:12px;
 }
 
 .field label{
- display:block;
- font-size:12px;
- font-weight:bold;
- margin-bottom:6px;
+  display:block;
+  margin-bottom:6px;
+  font-size:11px;
+  font-weight:bold;
 }
 
 .field input,
 .field textarea,
 .field select{
- width:100%;
- padding:13px;
- border:1px solid #d6e4da;
- border-radius:12px;
- outline:0;
- background:white;
+  width:100%;
+  padding:12px;
+  border:1px solid #d6e3da;
+  border-radius:12px;
+  outline:0;
+  background:white;
 }
 
 .field textarea{
- min-height:100px;
- resize:vertical;
+  min-height:100px;
 }
 
 /* DARK */
 
 body.dark{
- background:#07110b;
- color:white;
+  background:#07110b;
+  color:#fff;
 }
 
-body.dark .page{
- background:#07110b;
+body.dark .brand,
+body.dark .langs,
+body.dark .menuButton,
+body.dark .searchBox,
+body.dark .chip,
+body.dark .bottomPanel,
+body.dark .gps{
+  background:#142219;
+  color:white;
 }
 
-body.dark .logo,
-body.dark .menu,
-body.dark .panel,
-body.dark .gps,
+body.dark #search{
+  color:white;
+}
+
+body.dark .bottomPanel{
+  background:rgba(20,34,25,.97);
+}
+
+body.dark .quick button,
+body.dark .routePanel,
+body.dark .transport button{
+  background:#1a2b20;
+  color:white;
+}
+
+body.dark .routeResult,
+body.dark .drawer,
 body.dark .card,
-body.dark .modalBox,
-body.dark .quick button{
- background:#132018;
- color:white;
-}
-
-body.dark .search,
-body.dark .routeBox{
- background:#18271e;
-}
-
-body.dark .point input{
- color:white;
+body.dark .placeCard,
+body.dark .modalBox{
+  background:#142219;
+  color:white;
 }
 
 body.dark .menuItem{
- background:#132018;
- color:white;
+  background:#142219;
+  color:white;
+}
+
+body.dark .page{
+  background:#07110b;
 }
 
 body.dark .field input,
 body.dark .field textarea,
 body.dark .field select{
- background:#18271e;
- color:white;
- border-color:#2a4232;
+  background:#1a2b20;
+  color:white;
+  border-color:#294332;
+}
+
+@media(max-width:600px){
+
+  .brandText{
+    display:none;
+  }
+
+  .langs button{
+    padding:7px 6px;
+  }
+
+  .gps{
+    bottom:315px;
+  }
+
 }
 
 @media(min-width:800px){
 
- .bottom{
-  bottom:25px;
- }
+  .bottom{
+    bottom:20px;
+  }
 
- .panel{
-  border-radius:25px;
- }
+  .bottomPanel{
+    border-radius:24px;
+  }
 
- .gps{
-  bottom:330px;
- }
-
-}
-
-@media(max-width:500px){
-
- .logoText{
-  display:none;
- }
-
- .gps{
-  bottom:300px;
- }
-
- .menu{
-  width:330px;
- }
+  .gps{
+    bottom:330px;
+  }
 
 }
 </style>
@@ -724,286 +890,433 @@ body.dark .field select{
 
 <body>
 
+<!-- LOADER -->
+
 <div id="loader">
- <div class="loaderLogo">SHT</div>
- <div class="loaderName">SHOHIN ROHNAMO</div>
- <div class="loaderBar"><span></span></div>
+  <div class="logoBig">SHT</div>
+  <div class="logoSub">SHOHIN ROHNAMO</div>
+  <div class="loaderLine"><span></span></div>
 </div>
+
+<!-- MAP -->
 
 <div id="map"></div>
 
-<header class="top">
+<!-- TOP -->
 
- <div class="topbar">
+<div class="top">
 
-  <div class="logo">
+  <div class="topRow">
 
-   <div class="logoMark">SHT</div>
+    <div class="brand">
+      <div class="brandLogo">SHT</div>
 
-   <div class="logoText">
-    <b>SHOHIN ROHNAMO</b>
-    <small>TAJIKISTAN NAVIGATION</small>
-   </div>
-
-  </div>
-
-  <button class="menuBtn" onclick="openMenu()">☰</button>
-
- </div>
-
-</header>
-
-<button class="gps" onclick="gps()">⦿</button>
-
-<!-- MAIN PANEL -->
-
-<div class="bottom">
-
- <div class="panel">
-
-  <div class="search">
-
-   <span>🔎</span>
-
-   <input
-    id="search"
-    placeholder="Куда едем?"
-    onkeydown="if(event.key==='Enter')searchPlace()">
-
-   <button onclick="searchPlace()">➜</button>
-
-  </div>
-
-  <div id="routeBox" class="routeBox">
-
-   <div class="point">
-
-    <div class="dot">A</div>
-
-    <input
-     id="aInput"
-     readonly
-     placeholder="Откуда?">
-
-    <button onclick="chooseA()">
-     Карта
-    </button>
-
-   </div>
-
-   <div class="point">
-
-    <div class="dot">B</div>
-
-    <input
-     id="bInput"
-     readonly
-     placeholder="Куда?">
-
-    <button onclick="chooseB()">
-     Карта
-    </button>
-
-   </div>
-
-   <div class="transport">
-
-    <button
-     id="carBtn"
-     class="active"
-     onclick="setTransport('car')">
-     🚗 Авто
-    </button>
-
-    <button
-     id="walkBtn"
-     onclick="setTransport('foot')">
-     🚶 Пешком
-    </button>
-
-    <button
-     id="bikeBtn"
-     onclick="setTransport('bike')">
-     🚲 Велосипед
-    </button>
-
-   </div>
-
-   <button class="build" onclick="buildRoute()">
-    🧭 ПОСТРОИТЬ МАРШРУТ
-   </button>
-
-  </div>
-
-  <div id="info" class="info">
-
-   <div class="infoTop">
-
-    <div>
-     <div id="time" class="infoTime">--</div>
-     <div class="infoDistance">время в пути</div>
+      <div class="brandText">
+        <b>SHOHIN ROHNAMO</b>
+        <small>DUShANBE NAVIGATION</small>
+      </div>
     </div>
 
-    <div style="text-align:right">
-     <div id="distance" class="infoTime">--</div>
-     <div class="infoDistance">расстояние</div>
+    <div style="display:flex;align-items:center">
+
+      <div class="langs">
+
+        <button id="tg" onclick="setLanguage('tg')">
+          TJ
+        </button>
+
+        <button id="ru" class="active"
+        onclick="setLanguage('ru')">
+          RU
+        </button>
+
+        <button id="en"
+        onclick="setLanguage('en')">
+          EN
+        </button>
+
+      </div>
+
+      <button class="menuButton"
+      onclick="openMenu()">
+        ☰
+      </button>
+
     </div>
 
-   </div>
-
-   <div class="infoLine"></div>
-
-   <button class="startNav" onclick="startNavigation()">
-    ▶ НАЧАТЬ НАВИГАЦИЮ
-   </button>
-
   </div>
-
-  <div class="quick">
-
-   <button onclick="openStops()">
-    <span>🚏</span>
-    Истгоҳҳо
-   </button>
-
-   <button onclick="openPlaces()">
-    <span>🏙️</span>
-    Душанбе
-   </button>
-
-   <button onclick="openRoutes()">
-    <span>🚌</span>
-    Роҳҳо
-   </button>
-
-   <button onclick="openAddStop()">
-    <span>➕</span>
-    Илова
-   </button>
-
-  </div>
-
- </div>
 
 </div>
 
-<!-- SIDE MENU -->
+<!-- SEARCH -->
 
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+<div class="searchArea">
 
-<aside id="menu" class="menu">
+  <div class="searchBox">
 
- <div class="menuHead">
+    <span class="searchIcon">🔎</span>
 
-  <button class="closeMenu" onclick="closeMenu()">
-   ✕
+    <input
+      id="search"
+      placeholder="Куда едем?"
+      onkeydown="
+      if(event.key==='Enter')searchPlace()
+      ">
+
+    <button class="searchGo"
+    onclick="searchPlace()">
+      ➜
+    </button>
+
+  </div>
+
+  <div class="chips">
+
+    <button class="chip hot"
+    onclick="popular('Садбарг')">
+      🔥 Садбарг
+    </button>
+
+    <button class="chip"
+    onclick="popular('Корвон')">
+      🛍️ Корвон
+    </button>
+
+    <button class="chip"
+    onclick="popular('Караболо')">
+      🏥 Караболо
+    </button>
+
+    <button class="chip"
+    onclick="popular('Цирк')">
+      🎪 Цирк
+    </button>
+
+    <button class="chip"
+    onclick="popular('Пединститут')">
+      🎓 Пединститут
+    </button>
+
+    <button class="chip"
+    onclick="popular('Аэропорт')">
+      ✈️ Аэропорт
+    </button>
+
+    <button class="chip"
+    onclick="popular('Вокзал')">
+      🚉 Вокзал
+    </button>
+
+  </div>
+
+</div>
+
+<!-- GPS -->
+
+<button class="gps" onclick="getGPS()">
+  ⦿
+</button>
+
+<!-- BOTTOM -->
+
+<div class="bottom">
+
+  <div class="bottomPanel">
+
+    <!-- ROUTE -->
+
+    <div id="routePanel" class="routePanel">
+
+      <div class="pointRow">
+
+        <div class="pointIcon pointA">
+          A
+        </div>
+
+        <input
+          id="inputA"
+          class="pointInput"
+          readonly
+          placeholder="Откуда?">
+
+        <button
+          class="mapChoose"
+          onclick="chooseA()">
+          Карта
+        </button>
+
+      </div>
+
+      <div class="pointRow">
+
+        <div class="pointIcon pointB">
+          B
+        </div>
+
+        <input
+          id="inputB"
+          class="pointInput"
+          readonly
+          placeholder="Куда?">
+
+        <button
+          class="mapChoose"
+          onclick="chooseB()">
+          Карта
+        </button>
+
+      </div>
+
+      <div class="transport">
+
+        <button
+          id="car"
+          class="active car"
+          onclick="transport('car')">
+          🚗 Авто
+        </button>
+
+        <button
+          id="foot"
+          class="foot"
+          onclick="transport('foot')">
+          🚶 Пешком
+        </button>
+
+        <button
+          id="bike"
+          class="bike"
+          onclick="transport('bike')">
+          🚲 Велосипед
+        </button>
+
+      </div>
+
+      <div class="shadowMode"
+      onclick="toggleShadow()">
+
+        <div class="shadowText">
+          <b>🌳 Маршрут в тени</b>
+          <small>Пешеходный режим</small>
+        </div>
+
+        <div id="shadowSwitch"
+        class="switch">
+          <i></i>
+        </div>
+
+      </div>
+
+      <button class="build"
+      onclick="buildRoute()">
+        🧭 ПОСТРОИТЬ МАРШРУТ
+      </button>
+
+    </div>
+
+    <!-- RESULT -->
+
+    <div id="routeResult"
+    class="routeResult">
+
+      <div class="routeStats">
+
+        <div>
+          <div id="routeTime"
+          class="big">
+            --
+          </div>
+
+          <div class="small">
+            ВРЕМЯ В ПУТИ
+          </div>
+        </div>
+
+        <div style="text-align:right">
+
+          <div id="routeDistance"
+          class="big">
+            --
+          </div>
+
+          <div class="small">
+            РАССТОЯНИЕ
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="routeLine"></div>
+
+      <button class="start"
+      onclick="startNavigation()">
+        ▶ НАЧАТЬ НАВИГАЦИЮ
+      </button>
+
+    </div>
+
+    <!-- QUICK -->
+
+    <div class="quick">
+
+      <button onclick="openRouteMode()">
+        <span>🧭</span>
+        Маршрут
+      </button>
+
+      <button onclick="openStops()">
+        <span>🚏</span>
+        Остановки
+      </button>
+
+      <button onclick="openPlaces()">
+        <span>🏙️</span>
+        Душанбе
+      </button>
+
+      <button onclick="openRoutes()">
+        <span>🚌</span>
+        Роҳҳо
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- DRAWER -->
+
+<div id="overlay"
+class="overlay"
+onclick="closeMenu()">
+</div>
+
+<aside id="drawer" class="drawer">
+
+  <div class="drawerHead">
+
+    <button class="closeDrawer"
+    onclick="closeMenu()">
+      ✕
+    </button>
+
+    <h1>SHT</h1>
+
+    <p>
+      SHOHIN ROHNAMO
+    </p>
+
+  </div>
+
+  <button class="menuItem"
+  onclick="goHome()">
+    <span>🏠</span>
+    Главная
   </button>
 
-  <strong>SHT</strong>
+  <button class="menuItem"
+  onclick="openRouteMode()">
+    <span>🧭</span>
+    Навигация
+  </button>
 
-  <small>
-   SHOHIN ROHNAMO
-  </small>
+  <button class="menuItem"
+  onclick="openRoutes()">
+    <span>🚌</span>
+    Маршруты
+  </button>
 
- </div>
+  <button class="menuItem"
+  onclick="openStops()">
+    <span>🚏</span>
+    Остановки
+  </button>
 
- <button class="menuItem" onclick="home()">
-  <span>🏠</span> Главная
- </button>
+  <button class="menuItem"
+  onclick="openPlaces()">
+    <span>🏙️</span>
+    Места Душанбе
+  </button>
 
- <button class="menuItem" onclick="openNavigation()">
-  <span>🧭</span> Навигация
- </button>
+  <button class="menuItem"
+  onclick="openPopular()">
+    <span>🔥</span>
+    Народные ориентиры
+  </button>
 
- <button class="menuItem" onclick="openRoutes()">
-  <span>🚌</span> Маршруты
- </button>
+  <button class="menuItem"
+  onclick="openAddStop()">
+    <span>➕</span>
+    Добавить остановку
+  </button>
 
- <button class="menuItem" onclick="openStops()">
-  <span>🚏</span> Остановки
- </button>
+  <button class="menuItem"
+  onclick="openAddRoute()">
+    <span>➕</span>
+    Добавить маршрут
+  </button>
 
- <button class="menuItem" onclick="openPlaces()">
-  <span>🏙️</span> Места Душанбе
- </button>
+  <button class="menuItem"
+  onclick="openContacts()">
+    <span>📷</span>
+    Instagram / Тамос
+  </button>
 
- <button class="menuItem" onclick="openAddStop()">
-  <span>➕</span> Добавить остановку
- </button>
+  <button class="menuItem"
+  onclick="openAgreement()">
+    <span>📄</span>
+    Соглашение
+  </button>
 
- <button class="menuItem" onclick="openAddRoute()">
-  <span>➕</span> Добавить маршрут
- </button>
-
- <button class="menuItem" onclick="openContacts()">
-  <span>📷</span> Instagram / Контакты
- </button>
-
- <button class="menuItem" onclick="openAgreement()">
-  <span>📄</span> Соглашение
- </button>
-
- <button class="menuItem" onclick="toggleDark()">
-  <span>🌙</span> Тёмная тема
- </button>
+  <button class="menuItem"
+  onclick="toggleDark()">
+    <span>🌙</span>
+    Тёмная тема
+  </button>
 
 </aside>
 
 <!-- PAGE -->
 
-<section id="page" class="page">
+<section id="page"
+class="page">
 
- <div id="pageContent" class="pageInner"></div>
+  <div id="pageContent"
+  class="pageInner"></div>
 
 </section>
 
-<!-- MODAL -->
-
-<div id="modal" class="modal">
-
- <div class="modalBox">
-
-  <div class="modalHead">
-   <h2 id="modalTitle">Информация</h2>
-
-   <button class="close" onclick="closeModal()">
-    ✕
-   </button>
-  </div>
-
-  <div id="modalContent"></div>
-
- </div>
-
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 <script>
 
-/* ============================
+/* ==================================
    MAP
-============================ */
+================================== */
 
-let map=L.map("map",{
- zoomControl:false
+const map=L.map("map",{
+  zoomControl:false
 }).setView(
- [38.5598,68.7870],
- 13
+  [38.5598,68.7870],
+  13
 );
 
 L.tileLayer(
- "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
- {
-  maxZoom:19,
-  attribution:"© OpenStreetMap"
- }
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom:19,
+    attribution:"© OpenStreetMap"
+  }
 ).addTo(map);
 
 
-/* ============================
+/* ==================================
    VARIABLES
-============================ */
+================================== */
 
 let A=null;
 let B=null;
@@ -1011,1116 +1324,1570 @@ let B=null;
 let markerA=null;
 let markerB=null;
 
-let route=null;
+let routeLayer=null;
 
 let selecting=null;
 
-let transport="car";
+let currentTransport="car";
 
-let navigationMode=false;
+let shadowMode=false;
 
 
-/* ============================
+/* ==================================
+   POPULAR PLACES
+================================== */
+
+const popularPlaces={
+
+  "Садбарг":[
+    38.5762,
+    68.7894
+  ],
+
+  "Корвон":[
+    38.5481,
+    68.7585
+  ],
+
+  "Караболо":[
+    38.5821,
+    68.7857
+  ],
+
+  "Цирк":[
+    38.5713,
+    68.7850
+  ],
+
+  "Пединститут":[
+    38.5719,
+    68.7807
+  ],
+
+  "Аэропорт":[
+    38.5475,
+    68.8147
+  ],
+
+  "Вокзал":[
+    38.5670,
+    68.7810
+  ]
+
+};
+
+
+/* ==================================
    STOPS
-============================ */
+================================== */
 
 const stops=[
 
  {
-  name:"Площадь Исмоили Сомони",
-  lat:38.5736,
-  lng:68.7864,
-  buses:"1, 2, 8",
-  minibuses:"7, 11"
+  name:"Садбарг",
+  lat:38.5762,
+  lng:68.7894,
+  buses:["3","3a"],
+  trolley:["4"],
+  mini:["16","25","19"]
  },
 
  {
-  name:"Центр Душанбе",
-  lat:38.5598,
-  lng:68.7870,
-  buses:"2, 18",
-  minibuses:"33"
+  name:"Корвон",
+  lat:38.5481,
+  lng:68.7585,
+  buses:["1","8"],
+  trolley:[],
+  mini:["16","25"]
+ },
+
+ {
+  name:"Караболо",
+  lat:38.5821,
+  lng:68.7857,
+  buses:["2","18"],
+  trolley:["1"],
+  mini:["19","33"]
+ },
+
+ {
+  name:"Цирк",
+  lat:38.5713,
+  lng:68.7850,
+  buses:["3","8"],
+  trolley:["4"],
+  mini:["16","19"]
+ },
+
+ {
+  name:"Аэропорт",
+  lat:38.5475,
+  lng:68.8147,
+  buses:["2"],
+  trolley:[],
+  mini:["8","16"]
  }
 
 ];
 
-stops.forEach((s,index)=>{
 
- let m=L.circleMarker(
-  [s.lat,s.lng],
-  {
-   radius:8,
-   color:"#087b42",
-   fillColor:"#18b866",
-   fillOpacity:1,
-   weight:3
-  }
- ).addTo(map);
+function addStops(){
 
- m.bindPopup(`
-  <b>🚏 ${s.name}</b><br><br>
+ stops.forEach((s,index)=>{
 
-  🚌 ${s.buses}<br>
-  🚐 ${s.minibuses}<br><br>
+   const marker=L.circleMarker(
+     [s.lat,s.lng],
+     {
+       radius:8,
+       color:"#087f46",
+       fillColor:"#12a85c",
+       fillOpacity:1,
+       weight:3
+     }
+   ).addTo(map);
 
-  <button
-   onclick="routeToStop(${index})"
-   style="
-    border:0;
-    padding:9px 13px;
-    border-radius:10px;
-    background:#0b8f4d;
-    color:white;
-    font-weight:bold">
-   🧭 Маршрут
-  </button>
- `);
+   marker.bindPopup(`
+     <div style="min-width:190px">
 
-});
+       <b>🚏 ${s.name}</b>
+
+       <br><br>
+
+       <b style="color:#287fe8">
+       🚌 Автобус:
+       </b>
+       ${s.buses.join(", ") || "—"}
+
+       <br>
+
+       <b style="color:#00a9d8">
+       🚎 Троллейбус:
+       </b>
+       ${s.trolley.join(", ") || "—"}
+
+       <br>
+
+       <b style="color:#f39a28">
+       🚐 Маршрутка:
+       </b>
+       ${s.mini.join(", ") || "—"}
+
+       <br><br>
+
+       <button
+       onclick="stopAsDestination(${index})"
+       style="
+       width:100%;
+       padding:9px;
+       border:0;
+       border-radius:9px;
+       background:#087f46;
+       color:white;
+       font-weight:bold">
+       🧭 Поехать сюда
+       </button>
+
+     </div>
+   `);
+
+ });
+
+}
+
+addStops();
 
 
-/* ============================
+/* ==================================
    MAP CLICK
-============================ */
+================================== */
 
-map.on("click",function(e){
+map.on("click",e=>{
 
- if(selecting==="A"){
-  setA(e.latlng);
- }
+  if(selecting==="A"){
+    setA(e.latlng);
+    return;
+  }
 
- if(selecting==="B"){
-  setB(e.latlng);
- }
+  if(selecting==="B"){
+    setB(e.latlng);
+    return;
+  }
 
 });
 
 
-/* ============================
-   CHOOSE A
-============================ */
+/* ==================================
+   A
+================================== */
 
 function chooseA(){
 
- selecting="A";
+  selecting="A";
 
- showRouteBox();
+  openRouteMode();
 
- alert(
-  "Нажмите на карте точку отправления A."
- );
-
-}
-
-
-/* ============================
-   CHOOSE B
-============================ */
-
-function chooseB(){
-
- selecting="B";
-
- showRouteBox();
-
- alert(
-  "Нажмите на карте точку назначения B."
- );
+  alert(
+    "Нажмите на карте место отправления."
+  );
 
 }
 
-
-/* ============================
-   SET A
-============================ */
 
 function setA(pos){
 
- A=pos;
+  A=pos;
 
- if(markerA)
-  map.removeLayer(markerA);
+  if(markerA)
+    map.removeLayer(markerA);
 
- markerA=L.marker(pos)
-  .addTo(map)
-  .bindPopup("🟢 Точка A")
-  .openPopup();
+  markerA=L.marker(pos)
+    .addTo(map)
+    .bindPopup("🟢 Точка A")
+    .openPopup();
 
- document.getElementById("aInput")
-  .value=
-   pos.lat.toFixed(5)+
-   ", "+
-   pos.lng.toFixed(5);
+  document.getElementById("inputA")
+    .value=
+      pos.lat.toFixed(5)+
+      ", "+
+      pos.lng.toFixed(5);
 
- selecting=null;
+  selecting=null;
 
 }
 
 
-/* ============================
-   SET B
-============================ */
+/* ==================================
+   B
+================================== */
+
+function chooseB(){
+
+  selecting="B";
+
+  openRouteMode();
+
+  alert(
+    "Нажмите на карте место назначения."
+  );
+
+}
+
 
 function setB(pos){
 
- B=pos;
+  B=pos;
 
- if(markerB)
-  map.removeLayer(markerB);
+  if(markerB)
+    map.removeLayer(markerB);
 
- markerB=L.marker(pos)
-  .addTo(map)
-  .bindPopup("🔴 Точка B")
-  .openPopup();
+  markerB=L.marker(pos)
+    .addTo(map)
+    .bindPopup("🔴 Точка B")
+    .openPopup();
 
- document.getElementById("bInput")
-  .value=
-   pos.lat.toFixed(5)+
-   ", "+
-   pos.lng.toFixed(5);
+  document.getElementById("inputB")
+    .value=
+      pos.lat.toFixed(5)+
+      ", "+
+      pos.lng.toFixed(5);
 
- selecting=null;
+  selecting=null;
 
 }
 
 
-/* ============================
-   REAL ROUTE
-============================ */
+/* ==================================
+   TRANSPORT
+================================== */
+
+function transport(type){
+
+  currentTransport=type;
+
+  ["car","foot","bike"].forEach(id=>{
+    document.getElementById(id)
+      .classList.remove("active");
+  });
+
+  document.getElementById(type)
+    .classList.add("active");
+
+  if(type==="foot"){
+    shadowMode=true;
+    document.getElementById("shadowSwitch")
+      .classList.add("on");
+  }
+
+}
+
+
+/* ==================================
+   SHADOW MODE
+================================== */
+
+function toggleShadow(){
+
+  shadowMode=!shadowMode;
+
+  document.getElementById("shadowSwitch")
+    .classList.toggle(
+      "on",
+      shadowMode
+    );
+
+  if(shadowMode){
+
+    transport("foot");
+
+    alert(
+      "🌳 Режим «Маршрут в тени» включён. В этой версии пеший маршрут использует дорожную сеть; реальные теневые участки будут добавлены после подключения данных о деревьях и парках."
+    );
+
+  }
+
+}
+
+
+/* ==================================
+   REAL ROAD ROUTE
+================================== */
 
 async function buildRoute(){
 
- if(!A || !B){
+  if(!A || !B){
 
-  alert(
-   "Сначала выберите точки A и B."
-  );
+    alert(
+      "Сначала выберите точки A и B."
+    );
 
-  return;
- }
+    return;
+  }
 
- const profile=
-  transport==="foot"
-   ?"foot"
-   :
-   transport==="bike"
-    ?"bike"
-    :"car";
+  let profile="driving";
 
- const url=
- `https://router.project-osrm.org/route/v1/${profile}/`+
- `${A.lng},${A.lat};${B.lng},${B.lat}`+
- `?overview=full&geometries=geojson&steps=true`;
+  if(currentTransport==="foot")
+    profile="foot";
 
- try{
+  if(currentTransport==="bike")
+    profile="cycling";
 
-  document.getElementById("time")
-   .textContent="...";
+  const url=
+    "https://router.project-osrm.org/route/v1/"+
+    profile+"/"+
+    A.lng+","+A.lat+";"+
+    B.lng+","+B.lat+
+    "?overview=full&geometries=geojson&steps=true";
 
-  document.getElementById("distance")
-   .textContent="...";
+  const result=
+    document.getElementById("routeResult");
 
-  const response=
-   await fetch(url);
+  result.classList.add("show");
 
-  if(!response.ok)
-   throw new Error();
+  document.getElementById("routeTime")
+    .textContent="...";
 
-  const data=
-   await response.json();
+  document.getElementById("routeDistance")
+    .textContent="...";
 
-  if(
-   data.code!=="Ok" ||
-   !data.routes ||
-   !data.routes.length
-  ){
+  try{
 
-   throw new Error();
+    const response=await fetch(url);
+
+    if(!response.ok)
+      throw new Error();
+
+    const data=await response.json();
+
+    if(data.code!=="Ok")
+      throw new Error();
+
+    const r=data.routes[0];
+
+    if(routeLayer)
+      map.removeLayer(routeLayer);
+
+    routeLayer=L.geoJSON(
+      r.geometry,
+      {
+        style:{
+          color:shadowMode
+            ? "#b58a24"
+            : "#087f46",
+          weight:7,
+          opacity:.95
+        }
+      }
+    ).addTo(map);
+
+    map.fitBounds(
+      routeLayer.getBounds(),
+      {
+        padding:[80,100]
+      }
+    );
+
+    const distance=
+      (r.distance/1000).toFixed(1);
+
+    const minutes=
+      Math.max(
+        1,
+        Math.round(r.duration/60)
+      );
+
+    document.getElementById("routeDistance")
+      .textContent=
+        distance+" км";
+
+    document.getElementById("routeTime")
+      .textContent=
+        minutes+" мин";
+
+  }catch(error){
+
+    document.getElementById("routeTime")
+      .textContent="Ошибка";
+
+    document.getElementById("routeDistance")
+      .textContent="—";
+
+    alert(
+      "Маршрут не найден. Проверьте интернет и попробуйте снова."
+    );
 
   }
 
-  const r=data.routes[0];
+}
 
-  if(route)
-   map.removeLayer(route);
 
-  route=L.geoJSON(
-   r.geometry,
-   {
-    style:{
-     color:"#0b8f4d",
-     weight:7,
-     opacity:.95
+/* ==================================
+   GPS
+================================== */
+
+function getGPS(){
+
+  if(!navigator.geolocation){
+
+    alert("GPS не поддерживается.");
+    return;
+
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    position=>{
+
+      const pos={
+        lat:position.coords.latitude,
+        lng:position.coords.longitude
+      };
+
+      map.setView(
+        [pos.lat,pos.lng],
+        16
+      );
+
+      L.marker(pos)
+        .addTo(map)
+        .bindPopup("📍 Вы здесь")
+        .openPopup();
+
+    },
+    ()=>{
+      alert(
+        "Разрешите доступ к геолокации."
+      );
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:10000
     }
-   }
+  );
+
+}
+
+
+/* ==================================
+   STOP DESTINATION
+================================== */
+
+function stopAsDestination(index){
+
+  const s=stops[index];
+
+  B={
+    lat:s.lat,
+    lng:s.lng
+  };
+
+  setB(B);
+
+  openRouteMode();
+
+  if(!A)
+    getGPS();
+
+}
+
+
+/* ==================================
+   POPULAR
+================================== */
+
+function popular(name){
+
+  const p=popularPlaces[name];
+
+  if(!p)
+    return;
+
+  map.setView(
+    p,
+    16
+  );
+
+  document.getElementById("search")
+    .value=name;
+
+  const temp=L.circleMarker(
+    p,
+    {
+      radius:12,
+      color:"#d9a72c",
+      fillColor:"#fff1a8",
+      fillOpacity:.9,
+      weight:4
+    }
   ).addTo(map);
 
-  map.fitBounds(
-   route.getBounds(),
-   {
-    padding:[80,160]
-   }
-  );
-
-  const km=
-   (r.distance/1000).toFixed(1);
-
-  const min=
-   Math.round(r.duration/60);
-
-  document.getElementById("distance")
-   .textContent=km+" км";
-
-  document.getElementById("time")
-   .textContent=min+" мин";
-
-  document.getElementById("info")
-   .classList.add("show");
-
- }catch(e){
-
-  alert(
-   "Не удалось построить маршрут. Проверьте интернет и попробуйте ещё раз."
-  );
-
- }
+  setTimeout(()=>{
+    map.removeLayer(temp);
+  },4000);
 
 }
 
 
-/* ============================
-   TRANSPORT
-============================ */
-
-function setTransport(type){
-
- transport=type;
-
- document.getElementById("carBtn")
-  .classList.remove("active");
-
- document.getElementById("walkBtn")
-  .classList.remove("active");
-
- document.getElementById("bikeBtn")
-  .classList.remove("active");
-
- if(type==="car")
-  document.getElementById("carBtn")
-   .classList.add("active");
-
- if(type==="foot")
-  document.getElementById("walkBtn")
-   .classList.add("active");
-
- if(type==="bike")
-  document.getElementById("bikeBtn")
-   .classList.add("active");
-
-}
-
-
-/* ============================
-   GPS
-============================ */
-
-function gps(){
-
- if(!navigator.geolocation){
-
-  alert("GPS недоступен.");
-  return;
-
- }
-
- navigator.geolocation.getCurrentPosition(
-  p=>{
-
-   const pos={
-    lat:p.coords.latitude,
-    lng:p.coords.longitude
-   };
-
-   map.setView(
-    [pos.lat,pos.lng],
-    16
-   );
-
-   L.marker(pos)
-    .addTo(map)
-    .bindPopup("📍 Вы здесь")
-    .openPopup();
-
-  },
-  ()=>{
-   alert(
-    "Разрешите доступ к геолокации."
-   );
-  },
-  {
-   enableHighAccuracy:true,
-   timeout:10000
-  }
- );
-
-}
-
-
-/* ============================
-   ROUTE TO STOP
-============================ */
-
-function routeToStop(index){
-
- const s=stops[index];
-
- B={
-  lat:s.lat,
-  lng:s.lng
- };
-
- document.getElementById("bInput")
-  .value=
-   s.lat.toFixed(5)+
-   ", "+
-   s.lng.toFixed(5);
-
- showRouteBox();
-
- if(!A){
-
-  gpsToA();
-
- }else{
-
-  buildRoute();
-
- }
-
-}
-
-
-/* ============================
-   GPS AS A
-============================ */
-
-function gpsToA(){
-
- if(!navigator.geolocation){
-
-  alert("GPS недоступен.");
-  return;
-
- }
-
- navigator.geolocation.getCurrentPosition(
-  p=>{
-
-   setA({
-    lat:p.coords.latitude,
-    lng:p.coords.longitude
-   });
-
-   buildRoute();
-
-  },
-  ()=>{
-   alert(
-    "Разрешите доступ к геолокации."
-   );
-  }
- );
-
-}
-
-
-/* ============================
-   START NAVIGATION
-============================ */
-
-function startNavigation(){
-
- if(!A || !B){
-
-  alert(
-   "Сначала постройте маршрут."
-  );
-
-  return;
- }
-
- navigationMode=true;
-
- alert(
-  "Навигация запущена. Следите за маршрутом на карте."
- );
-
-}
-
-
-/* ============================
+/* ==================================
    SEARCH
-============================ */
+================================== */
 
 function searchPlace(){
 
- const q=
-  document.getElementById("search")
-   .value
-   .trim()
-   .toLowerCase();
+  const value=
+    document.getElementById("search")
+      .value
+      .trim()
+      .toLowerCase();
 
- if(!q)
-  return;
+  if(!value)
+    return;
 
- const stop=
-  stops.find(s=>
-   s.name.toLowerCase().includes(q)
+  const key=
+    Object.keys(popularPlaces)
+      .find(x=>
+        x.toLowerCase()
+          .includes(value)
+      );
+
+  if(key){
+
+    popular(key);
+    return;
+
+  }
+
+  const stop=
+    stops.find(s=>
+      s.name
+        .toLowerCase()
+        .includes(value)
+    );
+
+  if(stop){
+
+    map.setView(
+      [stop.lat,stop.lng],
+      17
+    );
+
+    return;
+
+  }
+
+  alert(
+    "Ориентир пока не найден. Попробуйте: Садбарг, Корвон, Караболо, Цирк, Пединститут, Аэропорт или Вокзал."
   );
-
- if(stop){
-
-  map.setView(
-   [stop.lat,stop.lng],
-   17
-  );
-
-  return;
- }
-
- alert(
-  "Место не найдено. Можно выбрать точку B прямо на карте."
- );
-
- showRouteBox();
 
 }
 
 
-/* ============================
-   SHOW ROUTE BOX
-============================ */
+/* ==================================
+   ROUTE MODE
+================================== */
 
-function showRouteBox(){
+function openRouteMode(){
 
- document.getElementById("routeBox")
-  .classList.add("show");
+  closeMenu();
+
+  document.getElementById("routePanel")
+    .classList.add("show");
+
+  document.getElementById("routeResult")
+    .classList.remove("show");
+
+  setTimeout(()=>{
+    map.invalidateSize();
+  },100);
 
 }
 
 
-/* ============================
-   PAGE HELPERS
-============================ */
+/* ==================================
+   MENU
+================================== */
+
+function openMenu(){
+
+  document.getElementById("drawer")
+    .classList.add("open");
+
+  document.getElementById("overlay")
+    .classList.add("show");
+
+}
+
+function closeMenu(){
+
+  document.getElementById("drawer")
+    .classList.remove("open");
+
+  document.getElementById("overlay")
+    .classList.remove("show");
+
+}
+
+
+/* ==================================
+   PAGE
+================================== */
 
 const page=
- document.getElementById("page");
+  document.getElementById("page");
 
-const content=
- document.getElementById("pageContent");
+const pageContent=
+  document.getElementById("pageContent");
 
 
 function openPage(html){
 
- content.innerHTML=html;
+  pageContent.innerHTML=html;
 
- page.classList.add("active");
+  page.classList.add("show");
 
- closeMenu();
+  closeMenu();
 
 }
 
 
 function closePage(){
 
- page.classList.remove("active");
+  page.classList.remove("show");
 
 }
 
 
-/* ============================
+/* ==================================
    HOME
-============================ */
+================================== */
 
-function home(){
+function goHome(){
 
- closePage();
- closeMenu();
+  closePage();
+  closeMenu();
 
- setTimeout(()=>{
-  map.invalidateSize();
- },100);
-
-}
-
-
-/* ============================
-   NAVIGATION PAGE
-============================ */
-
-function openNavigation(){
-
- closePage();
- closeMenu();
-
- showRouteBox();
-
- map.invalidateSize();
+  setTimeout(()=>{
+    map.invalidateSize();
+  },100);
 
 }
 
 
-/* ============================
-   ROUTES
-============================ */
-
-function openRoutes(){
-
- openPage(`
-
-  <div class="hero">
-   <h1>🚌 Маршруты</h1>
-   <p>
-    Городские и междугородние направления.
-   </p>
-  </div>
-
-  <div class="card">
-   <h3>🚌 Автобус №1</h3>
-   <p class="muted">
-    Городской маршрут.
-   </p>
-   <br>
-   <span class="badge">Автобус</span>
-   <span class="badge">№1</span>
-  </div>
-
-  <div class="card">
-   <h3>🚌 Автобус №2</h3>
-   <p class="muted">
-    Городской маршрут.
-   </p>
-   <br>
-   <span class="badge">Автобус</span>
-   <span class="badge">№2</span>
-  </div>
-
-  <div class="card">
-   <h3>🛣️ Междугородние</h3>
-   <p class="muted">
-    Душанбе → Хуҷанд<br>
-    Душанбе → Кӯлоб<br>
-    Душанбе → Бохтар
-   </p>
-  </div>
-
- `);
-
-}
-
-
-/* ============================
-   STOPS
-============================ */
+/* ==================================
+   STOPS PAGE
+================================== */
 
 function openStops(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>🚏 Истгоҳҳо</h1>
-   <p>
-    Остановки и проходящий транспорт.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  ${stops.map((s,i)=>`
+      <h1>🚏 Остановки Душанбе</h1>
 
-   <div class="card">
+      <p>
+        Народные названия и проходящий транспорт.
+      </p>
 
-    <h3>🚏 ${s.name}</h3>
-
-    <br>
-
-    <b>🚌 Автобусы</b>
-
-    <div>
-     ${s.buses.split(",").map(x=>
-      `<span class="badge">${x.trim()}</span>`
-     ).join("")}
     </div>
 
-    <br>
+    ${stops.map((s,i)=>`
 
-    <b>🚐 Маршрутки</b>
+      <div class="card">
 
-    <div>
-     ${s.minibuses.split(",").map(x=>
-      `<span class="badge">${x.trim()}</span>`
-     ).join("")}
-    </div>
+        <h3>
+          🚏 ${s.name}
+        </h3>
 
-    <br>
+        <p class="muted">
+          Популярная остановка/ориентир Душанбе.
+        </p>
 
-    <button
-     class="btn full"
-     onclick="closePage();routeToStop(${i})">
-     🧭 Проложить маршрут
-    </button>
+        <br>
 
-   </div>
+        <b>Транспорт:</b>
 
-  `).join("")}
+        <div>
 
- `);
+          ${s.buses.map(x=>
+            `<span class="badge bus">
+              🚌 №${x}
+            </span>`
+          ).join("")}
+
+          ${s.trolley.map(x=>
+            `<span class="badge trolley">
+              🚎 №${x}
+            </span>`
+          ).join("")}
+
+          ${s.mini.map(x=>
+            `<span class="badge mini">
+              🚐 №${x}
+            </span>`
+          ).join("")}
+
+        </div>
+
+        <br>
+
+        <button
+        class="primary"
+        onclick="
+          closePage();
+          stopAsDestination(${i})
+        ">
+          🧭 Поехать сюда
+        </button>
+
+      </div>
+
+    `).join("")}
+
+  `);
 
 }
 
 
-/* ============================
+/* ==================================
    PLACES
-============================ */
+================================== */
 
 function openPlaces(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>🏙️ Душанбе</h1>
-   <p>
-    Ҷойҳои диданбоби Душанбе.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  <div class="card">
+      <h1>🏙️ Места Душанбе</h1>
 
-   <h2>🌳 Парк Рудаки</h2>
+      <p>
+        Ҷойҳои диданбоби Душанбе.
+      </p>
 
-   <p class="muted">
-    Одно из популярных мест для прогулок.
-   </p>
+    </div>
 
-   <br>
+    <div class="placeGrid">
 
-   <button
-    class="btn"
-    onclick="closePage();searchPlaceByName('Парк Рудаки')">
-    📍 Показать
-   </button>
+      <div class="placeCard">
 
-  </div>
+        <div class="placeEmoji">🌳</div>
 
-  <div class="card">
+        <h3>Парк Рудаки</h3>
 
-   <h2>🏛️ Центр Душанбе</h2>
+        <p class="muted">
+          Популярное место для прогулок
+          в центре Душанбе.
+        </p>
 
-   <p class="muted">
-    Центральная часть города.
-   </p>
+        <br>
 
-   <br>
+        <button
+        class="primary"
+        onclick="
+          closePage();
+          map.setView(
+            [38.5736,68.7864],
+            16
+          )
+        ">
+          📍 На карте
+        </button>
 
-   <button
-    class="btn"
-    onclick="closePage();map.setView([38.5598,68.7870],15)">
-    📍 Показать
-   </button>
+      </div>
 
-  </div>
+      <div class="placeCard">
 
- `);
+        <div class="placeEmoji">🏛️</div>
+
+        <h3>Площадь Исмоили Сомони</h3>
+
+        <p class="muted">
+          Один из главных ориентиров столицы.
+        </p>
+
+        <br>
+
+        <button
+        class="primary"
+        onclick="
+          closePage();
+          map.setView(
+            [38.5736,68.7864],
+            16
+          )
+        ">
+          📍 На карте
+        </button>
+
+      </div>
+
+      <div class="placeCard">
+
+        <div class="placeEmoji">🏙️</div>
+
+        <h3>Центр Душанбе</h3>
+
+        <p class="muted">
+          Центральная часть города.
+        </p>
+
+        <br>
+
+        <button
+        class="primary"
+        onclick="
+          closePage();
+          map.setView(
+            [38.5598,68.7870],
+            15
+          )
+        ">
+          📍 На карте
+        </button>
+
+      </div>
+
+      <div class="placeCard">
+
+        <div class="placeEmoji">✈️</div>
+
+        <h3>Аэропорт</h3>
+
+        <p class="muted">
+          Международный аэропорт Душанбе.
+        </p>
+
+        <br>
+
+        <button
+        class="primary"
+        onclick="
+          closePage();
+          popular('Аэропорт')
+        ">
+          📍 На карте
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
 
 }
 
 
-function searchPlaceByName(name){
+/* ==================================
+   ROUTES PAGE
+================================== */
 
- document.getElementById("search").value=name;
+function openRoutes(){
+
+  openPage(`
+
+    <div class="pageHero">
+
+      <h1>🚌 Роҳҳо</h1>
+
+      <p>
+        Маршруты городского транспорта.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        🚌 Автобус №3
+      </h3>
+
+      <p class="muted">
+        Популярное городское направление.
+      </p>
+
+      <br>
+
+      <span class="badge bus">
+        🚌 АВТОБУС
+      </span>
+
+      <span class="badge bus">
+        №3
+      </span>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        🚌 Автобус №3a
+      </h3>
+
+      <p class="muted">
+        Городское направление.
+      </p>
+
+      <br>
+
+      <span class="badge bus">
+        🚌 АВТОБУС
+      </span>
+
+      <span class="badge bus">
+        №3a
+      </span>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        🚐 Маршрутка №16
+      </h3>
+
+      <p class="muted">
+        Маршрутка.
+      </p>
+
+      <br>
+
+      <span class="badge mini">
+        🚐 МАРШРУТКА
+      </span>
+
+      <span class="badge mini">
+        №16
+      </span>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        🚐 Маршрутка №25
+      </h3>
+
+      <p class="muted">
+        Маршрутка.
+      </p>
+
+      <br>
+
+      <span class="badge mini">
+        🚐 МАРШРУТКА
+      </span>
+
+      <span class="badge mini">
+        №25
+      </span>
+
+    </div>
+
+  `);
 
 }
 
 
-/* ============================
+/* ==================================
+   POPULAR PAGE
+================================== */
+
+function openPopular(){
+
+  openPage(`
+
+    <div class="pageHero">
+
+      <h1>🔥 Народные ориентиры</h1>
+
+      <p>
+        Места, по которым жители Душанбе
+        часто ориентируются.
+      </p>
+
+    </div>
+
+    <div class="placeGrid">
+
+      ${Object.keys(popularPlaces)
+        .map(name=>`
+
+        <div class="placeCard">
+
+          <div class="placeEmoji">
+            📍
+          </div>
+
+          <h3>
+            ${name}
+          </h3>
+
+          <p class="muted">
+            Популярный городской ориентир.
+          </p>
+
+          <br>
+
+          <button
+          class="primary"
+          onclick="
+            closePage();
+            popular('${name}')
+          ">
+            📍 Показать
+          </button>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `);
+
+}
+
+
+/* ==================================
    ADD STOP
-============================ */
+================================== */
+
+let newStop=null;
+
 
 function openAddStop(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>➕ Добавить остановку</h1>
-   <p>
-    Выберите точку прямо на карте.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  <div class="card">
+      <h1>➕ Добавить остановку</h1>
 
-   <p class="muted">
-    1. Нажмите кнопку ниже.<br>
-    2. Выберите место на карте.<br>
-    3. Заполните название и транспорт.
-   </p>
+      <p>
+        Выберите место на карте и предложите
+        новую остановку.
+      </p>
 
-   <br>
+    </div>
 
-   <button
-    class="btn full"
-    onclick="selectNewStop()">
-    📍 Выбрать место на карте
-   </button>
+    <div class="card">
 
-   <br><br>
+      <button
+      class="primary"
+      onclick="selectNewStop()">
+        📍 Выбрать точку на карте
+      </button>
 
-   <div class="field">
-    <label>Название</label>
-    <input
-     id="newStopName"
-     placeholder="Название остановки">
-   </div>
+      <br><br>
 
-   <div class="field">
-    <label>Автобусы</label>
-    <input
-     id="newStopBus"
-     placeholder="1, 2, 8">
-   </div>
+      <div class="field">
 
-   <div class="field">
-    <label>Маршрутки</label>
-    <input
-     id="newStopMini"
-     placeholder="7, 11">
-   </div>
+        <label>
+          Название остановки
+        </label>
 
-   <button
-    class="btn full"
-    onclick="saveStopSuggestion()">
-    📤 Отправить предложение
-   </button>
+        <input
+        id="newName"
+        placeholder="Например: Садбарг">
 
-  </div>
+      </div>
 
- `);
+      <div class="field">
+
+        <label>
+          Автобусы
+        </label>
+
+        <input
+        id="newBus"
+        placeholder="3, 8">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Троллейбусы
+        </label>
+
+        <input
+        id="newTrolley"
+        placeholder="4">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Маршрутки
+        </label>
+
+        <input
+        id="newMini"
+        placeholder="16, 25, 19">
+
+      </div>
+
+      <button
+      class="primary"
+      onclick="saveNewStop()">
+        📤 Отправить предложение
+      </button>
+
+    </div>
+
+  `);
 
 }
-
-
-let newStopPoint=null;
 
 
 function selectNewStop(){
 
- closePage();
+  closePage();
 
- alert(
-  "Теперь нажмите на карте место остановки."
- );
-
- selecting="STOP";
-
-}
-
-
-function saveStopSuggestion(){
-
- if(!newStopPoint){
+  selecting="STOP";
 
   alert(
-   "Сначала выберите место на карте."
+    "Нажмите на карте точку новой остановки."
   );
-
-  return;
- }
-
- const name=
-  document.getElementById("newStopName")
-   .value.trim();
-
- if(!name){
-
-  alert("Введите название.");
-  return;
-
- }
-
- const data={
-  name:name,
-  lat:newStopPoint.lat,
-  lng:newStopPoint.lng,
-  buses:
-   document.getElementById("newStopBus").value,
-  minibuses:
-   document.getElementById("newStopMini").value
- };
-
- localStorage.setItem(
-  "shohinStop_"+Date.now(),
-  JSON.stringify(data)
- );
-
- alert(
-  "Предложение сохранено. Его можно отправить администрации для проверки."
- );
-
- closePage();
 
 }
 
 
-/* ============================
-   STOP MAP SELECTION
-============================ */
+map.on("click",e=>{
 
-const oldMapClick=map._events.click;
+  if(selecting==="STOP"){
 
+    newStop=e.latlng;
 
-/* расширяем обработчик */
+    selecting=null;
 
-map.on("click",function(e){
+    L.marker(e.latlng)
+      .addTo(map)
+      .bindPopup("📍 Новая остановка")
+      .openPopup();
 
- if(selecting==="STOP"){
+    openAddStop();
 
-  newStopPoint=e.latlng;
-
-  selecting=null;
-
-  L.marker(e.latlng)
-   .addTo(map)
-   .bindPopup("📍 Новая остановка")
-   .openPopup();
-
-  openAddStop();
-
-  document.getElementById("newStopName").focus();
-
- }
+  }
 
 });
 
 
-/* ============================
+function saveNewStop(){
+
+  if(!newStop){
+
+    alert(
+      "Сначала выберите место на карте."
+    );
+
+    return;
+  }
+
+  const name=
+    document.getElementById("newName")
+      .value.trim();
+
+  if(!name){
+
+    alert(
+      "Введите название остановки."
+    );
+
+    return;
+  }
+
+  const item={
+    name:name,
+    lat:newStop.lat,
+    lng:newStop.lng,
+    buses:
+      document.getElementById("newBus").value,
+    trolley:
+      document.getElementById("newTrolley").value,
+    mini:
+      document.getElementById("newMini").value
+  };
+
+  const list=
+    JSON.parse(
+      localStorage.getItem(
+        "SHOHIN_STOP_SUGGESTIONS"
+      ) || "[]"
+    );
+
+  list.push(item);
+
+  localStorage.setItem(
+    "SHOHIN_STOP_SUGGESTIONS",
+    JSON.stringify(list)
+  );
+
+  alert(
+    "Остановка сохранена как предложение для обновления базы."
+  );
+
+  newStop=null;
+
+  closePage();
+
+}
+
+
+/* ==================================
    ADD ROUTE
-============================ */
+================================== */
 
 function openAddRoute(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>➕ Добавить маршрут</h1>
-   <p>
-    Сначала выберите A и B на карте.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  <div class="card">
+      <h1>➕ Добавить маршрут</h1>
 
-   <div class="field">
-    <label>Название</label>
-    <input
-     id="routeName"
-     placeholder="Например Душанбе → Варзоб">
-   </div>
+      <p>
+        Маршрут создаётся через точки карты.
+      </p>
 
-   <div class="field">
-    <label>Транспорт</label>
-    <input
-     id="routeTransport"
-     placeholder="Автобус №...">
-   </div>
+    </div>
 
-   <button
-    class="btn full"
-    onclick="closePage();showRouteBox();chooseA()">
-    🗺️ Выбрать A
-   </button>
+    <div class="card">
 
-   <br><br>
+      <div class="field">
 
-   <button
-    class="btn full"
-    onclick="closePage();showRouteBox();chooseB()">
-    🗺️ Выбрать B
-   </button>
+        <label>
+          Название
+        </label>
 
-  </div>
+        <input
+        id="routeName"
+        placeholder="Например Душанбе → Корвон">
 
- `);
+      </div>
+
+      <div class="field">
+
+        <label>
+          Номер транспорта
+        </label>
+
+        <input
+        id="routeNumber"
+        placeholder="16">
+
+      </div>
+
+      <button
+      class="primary"
+      onclick="
+        closePage();
+        openRouteMode();
+        chooseA()
+      ">
+        📍 Выбрать точку A
+      </button>
+
+      <br><br>
+
+      <button
+      class="primary"
+      onclick="
+        closePage();
+        openRouteMode();
+        chooseB()
+      ">
+        📍 Выбрать точку B
+      </button>
+
+    </div>
+
+  `);
 
 }
 
 
-/* ============================
+/* ==================================
    CONTACTS
-============================ */
+================================== */
 
 function openContacts(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>📷 Тамос</h1>
-   <p>
-    Свяжитесь с SHOHIN ROHNAMO.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  <div class="card">
+      <h1>📷 Тамос</h1>
 
-   <h3>Instagram</h3>
+      <p>
+        Связь с SHOHIN ROHNAMO.
+      </p>
 
-   <p class="muted">
-    Предложения, ошибки и обновления.
-   </p>
+    </div>
 
-   <br>
+    <div class="card">
 
-   <a
-    href="https://www.instagram.com/shohin_tajikistan/"
-    target="_blank"
-    class="btn"
-    style="display:inline-block;text-decoration:none">
-    📷 Instagram
-   </a>
+      <h3>
+        Instagram
+      </h3>
 
-  </div>
+      <p class="muted">
+        Сообщайте об ошибках, добавляйте
+        остановки и предлагайте новые маршруты.
+      </p>
 
- `);
+      <br>
+
+      <a
+      href="https://www.instagram.com/shohin_tajikistan/"
+      target="_blank"
+      style="
+      display:block;
+      text-align:center;
+      text-decoration:none;
+      padding:13px;
+      border-radius:12px;
+      background:#087f46;
+      color:white;
+      font-weight:bold">
+        📷 @shohin_tajikistan
+      </a>
+
+    </div>
+
+  `);
 
 }
 
 
-/* ============================
+/* ==================================
    AGREEMENT
-============================ */
+================================== */
 
 function openAgreement(){
 
- openPage(`
+  openPage(`
 
-  <div class="hero">
-   <h1>📄 Созишнома</h1>
-   <p>
-    Условия использования SHOHIN ROHNAMO.
-   </p>
-  </div>
+    <div class="pageHero">
 
-  <div class="card">
+      <h1>📄 Соглашение</h1>
 
-   <h3>1. Общие положения</h3>
+      <p>
+        Условия использования сервиса.
+      </p>
 
-   <p class="muted">
-    SHOHIN ROHNAMO предоставляет информационный
-    сервис для поиска маршрутов, остановок,
-    дорог и интересных мест.
-   </p>
+    </div>
 
-   <br>
+    <div class="card">
 
-   <h3>2. Пользовательские данные</h3>
+      <h3>
+        1. Общие положения
+      </h3>
 
-   <p class="muted">
-    Пользователь самостоятельно отвечает за
-    информацию, которую отправляет через формы
-    предложений.
-   </p>
+      <p class="muted">
+        SHOHIN ROHNAMO является информационным
+        навигационным сервисом. Карты, маршруты,
+        остановки и транспортная информация могут
+        изменяться.
+      </p>
 
-   <br>
+      <br>
 
-   <h3>3. Маршруты</h3>
+      <h3>
+        2. Навигация
+      </h3>
 
-   <p class="muted">
-    Дорожная ситуация может изменяться.
-    Пользователь обязан соблюдать дорожные
-    знаки и правила безопасности.
-   </p>
+      <p class="muted">
+        Пользователь самостоятельно обязан
+        соблюдать правила дорожного движения,
+        дорожные знаки и требования безопасности.
+      </p>
 
-   <br>
+      <br>
 
-   <h3>4. Изменения</h3>
+      <h3>
+        3. Пользовательские предложения
+      </h3>
 
-   <p class="muted">
-    SHOHIN ROHNAMO может обновлять карты,
-    маршруты и функции приложения.
-   </p>
+      <p class="muted">
+        Информация, отправленная пользователями,
+        может проходить проверку перед публикацией.
+      </p>
 
-  </div>
+      <br>
 
- `);
+      <h3>
+        4. Геолокация
+      </h3>
 
-}
+      <p class="muted">
+        Для работы GPS браузер может запросить
+        разрешение на использование местоположения.
+      </p>
 
+      <br>
 
-/* ============================
-   MENU
-============================ */
+      <h3>
+        5. Обновления
+      </h3>
 
-function openMenu(){
+      <p class="muted">
+        SHOHIN ROHNAMO может изменять интерфейс,
+        маршруты, остановки и функциональность
+        приложения.
+      </p>
 
- document.getElementById("menu")
-  .classList.add("open");
+    </div>
 
- document.getElementById("overlay")
-  .classList.add("show");
-
-}
-
-function closeMenu(){
-
- document.getElementById("menu")
-  .classList.remove("open");
-
- document.getElementById("overlay")
-  .classList.remove("show");
+  `);
 
 }
 
 
-/* ============================
+/* ==================================
+   LANGUAGE
+================================== */
+
+function setLanguage(lang){
+
+  ["tg","ru","en"].forEach(x=>{
+    document.getElementById(x)
+      .classList.remove("active");
+  });
+
+  document.getElementById(lang)
+    .classList.add("active");
+
+  const search=
+    document.getElementById("search");
+
+  if(lang==="tg")
+    search.placeholder=
+      "Ба куҷо меравем?";
+
+  if(lang==="ru")
+    search.placeholder=
+      "Куда едем?";
+
+  if(lang==="en")
+    search.placeholder=
+      "Where are we going?";
+
+}
+
+
+/* ==================================
    DARK
-============================ */
+================================== */
 
 function toggleDark(){
 
- document.body.classList.toggle("dark");
+  document.body.classList.toggle("dark");
 
- localStorage.setItem(
-  "shohinDark",
-  document.body.classList.contains("dark")
- );
+  localStorage.setItem(
+    "SHOHIN_DARK",
+    document.body.classList.contains("dark")
+  );
 
 }
 
 
-/* ============================
-   START
-============================ */
+/* ==================================
+   START NAVIGATION
+================================== */
 
-window.addEventListener(
- "load",
- ()=>{
+function startNavigation(){
 
-  if(
-   localStorage.getItem("shohinDark")
-   ==="true"
-  ){
+  if(!A || !B){
 
-   document.body.classList.add("dark");
+    alert(
+      "Сначала выберите A и B."
+    );
+
+    return;
+  }
+
+  if(!routeLayer){
+
+    buildRoute();
+    return;
 
   }
 
-  setTimeout(
-   ()=>{
-    document
-     .getElementById("loader")
-     .classList.add("hide");
-   },
-   700
+  alert(
+    "🧭 Навигация запущена. Следуйте по зелёному маршруту."
   );
 
- }
+}
+
+
+/* ==================================
+   LOADER
+================================== */
+
+window.addEventListener(
+  "load",
+  ()=>{
+
+    if(
+      localStorage.getItem("SHOHIN_DARK")
+      ==="true"
+    ){
+
+      document.body.classList.add("dark");
+
+    }
+
+    setTimeout(
+      ()=>{
+        document
+          .getElementById("loader")
+          .classList.add("hide");
+      },
+      900
+    );
+
+  }
 );
 
 </script>
