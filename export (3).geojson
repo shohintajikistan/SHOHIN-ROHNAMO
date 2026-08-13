@@ -1,0 +1,3147 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-08-13T08:26:26Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/288439341",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.779865,
+          38.5614748
+        ]
+      },
+      "id": "node/288439341"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/288439807",
+        "bus": "yes",
+        "bus_routes": "1",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Садбарг\"",
+        "name:en": "Sadbarg",
+        "name:ru": "Остановка \"Садбарг\"",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "shelter": "yes",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.799592,
+          38.5616714
+        ]
+      },
+      "id": "node/288439807"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/288439830",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7830047,
+          38.5832621
+        ]
+      },
+      "id": "node/288439830"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/288915463",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7610281,
+          38.5180275
+        ]
+      },
+      "id": "node/288915463"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300671487",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7927132,
+          38.5670665
+        ]
+      },
+      "id": "node/300671487"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300671943",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "name": "Истгоҳи \"Парки Рӯдакӣ\"",
+        "name:en": "Park Rudaki",
+        "name:ru": "Остановка \"Парк имени Рудаки\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866793,
+          38.5748038
+        ]
+      },
+      "id": "node/300671943"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300672894",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7835733,
+          38.5829329
+        ]
+      },
+      "id": "node/300672894"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300920494",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7623413,
+          38.5183969
+        ]
+      },
+      "id": "node/300920494"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300921345",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "name": "Амонатбонк",
+        "name:en": "Amonatbonk"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.763706,
+          38.5247763
+        ]
+      },
+      "id": "node/300921345"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301539260",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7881274,
+          38.5708211
+        ]
+      },
+      "id": "node/301539260"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733521",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "name": "Цирк"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7617033,
+          38.557233
+        ]
+      },
+      "id": "node/301733521"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733627",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "name": "Цирк"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7623728,
+          38.5574679
+        ]
+      },
+      "id": "node/301733627"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733636",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "name": "Цирк"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7634628,
+          38.5584814
+        ]
+      },
+      "id": "node/301733636"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733828",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7551973,
+          38.5595486
+        ]
+      },
+      "id": "node/301733828"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733859",
+        "bench": "yes",
+        "bin": "yes",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7547596,
+          38.5625754
+        ]
+      },
+      "id": "node/301733859"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301733916",
+        "bench": "yes",
+        "bin": "yes",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7551115,
+          38.5645486
+        ]
+      },
+      "id": "node/301733916"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/301971057",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Роҳи оҳан\"",
+        "name:en": "Railway",
+        "name:ru": "Остановка \"Железная дорога\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8001208,
+          38.5578113
+        ]
+      },
+      "id": "node/301971057"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302040872",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "олами китоб",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8009907,
+          38.5631309
+        ]
+      },
+      "id": "node/302040872"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302040893",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7981584,
+          38.562805
+        ]
+      },
+      "id": "node/302040893"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302040901",
+        "bench": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7956597,
+          38.5630332
+        ]
+      },
+      "id": "node/302040901"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302040904",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "олами китоб",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8008098,
+          38.5629612
+        ]
+      },
+      "id": "node/302040904"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302041849",
+        "highway": "bus_stop",
+        "name": "Поворот Аэропорта",
+        "name:en": "Istgochi Gardishi Furudgox",
+        "network": "2, 4, 7, 8",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8142516,
+          38.5631175
+        ]
+      },
+      "id": "node/302041849"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302041927",
+        "highway": "bus_stop",
+        "name": "Аэропорт",
+        "network": "2, 4",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8151432,
+          38.5502479
+        ]
+      },
+      "id": "node/302041927"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302042165",
+        "created_by": "Potlatch 0.10c",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8736207,
+          38.5515463
+        ]
+      },
+      "id": "node/302042165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/302870152",
+        "created_by": "Potlatch 0.10d",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7417112,
+          38.5622001
+        ]
+      },
+      "id": "node/302870152"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376042307",
+        "bench": "yes",
+        "bus": "yes",
+        "bus_routes": "1",
+        "highway": "bus_stop",
+        "name": "Оперный театр",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "shelter": "yes",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.793877,
+          38.5667853
+        ]
+      },
+      "id": "node/376042307"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376044369",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "bus_routes": "1",
+        "check_date:shelter": "2023-11-29",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "name": "Дом печати",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "shelter": "yes",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7897228,
+          38.5706843
+        ]
+      },
+      "id": "node/376044369"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376045130",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "check_date:shelter": "2023-11-22",
+        "highway": "bus_stop",
+        "name": "Маркази савдои \"Тоҷикистон\"",
+        "name:ru": "Торговый центр \"Таджикистан\"",
+        "name:tg": "Маркази савдои \"Тоҷикистон\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7864736,
+          38.5796048
+        ]
+      },
+      "id": "node/376045130"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376045245",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Маркази Савдои Toҷикистон\"",
+        "name:ru": "Остановка ЦУМ",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7867456,
+          38.5806671
+        ]
+      },
+      "id": "node/376045245"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376045814",
+        "bus": "yes",
+        "bus_routes": "1",
+        "highway": "bus_stop",
+        "name": "Ватан",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7969471,
+          38.563966
+        ]
+      },
+      "id": "node/376045814"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376046479",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "check_date:shelter": "2023-11-27",
+        "highway": "bus_stop",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7905811,
+          38.5629801
+        ]
+      },
+      "id": "node/376046479"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/376046742",
+        "bench": "yes",
+        "bin": "yes",
+        "check_date:shelter": "2023-11-27",
+        "created_by": "Potlatch 0.10f",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7887185,
+          38.562819
+        ]
+      },
+      "id": "node/376046742"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385299070",
+        "highway": "bus_stop",
+        "name": "Рынок 46 мкр",
+        "name:en": "Market 46"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7649808,
+          38.5250519
+        ]
+      },
+      "id": "node/385299070"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385301254",
+        "highway": "bus_stop",
+        "name": "Прекресток 46"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7610827,
+          38.5251107
+        ]
+      },
+      "id": "node/385301254"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385301841",
+        "highway": "bus_stop",
+        "name": "Парк Фирдавси"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.754318,
+          38.5250254
+        ]
+      },
+      "id": "node/385301841"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385302576",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7482894,
+          38.5256786
+        ]
+      },
+      "id": "node/385302576"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385302726",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7499848,
+          38.5263059
+        ]
+      },
+      "id": "node/385302726"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385303696",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7556239,
+          38.5177643
+        ]
+      },
+      "id": "node/385303696"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/385303714",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7529717,
+          38.5180598
+        ]
+      },
+      "id": "node/385303714"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841050",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7623003,
+          38.5222924
+        ]
+      },
+      "id": "node/440841050"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841241",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7616737,
+          38.5215739
+        ]
+      },
+      "id": "node/440841241"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841352",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7616565,
+          38.5175111
+        ]
+      },
+      "id": "node/440841352"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841450",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7487993,
+          38.5191818
+        ]
+      },
+      "id": "node/440841450"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841600",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7493787,
+          38.5187201
+        ]
+      },
+      "id": "node/440841600"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841901",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7485845,
+          38.5255491
+        ]
+      },
+      "id": "node/440841901"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440841995",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7542923,
+          38.5253813
+        ]
+      },
+      "id": "node/440841995"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440842446",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.78108,
+          38.5612227
+        ]
+      },
+      "id": "node/440842446"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440842673",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7877662,
+          38.5637462
+        ]
+      },
+      "id": "node/440842673"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/440843977",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Донишгоҳи Омӯзгорӣ бо номи С. Айнӣ\"",
+        "name:en": "Pedagogical University",
+        "name:ru": "Остановка \"Педагогический Университет\"",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7869728,
+          38.5963937
+        ]
+      },
+      "id": "node/440843977"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666017",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7488582,
+          38.5582607
+        ]
+      },
+      "id": "node/443666017"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666019",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7475107,
+          38.5585828
+        ]
+      },
+      "id": "node/443666019"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666147",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7433307,
+          38.5677102
+        ]
+      },
+      "id": "node/443666147"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666151",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.742996,
+          38.567878
+        ]
+      },
+      "id": "node/443666151"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666158",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.748575,
+          38.5684551
+        ]
+      },
+      "id": "node/443666158"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443666160",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7487638,
+          38.5682806
+        ]
+      },
+      "id": "node/443666160"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/529410864",
+        "bus": "yes",
+        "bus_routes": "1",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Бонки Миллӣ\"",
+        "name:en": "National Bank",
+        "name:ru": "Остановка \"Национальный Банк\"",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "shelter": "yes",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7926956,
+          38.568539
+        ]
+      },
+      "id": "node/529410864"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/538211224",
+        "area": "yes",
+        "name": "Остановка",
+        "public_transport": "platform",
+        "shelter": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7571832,
+          38.584069
+        ]
+      },
+      "id": "way/538211224"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/538211266",
+        "area": "yes",
+        "name": "Остановка",
+        "public_transport": "platform",
+        "ref": "8",
+        "shelter": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7583221,
+          38.5843477
+        ]
+      },
+      "id": "way/538211266"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/538211267",
+        "area": "yes",
+        "name": "Остановка",
+        "public_transport": "platform",
+        "shelter": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7584629,
+          38.584339
+        ]
+      },
+      "id": "way/538211267"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/705760387",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.786577,
+          38.5844928
+        ]
+      },
+      "id": "node/705760387"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/705760393",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "name": "Истгоҳи \"Чойхона Роҳат\"",
+        "name:en": "Teahouse \"Rohat\"",
+        "name:ru": "Остановка \"Чайхана Рохат\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7868577,
+          38.585278
+        ]
+      },
+      "id": "node/705760393"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/926658384",
+        "public_transport": "platform",
+        "railway": "platform",
+        "train": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.704868,
+          38.5585373
+        ]
+      },
+      "id": "way/926658384"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/964612617",
+        "public_transport": "platform",
+        "railway": "platform",
+        "train": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8778673,
+          38.547815
+        ]
+      },
+      "id": "way/964612617"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1001740360",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7542015,
+          38.584666
+        ]
+      },
+      "id": "node/1001740360"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1001740362",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7527343,
+          38.5839154
+        ]
+      },
+      "id": "node/1001740362"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1001740363",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.747453,
+          38.5840329
+        ]
+      },
+      "id": "node/1001740363"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1001740366",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7432673,
+          38.5837237
+        ]
+      },
+      "id": "node/1001740366"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1012237488",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7439604,
+          38.5831601
+        ]
+      },
+      "id": "node/1012237488"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1012237489",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7459398,
+          38.5833362
+        ]
+      },
+      "id": "node/1012237489"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1061078804",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866697,
+          38.59592
+        ]
+      },
+      "id": "node/1061078804"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1111449607",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7471149,
+          38.522212
+        ]
+      },
+      "id": "node/1111449607"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1111449608",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7568996,
+          38.5115846
+        ]
+      },
+      "id": "node/1111449608"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1111449609",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7571356,
+          38.51187
+        ]
+      },
+      "id": "node/1111449609"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1111449610",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7534449,
+          38.5128606
+        ]
+      },
+      "id": "node/1111449610"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1111449614",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7534878,
+          38.5149237
+        ]
+      },
+      "id": "node/1111449614"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1207109000",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7545193,
+          38.5718397
+        ]
+      },
+      "id": "node/1207109000"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1207109058",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7549806,
+          38.5716463
+        ]
+      },
+      "id": "node/1207109058"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1324664065",
+        "area": "yes",
+        "public_transport": "platform",
+        "railway": "platform",
+        "ref": "1",
+        "train": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8006127,
+          38.5569147
+        ]
+      },
+      "id": "way/1324664065"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1979317979",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7844186,
+          38.567921
+        ]
+      },
+      "id": "node/1979317979"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2340121058",
+        "highway": "bus_stop",
+        "name": "Жилмассив"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8263841,
+          38.5602287
+        ]
+      },
+      "id": "node/2340121058"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2340121059",
+        "highway": "bus_stop",
+        "name": "Жилмассив"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8263707,
+          38.5599225
+        ]
+      },
+      "id": "node/2340121059"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2340121202",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Поликлинника",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8304584,
+          38.5584249
+        ]
+      },
+      "id": "node/2340121202"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2340121313",
+        "highway": "bus_stop",
+        "name": "Поликлинника"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8310055,
+          38.5585738
+        ]
+      },
+      "id": "node/2340121313"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2391200022",
+        "bus": "yes",
+        "bus_routes": "1",
+        "highway": "bus_stop",
+        "name": "Садбарг",
+        "operator": "ГУКП \"Троллейбус\"",
+        "public_transport": "platform",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7989026,
+          38.5616899
+        ]
+      },
+      "id": "node/2391200022"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3501027012",
+        "highway": "bus_stop",
+        "local_ref": "Конечка маршрутки №7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.796776,
+          38.5437423
+        ]
+      },
+      "id": "node/3501027012"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4139870192",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Minibus \"22\" to 82/102 district",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7841636,
+          38.5947394
+        ]
+      },
+      "id": "node/4139870192"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4146205695",
+        "highway": "bus_stop",
+        "name": "Конечка маршрутки No17 / No17a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7867756,
+          38.6084511
+        ]
+      },
+      "id": "node/4146205695"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4165043089",
+        "highway": "bus_stop",
+        "name": "Конечка маршрутки No67"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7850441,
+          38.6145943
+        ]
+      },
+      "id": "node/4165043089"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4381143190",
+        "highway": "bus_stop",
+        "name": "13 маршрут",
+        "name:ru": "13 маршрут"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7418905,
+          38.5499748
+        ]
+      },
+      "id": "node/4381143190"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4381143292",
+        "highway": "bus_stop",
+        "name": "9, 16 маршрут",
+        "name:ru": "9, 16 маршрут"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7422311,
+          38.5584058
+        ]
+      },
+      "id": "node/4381143292"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4440121092",
+        "highway": "bus_stop",
+        "name:en": "Mashrutka #33"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7857991,
+          38.5520542
+        ]
+      },
+      "id": "node/4440121092"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4640214893",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8005364,
+          38.5823039
+        ]
+      },
+      "id": "node/4640214893"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4753724123",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгох",
+        "name:ru": "Истгох",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7400774,
+          38.5110752
+        ]
+      },
+      "id": "node/4753724123"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4753725125",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгох",
+        "name:ru": "Истгох",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7425432,
+          38.512776
+        ]
+      },
+      "id": "node/4753725125"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4756724123",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Конечка Маршрутки 52",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.749511,
+          38.5936303
+        ]
+      },
+      "id": "node/4756724123"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4756724321",
+        "highway": "bus_stop",
+        "name": "Остановка Поезда \"Душанбе-Пахтабад\"",
+        "name:ru": "Остановка Поезда \"Душанбе-Пахтабад\""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7669502,
+          38.568611
+        ]
+      },
+      "id": "node/4756724321"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4806074726",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "name:en": "Bas stop",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866814,
+          38.58882
+        ]
+      },
+      "id": "node/4806074726"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4810973522",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7622912,
+          38.5473398
+        ]
+      },
+      "id": "node/4810973522"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4865521922",
+        "highway": "bus_stop",
+        "name": "Остановка",
+        "name:ru": "Остановка"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7549925,
+          38.5812955
+        ]
+      },
+      "id": "node/4865521922"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4865522022",
+        "highway": "bus_stop",
+        "name": "Мединститут",
+        "name:ru": "Мединститут"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.754831,
+          38.5791059
+        ]
+      },
+      "id": "node/4865522022"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4902978423",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Конечка маршрутки #33",
+        "name:ru": "Конечка маршрутки #33",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7808808,
+          38.5488511
+        ]
+      },
+      "id": "node/4902978423"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4902979722",
+        "highway": "bus_stop",
+        "name": "Конечка маршрутки #14",
+        "name:ru": "Конечка маршрутки #14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8147857,
+          38.5513677
+        ]
+      },
+      "id": "node/4902979722"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4902979723",
+        "highway": "bus_stop",
+        "name": "Конечка маршрутки #11",
+        "name:ru": "Конечка маршрутки #11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866136,
+          38.5664251
+        ]
+      },
+      "id": "node/4902979723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4927146054",
+        "bench": "no",
+        "bin": "no",
+        "name": "Mini van stop (route 11)",
+        "public_transport": "platform",
+        "shelter": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7878369,
+          38.5678962
+        ]
+      },
+      "id": "node/4927146054"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4948956423",
+        "highway": "bus_stop",
+        "name": "Остановка",
+        "name:en": "Чортут",
+        "name:ru": "Остановка"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7270342,
+          38.5271275
+        ]
+      },
+      "id": "node/4948956423"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5063562538",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "lit": "yes",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7863808,
+          38.5754325
+        ]
+      },
+      "id": "node/5063562538"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5076095838",
+        "highway": "bus_stop",
+        "name": "Bus Taxi",
+        "note": "Taxi station to Mu`minobod",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7614687,
+          38.5109379
+        ]
+      },
+      "id": "node/5076095838"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5076095839",
+        "highway": "bus_stop",
+        "name": "Taxi arrivals from Qurghonteppa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7622201,
+          38.5174926
+        ]
+      },
+      "id": "node/5076095839"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5186458684",
+        "bench": "yes",
+        "description": "8 маршрутка; 8 автобус",
+        "highway": "bus_stop",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8068578,
+          38.5508247
+        ]
+      },
+      "id": "node/5186458684"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5186460380",
+        "bench": "no",
+        "description": "8 маршрут",
+        "highway": "bus_stop",
+        "shelter": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8075837,
+          38.5510796
+        ]
+      },
+      "id": "node/5186460380"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5351027122",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7587272,
+          38.584334
+        ]
+      },
+      "id": "node/5351027122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5351027123",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.758741,
+          38.5840903
+        ]
+      },
+      "id": "node/5351027123"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5351028421",
+        "highway": "bus_stop",
+        "name": "Аэропорт",
+        "network": "2, 4",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.815842,
+          38.5502698
+        ]
+      },
+      "id": "node/5351028421"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5481809824",
+        "highway": "bus_stop",
+        "name": "Фурудгох"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8149781,
+          38.5504421
+        ]
+      },
+      "id": "node/5481809824"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5540445621",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Донишгоҳи Тиббӣ бо номи А. Сино\"",
+        "name:en": "Medical University",
+        "name:ru": "Остановка \"Медицинский Университет\"",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7869426,
+          38.6016767
+        ]
+      },
+      "id": "node/5540445621"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5637955021",
+        "highway": "bus_stop",
+        "name": "Остановка",
+        "name:en": "Bus stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7622561,
+          38.5518658
+        ]
+      },
+      "id": "node/5637955021"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5655816522",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7415275,
+          38.5588607
+        ]
+      },
+      "id": "node/5655816522"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5689673421",
+        "highway": "bus_stop",
+        "name:en": "Minibus to Hisar SharedTaxi station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8149581,
+          38.5657189
+        ]
+      },
+      "id": "node/5689673421"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5696035522",
+        "bench": "no",
+        "highway": "bus_stop",
+        "name:en": "bus stop",
+        "ref": "8;2",
+        "shelter": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8099119,
+          38.563089
+        ]
+      },
+      "id": "node/5696035522"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6160754085",
+        "highway": "bus_stop",
+        "name": "Супермаркет \"Душанбе\"",
+        "name:en": "Supermarket \"Dushabe\""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7669589,
+          38.5248034
+        ]
+      },
+      "id": "node/6160754085"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6487013490",
+        "highway": "bus_stop",
+        "name:en": "ISTOCHI"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8076227,
+          38.5629712
+        ]
+      },
+      "id": "node/6487013490"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6487013491",
+        "highway": "bus_stop",
+        "name": "Поворот Аэропорта",
+        "name:en": "Istgochi Gardishi Furudgox",
+        "network": "2, 4, 7, 8",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8143844,
+          38.562955
+        ]
+      },
+      "id": "node/6487013491"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6512049185",
+        "highway": "bus_stop",
+        "name": "Место встречи"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.833446,
+          38.5075693
+        ]
+      },
+      "id": "node/6512049185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6534673885",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name:en": "Shared taxis to Kulob",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8789762,
+          38.55309
+        ]
+      },
+      "id": "node/6534673885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6549026089",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Rohat Teahouse bus stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866864,
+          38.5842914
+        ]
+      },
+      "id": "node/6549026089"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6549061476",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Bus stop of national university",
+        "name:ru": "Педагогический Университет",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7867,
+          38.5962278
+        ]
+      },
+      "id": "node/6549061476"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6549124480",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Меҳмонхонаи Авесто\"",
+        "name:en": "Hotel \"Avesto\"",
+        "name:ru": "Остановка \"Гостиница Авесто\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7868185,
+          38.5910116
+        ]
+      },
+      "id": "node/6549124480"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6657141185",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7827118,
+          38.6100003
+        ]
+      },
+      "id": "node/6657141185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6805643555",
+        "bench": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform",
+        "shelter": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7926019,
+          38.5788488
+        ]
+      },
+      "id": "node/6805643555"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6805643579",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name:signed": "no",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7927828,
+          38.5787404
+        ]
+      },
+      "id": "node/6805643579"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6880512786",
+        "highway": "bus_stop",
+        "name": "Курган-Тюбе маршрутка",
+        "name:en": "Qurghonteppa-Bokhtar Mini-bus"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7616583,
+          38.5174524
+        ]
+      },
+      "id": "node/6880512786"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6965322186",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7973399,
+          38.5630668
+        ]
+      },
+      "id": "node/6965322186"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7746252864",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"ТВ Сафина\"",
+        "name:en": "Television Safina",
+        "name:ru": "Остановка \"Телевидение Сафина\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7899213,
+          38.5711083
+        ]
+      },
+      "id": "node/7746252864"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7746264809",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Маркази миллӣ Тоҷикистон\"",
+        "name:en": "Shopping center \"Tajikistan\"",
+        "name:ru": "Остановка \"Торговый центр Таджикистан\"",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7867042,
+          38.5797228
+        ]
+      },
+      "id": "node/7746264809"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7746283141",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Истгоҳи \"Кинотеатри Ватан\"",
+        "name:en": "Vatan",
+        "name:ru": "Остановка \"Кинотеатр Ватан\"",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7962802,
+          38.5652619
+        ]
+      },
+      "id": "node/7746283141"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8014513638",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Парк имени Алишера Навои",
+        "name:tg": "Боғи ба номи Алишер Навоӣ",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.798507,
+          38.5698395
+        ]
+      },
+      "id": "node/8014513638"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8014513639",
+        "bench": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Парк имени Алишера Навои",
+        "name:tg": "Боғи ба номи Алишер Навоӣ",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7963793,
+          38.5720004
+        ]
+      },
+      "id": "node/8014513639"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8173313744",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Конечкаи машруткаи 11",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7308548,
+          38.5372966
+        ]
+      },
+      "id": "node/8173313744"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9035078116",
+        "bench": "yes",
+        "bin": "no",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7962051,
+          38.5628465
+        ]
+      },
+      "id": "node/9035078116"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9651806869",
+        "highway": "bus_stop",
+        "name": "СП \"Шёлковый путь\"",
+        "network": "2, 4, 8, 33, 55",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8152744,
+          38.5533363
+        ]
+      },
+      "id": "node/9651806869"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9651806870",
+        "highway": "bus_stop",
+        "name": "СП \"Шёлковый путь\"",
+        "network": "2, 4, 8, 33, 55",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8154782,
+          38.5545314
+        ]
+      },
+      "id": "node/9651806870"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9651806871",
+        "highway": "bus_stop",
+        "name": "Торговый центр \"Эвропа\"",
+        "network": "2, 4, 8, 33",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8148244,
+          38.5621102
+        ]
+      },
+      "id": "node/9651806871"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9651806872",
+        "highway": "bus_stop",
+        "name": "Торговый центр \"Эвропа\"",
+        "network": "2, 4, 8, 33",
+        "operator": "ГКУП \"Душанбенаклиётхадамотрасон\"",
+        "public_transport": "platform",
+        "trolleybus": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8151578,
+          38.5610722
+        ]
+      },
+      "id": "node/9651806872"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274774",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7940491,
+          38.590955
+        ]
+      },
+      "id": "node/9774274774"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274784",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7939655,
+          38.5865338
+        ]
+      },
+      "id": "node/9774274784"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274788",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7939183,
+          38.583664
+        ]
+      },
+      "id": "node/9774274788"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274795",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7936393,
+          38.5795627
+        ]
+      },
+      "id": "node/9774274795"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274796",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7937638,
+          38.5796986
+        ]
+      },
+      "id": "node/9774274796"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274797",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7940298,
+          38.5786821
+        ]
+      },
+      "id": "node/9774274797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274799",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7977957,
+          38.5788834
+        ]
+      },
+      "id": "node/9774274799"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274801",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7984501,
+          38.5786586
+        ]
+      },
+      "id": "node/9774274801"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274814",
+        "bench": "yes",
+        "bin": "no",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "Парк имени Алишера Навои",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7990145,
+          38.5716347
+        ]
+      },
+      "id": "node/9774274814"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300855",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8007997,
+          38.5677467
+        ]
+      },
+      "id": "node/9774300855"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300856",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8011323,
+          38.5678961
+        ]
+      },
+      "id": "node/9774300856"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300864",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8052973,
+          38.5678306
+        ]
+      },
+      "id": "node/9774300864"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300866",
+        "bench": "yes",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8056277,
+          38.567678
+        ]
+      },
+      "id": "node/9774300866"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300876",
+        "bench": "yes",
+        "covered": "no",
+        "name": "Автобусная остановка",
+        "public_transport": "platform",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8095995,
+          38.5676696
+        ]
+      },
+      "id": "node/9774300876"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300883",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8123418,
+          38.5678105
+        ]
+      },
+      "id": "node/9774300883"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300888",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8153137,
+          38.5665237
+        ]
+      },
+      "id": "node/9774300888"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300892",
+        "bus": "yes",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.817982,
+          38.5650271
+        ]
+      },
+      "id": "node/9774300892"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300898",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8206062,
+          38.5629768
+        ]
+      },
+      "id": "node/9774300898"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300901",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.828258,
+          38.5603174
+        ]
+      },
+      "id": "node/9774300901"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300921",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8298996,
+          38.5637772
+        ]
+      },
+      "id": "node/9774300921"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300923",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8297837,
+          38.5642906
+        ]
+      },
+      "id": "node/9774300923"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300937",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8302622,
+          38.5677669
+        ]
+      },
+      "id": "node/9774300937"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300938",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8300948,
+          38.5685
+        ]
+      },
+      "id": "node/9774300938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774300939",
+        "name": "Автобусная остановка",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8288932,
+          38.5799729
+        ]
+      },
+      "id": "node/9774300939"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10029260619",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7298757,
+          38.5819966
+        ]
+      },
+      "id": "node/10029260619"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10029260917",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7382441,
+          38.582701
+        ]
+      },
+      "id": "node/10029260917"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10030021619",
+        "highway": "bus_stop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8007363,
+          38.5677489
+        ]
+      },
+      "id": "node/10030021619"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10036525718",
+        "highway": "bus_stop",
+        "name": "Истгохи Обамбор"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7819364,
+          38.6192263
+        ]
+      },
+      "id": "node/10036525718"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10036538518",
+        "highway": "bus_stop",
+        "name": "Истгохи махаллаи чашмасор"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7818586,
+          38.6199029
+        ]
+      },
+      "id": "node/10036538518"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10098638806",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7866183,
+          38.5921945
+        ]
+      },
+      "id": "node/10098638806"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12736015597",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7999942,
+          38.57051
+        ]
+      },
+      "id": "node/12736015597"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13121524501",
+        "highway": "bus_stop",
+        "name": "Остановка"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7452789,
+          38.5184067
+        ]
+      },
+      "id": "node/13121524501"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13128924202",
+        "highway": "bus_stop",
+        "name": "Остановка"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7449909,
+          38.5185239
+        ]
+      },
+      "id": "node/13128924202"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13264746057",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7063006,
+          38.5217482
+        ]
+      },
+      "id": "node/13264746057"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13264746058",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7068263,
+          38.5221528
+        ]
+      },
+      "id": "node/13264746058"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13728971701",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "public_transport": "platform"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7703801,
+          38.5406552
+        ]
+      },
+      "id": "node/13728971701"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13728988901",
+        "highway": "bus_stop",
+        "name:zh": "沃塞乘车点"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.761199,
+          38.5122011
+        ]
+      },
+      "id": "node/13728988901"
+    }
+  ]
+}
