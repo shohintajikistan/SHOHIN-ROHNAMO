@@ -1,0 +1,1923 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-08-13T07:57:49Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27358070",
+        "amenity": "hospital",
+        "name": "Республиканская офтальмологическая клиника",
+        "name:en": "Republican Ophthalmological Center",
+        "name:ru": "Республиканская офтальмологическая клиника",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7444972,
+          38.5349044
+        ]
+      },
+      "id": "way/27358070"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27390404",
+        "amenity": "hospital",
+        "name": "Национальный Медицинский Центр Республики Таджикистан",
+        "name:en": "National Medical Center",
+        "name:ru": "Национальный Медицинский Центр Республики Таджикистан",
+        "name:tg": "Маркази Миллии Тиббии Ҷумҳурии Тоҷикистон",
+        "opening_hours": "24/7",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7576467,
+          38.5810366
+        ]
+      },
+      "id": "way/27390404"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27482693",
+        "amenity": "hospital",
+        "name": "Городская больница №7",
+        "name:en": "Municipal hospital no. 7",
+        "name:ru": "Городская больница №7",
+        "natural": "wood",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7516082,
+          38.5396212
+        ]
+      },
+      "id": "way/27482693"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27483158",
+        "amenity": "clinic",
+        "building": "yes",
+        "building:levels": "3",
+        "healthcare": "clinic",
+        "name": "Маркази саломатии шахрӣ №3",
+        "name:en": "clinic №3",
+        "name:ru": "Поликлиника №3",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7911716,
+          38.5657691
+        ]
+      },
+      "id": "way/27483158"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/37845785",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Hospital №2",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7580765,
+          38.5635912
+        ]
+      },
+      "id": "way/37845785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/37845787",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Hospital №9",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7586801,
+          38.563232
+        ]
+      },
+      "id": "way/37845787"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/37845811",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Hospital #9",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7580274,
+          38.5632449
+        ]
+      },
+      "id": "way/37845811"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/51781856",
+        "amenity": "hospital",
+        "building:levels": "5",
+        "healthcare": "hospital",
+        "name": "Д Д Т Т/ТГМУ(медунивер)",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7532116,
+          38.5785755
+        ]
+      },
+      "id": "way/51781856"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/102521366",
+        "amenity": "hospital",
+        "building": "yes",
+        "building:levels": "3",
+        "healthcare": "hospital",
+        "name": "Госпитали КВД-и Роҳи оҳани Тоҷикистон",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8032354,
+          38.5589452
+        ]
+      },
+      "id": "way/102521366"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/103497337",
+        "amenity": "hospital",
+        "building": "yes",
+        "healthcare": "hospital",
+        "name": "Беморхонаи клиникии ёрии таъҷилӣ",
+        "name:en": "Hospital ambulance",
+        "name:ru": "Больница скорой помощи",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8092862,
+          38.5616852
+        ]
+      },
+      "id": "way/103497337"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104109262",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "name": "Поликлиника №1",
+        "name:en": "Hospital №1",
+        "name:ru": "Поликлиника №1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7515806,
+          38.5156084
+        ]
+      },
+      "id": "way/104109262"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104109264",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7523472,
+          38.5156209
+        ]
+      },
+      "id": "way/104109264"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104109266",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7517854,
+          38.5154071
+        ]
+      },
+      "id": "way/104109266"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104232200",
+        "amenity": "hospital",
+        "building": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7659618,
+          38.5157176
+        ]
+      },
+      "id": "way/104232200"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104473450",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7847092,
+          38.5695238
+        ]
+      },
+      "id": "way/104473450"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104474601",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Беморхонаи Клиникии Беморихои Сироятии ш. Душанбе",
+        "name:en": "Dushanbe Infectious Clinical Hospital",
+        "name:ru": "Инфекционная больница",
+        "opening_hours": "24/7",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7184813,
+          38.5831819
+        ]
+      },
+      "id": "way/104474601"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/104477486",
+        "amenity": "hospital",
+        "name": "Камисарияти харбии тиби",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7454782,
+          38.577107
+        ]
+      },
+      "id": "way/104477486"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/106643082",
+        "amenity": "hospital",
+        "name": "Клиникаи №5",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7837279,
+          38.6020356
+        ]
+      },
+      "id": "way/106643082"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/106643083",
+        "amenity": "hospital",
+        "name": "Маркази ташхиси табобатии ДДТТ",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7858737,
+          38.6030325
+        ]
+      },
+      "id": "way/106643083"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/177619662",
+        "amenity": "hospital",
+        "emergency": "no",
+        "name": "Лаборатория Нурафзо",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7556368,
+          38.5802853
+        ]
+      },
+      "id": "way/177619662"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/186775307",
+        "amenity": "hospital",
+        "barrier": "fence",
+        "designation": "гастроэнтерология",
+        "fence_type": "metal",
+        "healthcare": "hospital",
+        "healthcare:speciality": "internal",
+        "name": "Гастроэнтерология",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7504479,
+          38.579807
+        ]
+      },
+      "id": "way/186775307"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/188725110",
+        "amenity": "hospital",
+        "building": "hospital",
+        "designation": "Диагностический Центр Нурафзо",
+        "emergency": "no",
+        "name": "Nurafzo Diagnostic Center",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7558259,
+          38.5800836
+        ]
+      },
+      "id": "way/188725110"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/300684291",
+        "amenity": "hospital",
+        "name": "Таваллудхонаи №1",
+        "name:en": "Maternity Hospital Number 1",
+        "name:ru": "Роддом №1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.794255,
+          38.5766298
+        ]
+      },
+      "id": "node/300684291"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/393989315",
+        "amenity": "clinic",
+        "building": "yes",
+        "name": "Диагностический центр",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7639009,
+          38.5333357
+        ]
+      },
+      "id": "way/393989315"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/418742962",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7884126,
+          38.5982773
+        ]
+      },
+      "id": "node/418742962"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/475284711",
+        "amenity": "hospital",
+        "building": "retail",
+        "building:levels": "1",
+        "height": "4",
+        "name": "маркази  савдо",
+        "shop": "convenience",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7182898,
+          38.5873981
+        ]
+      },
+      "id": "way/475284711"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/482823154",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "healthcare:speciality": "paediatrics;general",
+        "name": "семейная поликлиника",
+        "opening_hours": "Mo-Sa 08:00-17:00",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8087708,
+          38.5512261
+        ]
+      },
+      "id": "way/482823154"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/574435525",
+        "addr:housenumber": "6А",
+        "amenity": "hospital",
+        "name": "Маркази тиббии «Истиқлол»",
+        "name:en": "Istiklol Hospital",
+        "name:fa": "مرکز پزشکی «استقلال»",
+        "name:ru": "Истиклол",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7652904,
+          38.5358266
+        ]
+      },
+      "id": "way/574435525"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662693545",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Military Hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.792391,
+          38.56972
+        ]
+      },
+      "id": "way/662693545"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662693546",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Military Hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7926954,
+          38.5698671
+        ]
+      },
+      "id": "way/662693546"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662693548",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "Military Hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7925589,
+          38.570148
+        ]
+      },
+      "id": "way/662693548"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878723",
+        "amenity": "clinic",
+        "building": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7929887,
+          38.5729107
+        ]
+      },
+      "id": "way/662878723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878727",
+        "amenity": "clinic",
+        "building": "yes",
+        "name": "Лаборатория крови",
+        "name:en": "Blood laboratory",
+        "name:ru": "Лаборатория крови",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7934714,
+          38.5724369
+        ]
+      },
+      "id": "way/662878727"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878728",
+        "amenity": "clinic",
+        "building": "yes",
+        "name:en": "City Clinic #1",
+        "name:ru": "Городская поликлиника №1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7928113,
+          38.5729735
+        ]
+      },
+      "id": "way/662878728"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878729",
+        "amenity": "clinic",
+        "building": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7930943,
+          38.5730319
+        ]
+      },
+      "id": "way/662878729"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878730",
+        "amenity": "clinic",
+        "building": "yes",
+        "name": "Лаборатория городской поликлиники",
+        "name:en": "Laboratory of City Clinic",
+        "name:ru": "Лаборатория городской поликлиники",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7933719,
+          38.5730138
+        ]
+      },
+      "id": "way/662878730"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/662878731",
+        "amenity": "clinic",
+        "building": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7933761,
+          38.5727383
+        ]
+      },
+      "id": "way/662878731"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/674523930",
+        "addr:housenumber": "3",
+        "addr:street": "кӯчаи Деҳотӣ",
+        "amenity": "clinic",
+        "building": "yes",
+        "building:levels": "1",
+        "healthcare": "clinic",
+        "name": "Медиан",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7572882,
+          38.532541
+        ]
+      },
+      "id": "way/674523930"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/751868691",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Городская поликлиника №1",
+        "name:en": "Clinic №1",
+        "name:ru": "Городская поликлиника №1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7929251,
+          38.5728938
+        ]
+      },
+      "id": "way/751868691"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/790463601",
+        "amenity": "clinic",
+        "building": "commercial",
+        "building:levels": "1",
+        "healthcare": "clinic",
+        "healthcare:speciality": "community",
+        "name": "Амбулаторияи МСШ №3",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8633051,
+          38.5470068
+        ]
+      },
+      "id": "way/790463601"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814828722",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Олами Тиб",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7402807,
+          38.5416443
+        ]
+      },
+      "id": "way/814828722"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/876437944",
+        "addr:city": "Душанбе",
+        "addr:housenumber": "29",
+        "addr:postcode": "734000",
+        "addr:street": "кӯчаи Карамов",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Диагностический центр Диамед",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7608167,
+          38.5967759
+        ]
+      },
+      "id": "way/876437944"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1202840009",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Роддом №1",
+        "name:en": "Maternity Hospital #1",
+        "name:ru": "Роддом №3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7325631,
+          38.5818335
+        ]
+      },
+      "id": "node/1202840009"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1205417676",
+        "amenity": "hospital",
+        "name": "Беморхонаи маркази №2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8277632,
+          38.559272
+        ]
+      },
+      "id": "node/1205417676"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1224881831",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7638465,
+          38.5334715
+        ]
+      },
+      "id": "node/1224881831"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1224881835",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7660941,
+          38.53357
+        ]
+      },
+      "id": "node/1224881835"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1224888230",
+        "amenity": "hospital",
+        "name": "Дармонгохи кудаконаи дандонпизишки №1",
+        "name:ru": "Детская стоматологическая клиника № 1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7881374,
+          38.5639064
+        ]
+      },
+      "id": "node/1224888230"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1240517295",
+        "amenity": "hospital",
+        "name": "Таваллудхонаи № 2",
+        "name:en": "Maternity hospital № 2",
+        "name:ru": "Роддом № 2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7857279,
+          38.5658287
+        ]
+      },
+      "id": "node/1240517295"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3501077765",
+        "amenity": "hospital",
+        "name": "Лаборатория Нурафзо"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.755671,
+          38.5803162
+        ]
+      },
+      "id": "node/3501077765"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4139858493",
+        "amenity": "hospital",
+        "name": "Солим Мед (Solim Med)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7926741,
+          38.6021241
+        ]
+      },
+      "id": "node/4139858493"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4139869991",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Prospekt Clinic"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.783125,
+          38.581103
+        ]
+      },
+      "id": "node/4139869991"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4164894390",
+        "amenity": "clinic",
+        "name": "Солим Мед"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7926152,
+          38.6021989
+        ]
+      },
+      "id": "node/4164894390"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4164894789",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "Клиника Абуали ибни Сино (Авиценна)",
+        "name:en": "Abuali ibni Sino Clinic"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7829282,
+          38.5811106
+        ]
+      },
+      "id": "node/4164894789"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4588583193",
+        "amenity": "hospital",
+        "name": "Городской Центр Кожных и Венерологических Заболеваний",
+        "name:en": "Center of skin and veneral diseases",
+        "name:es": "Urbano centro de enfermedades de la piel",
+        "name:ru": "Кожный диспансер"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.756074,
+          38.5555576
+        ]
+      },
+      "id": "node/4588583193"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4597615790",
+        "amenity": "clinic",
+        "name": "Протезно-Ортопедический завод",
+        "name:ru": "Протезно-Ортопедический завод"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8291019,
+          38.5611278
+        ]
+      },
+      "id": "node/4597615790"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4641696390",
+        "amenity": "clinic",
+        "name": "Поликлиника #6",
+        "name:ru": "Поликлиника #6",
+        "phone": "221-15-83"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8000579,
+          38.5805753
+        ]
+      },
+      "id": "node/4641696390"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4686808418",
+        "amenity": "hospital",
+        "name": "Беморхона",
+        "name:en": "Hospital",
+        "name:ru": "Больница"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7845982,
+          38.5696052
+        ]
+      },
+      "id": "node/4686808418"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4751846106",
+        "amenity": "hospital",
+        "name": "Госпитали ҳарбӣ",
+        "name:en": "military gospital",
+        "name:ru": "Военный госпиталь"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7265686,
+          38.5780377
+        ]
+      },
+      "id": "node/4751846106"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4785509754",
+        "amenity": "clinic",
+        "name": "Маркази саломатии шаҳрӣ №5",
+        "name:en": "Clinic №5",
+        "name:ru": "Поликлиника №5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7838213,
+          38.6018687
+        ]
+      },
+      "id": "node/4785509754"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4785548093",
+        "amenity": "hospital",
+        "name": "Маркази ташхиси табобатии Донишгоҳи давлатии тиббии Тоҷикистон",
+        "name:en": "Curative examination center Tajik State Medical University",
+        "name:ru": "Лечебный центр экспертизы Таджикский государственный медицинский университет"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7852516,
+          38.6033883
+        ]
+      },
+      "id": "node/4785548093"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4785551786",
+        "amenity": "hospital",
+        "name": "Маркази тиббӣ",
+        "name:en": "Medical Center",
+        "name:ru": "Медицинский центр"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7843396,
+          38.6042972
+        ]
+      },
+      "id": "node/4785551786"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4788312567",
+        "amenity": "clinic",
+        "name": "Маркази саломатии шаҳрӣ №5",
+        "name:en": "Clinic #14",
+        "name:ru": "Поликлиника №14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.714051,
+          38.5857554
+        ]
+      },
+      "id": "node/4788312567"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4791118022",
+        "amenity": "hospital",
+        "healthcare:speciality": "neurology",
+        "name": "Неврологическое отделение #2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7589292,
+          38.5815003
+        ]
+      },
+      "id": "node/4791118022"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4791126822",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "neurology",
+        "name": "Неврологическое отделение #1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7583165,
+          38.5812102
+        ]
+      },
+      "id": "node/4791126822"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4848741121",
+        "addr:housenumber": "126",
+        "addr:street": "кучаи Ханжин",
+        "amenity": "hospital",
+        "name": "Российский военный госпиталь",
+        "name:en": "Russian military hospital",
+        "name:ru": "Российский военный госпиталь"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7279998,
+          38.5077292
+        ]
+      },
+      "id": "node/4848741121"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4946694821",
+        "addr:housenumber": "66/А",
+        "addr:street": "кӯчаи Назаршоев",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "ООО \"Витилиго-плюс\"",
+        "opening_hours": "Sa 08:00-12:00; Mo-Fr 08:00-17:00",
+        "phone": "+992907380804"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7908249,
+          38.5572508
+        ]
+      },
+      "id": "node/4946694821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4985467521",
+        "addr:housenumber": "8",
+        "addr:postcode": "734026",
+        "addr:street": "хиёбони Исмоили Сомонӣ",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "urology",
+        "name": "ГУ Республиканский научно-клинический центр урология",
+        "name:ru": "ГУ Республиканский научно-клинический центр урология"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7586383,
+          38.5807112
+        ]
+      },
+      "id": "node/4985467521"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5211745980",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "cardiology",
+        "name": "Кардиология"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7585999,
+          38.5803083
+        ]
+      },
+      "id": "node/5211745980"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5513310622",
+        "amenity": "clinic",
+        "name": "Лаборатория Тишковой",
+        "name:en": "Laboratoriya Tishkovoy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7822048,
+          38.568576
+        ]
+      },
+      "id": "node/5513310622"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5596923621",
+        "addr:housenumber": "11",
+        "addr:postcode": "734012",
+        "addr:street": "кӯчаи Раҳимӣ",
+        "amenity": "clinic",
+        "name": "Ташхис ва Тиб",
+        "name:en": "Hospital Tashkhis va Tib",
+        "opening_hours": "Mo-Sa 08:00-16:00; Su 00:00-24:00",
+        "phone": "+992887777766"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7586926,
+          38.5643577
+        ]
+      },
+      "id": "node/5596923621"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6197267486",
+        "amenity": "hospital",
+        "name": "Медицинские \"Шифо\"",
+        "name:en": "Hospital \"Shifo\"",
+        "name:fr": "Hôpital \"Shifo\""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8033154,
+          38.5772104
+        ]
+      },
+      "id": "node/6197267486"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6548981784",
+        "addr:city": "Душанбе",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Stomotology and X-ray,"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7998978,
+          38.5604693
+        ]
+      },
+      "id": "node/6548981784"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7310334004",
+        "amenity": "hospital",
+        "fixme": "need survey",
+        "name": "Беморхонаи клиникии кӯдаконаи №2",
+        "name:en": "Children's Clinical Hospital № 2",
+        "name:ru": "Детская клиническая больница № 2",
+        "note": "relocated cf openstreetmap.org/note/1629607"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7649727,
+          38.5348836
+        ]
+      },
+      "id": "node/7310334004"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7615404793",
+        "addr:housenumber": "14а",
+        "addr:street": "кӯчаи Садриддин Айнӣ",
+        "amenity": "hospital",
+        "email": "klinika_madadiakbar@mail.ru",
+        "name": "Мадади Акбар",
+        "name:en": "Madadi Akbar",
+        "phone": "+992981113164"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7904131,
+          38.5614181
+        ]
+      },
+      "id": "node/7615404793"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7872104785",
+        "amenity": "hospital",
+        "healthcare": "sample_collection",
+        "name": "Клиника лаборатория Диамед"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.734809,
+          38.5823037
+        ]
+      },
+      "id": "node/7872104785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7872145185",
+        "amenity": "hospital",
+        "name": "Ожоговая больница номер 3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7913894,
+          38.5659731
+        ]
+      },
+      "id": "node/7872145185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9704507695",
+        "addr:city": "Душанбе",
+        "addr:housenumber": "51",
+        "addr:street": "кӯчаи Фотех Ниёзӣ",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "косметологическая",
+        "name": "Гугуш"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7934572,
+          38.5808612
+        ]
+      },
+      "id": "node/9704507695"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9766091369",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "Клиникаи Насратуллоев"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8018122,
+          38.5582162
+        ]
+      },
+      "id": "node/9766091369"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9768694713",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "Ecomed"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7605395,
+          38.5848434
+        ]
+      },
+      "id": "node/9768694713"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274777",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Центр психических заболеваний"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7941757,
+          38.5905324
+        ]
+      },
+      "id": "node/9774274777"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9774274800",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Детская туберкулёзная больница"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7975618,
+          38.5777175
+        ]
+      },
+      "id": "node/9774274800"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9780762107",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Поликлиника №5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8160508,
+          38.5525954
+        ]
+      },
+      "id": "node/9780762107"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10586453205",
+        "amenity": "clinic",
+        "name": "Поликлиника №4",
+        "name:en": "Poliklinika №4",
+        "name:tj": "Марказӣ саломати №4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7590761,
+          38.5301778
+        ]
+      },
+      "id": "node/10586453205"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10773258673",
+        "amenity": "hospital",
+        "name": "Беморхонаи клиникии сироятии кудакона"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7669462,
+          38.5354946
+        ]
+      },
+      "id": "node/10773258673"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12041601661",
+        "amenity": "clinic",
+        "name": "Дармонгоҳи муштараки Ҷамъиати ҳилоли аҳмари ҷумҳурии исломии Эрон ва Ҷамъиати ҳилоли аҳмари ҷумҳурии Тоҷиикистон",
+        "office": "ngo",
+        "operator:en": "Red Crescent"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.8146948,
+          38.565074
+        ]
+      },
+      "id": "node/12041601661"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13368642502",
+        "amenity": "clinic",
+        "name": "Medical Center Soranus"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7945372,
+          38.5785453
+        ]
+      },
+      "id": "node/13368642502"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526286558",
+        "amenity": "clinic",
+        "name": "Сино",
+        "name:tj": "Сино"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7508455,
+          38.519186
+        ]
+      },
+      "id": "node/13526286558"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526287751",
+        "amenity": "hospital",
+        "name": "Поликлиника №1",
+        "name:tj": "Маркази саломатии №1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7513068,
+          38.5157463
+        ]
+      },
+      "id": "node/13526287751"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526287752",
+        "amenity": "hospital",
+        "name": "Городской центр здоровья № 1",
+        "name:tj": "Маркази саломатии №1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7516957,
+          38.51559
+        ]
+      },
+      "id": "node/13526287752"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526287861",
+        "amenity": "clinic",
+        "name": "Томирис",
+        "name:tj": "Тамирис"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7534258,
+          38.5157799
+        ]
+      },
+      "id": "node/13526287861"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526287963",
+        "amenity": "clinic",
+        "name": "Салва",
+        "name:en": "Salva",
+        "name:tj": "Салва"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7612659,
+          38.5165963
+        ]
+      },
+      "id": "node/13526287963"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526350795",
+        "amenity": "clinic",
+        "name": "Клиника Умед",
+        "name:tj": "Умед"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7629369,
+          38.5245098
+        ]
+      },
+      "id": "node/13526350795"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526358829",
+        "amenity": "clinic",
+        "name": "ООО Шифои Комил",
+        "name:tj": "ООО Шифои Комил"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.762548,
+          38.5193958
+        ]
+      },
+      "id": "node/13526358829"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526359068",
+        "amenity": "clinic",
+        "name": "Ромашка",
+        "name:tj": "Рамашка"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7698704,
+          38.5153119
+        ]
+      },
+      "id": "node/13526359068"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526371606",
+        "amenity": "clinic",
+        "name": "Дорушшифои бонувон"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7362328,
+          38.5913884
+        ]
+      },
+      "id": "node/13526371606"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526387020",
+        "addr:city": "Душанбе",
+        "amenity": "hospital",
+        "name": "Инфекционная больница",
+        "name:tj": "Беморҳонаи сироятӣ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7186214,
+          38.5832286
+        ]
+      },
+      "id": "node/13526387020"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526387021",
+        "addr:city": "Душанбе",
+        "amenity": "hospital",
+        "name": "Инфекционная больница",
+        "name:tj": "Беморҳонаи сироятӣ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7179214,
+          38.5831468
+        ]
+      },
+      "id": "node/13526387021"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526399105",
+        "amenity": "clinic",
+        "dispensing": "yes",
+        "name": "Асан",
+        "name:ru": "Медцентр, клиника,Корекция зрения,"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7406504,
+          38.5895299
+        ]
+      },
+      "id": "node/13526399105"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526399108",
+        "amenity": "clinic",
+        "dispensing": "yes",
+        "name": "Шифои Рахмон",
+        "name:ru": "Медцентр, Клиника"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.740413,
+          38.5877332
+        ]
+      },
+      "id": "node/13526399108"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526414687",
+        "amenity": "clinic",
+        "name": "Салва",
+        "name:en": "Clinic Salva",
+        "name:ru": "Медцентр, клиника Салва"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7409347,
+          38.5921054
+        ]
+      },
+      "id": "node/13526414687"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526414700",
+        "amenity": "clinic",
+        "name": "Ахрориён",
+        "name:ru": "Медцентр, клиника,Диагностический центр \"Ахрориён\"",
+        "name:tj": "Аҳрориён"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.738215,
+          38.5917385
+        ]
+      },
+      "id": "node/13526414700"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13528272660",
+        "amenity": "clinic",
+        "name": "Набз",
+        "name:tj": "Клиникаи кардиологии Набз"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7573418,
+          38.5322462
+        ]
+      },
+      "id": "node/13528272660"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13528272661",
+        "amenity": "clinic",
+        "name": "Медиан Центр",
+        "name:tj": "Марказӣ Медиан"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7572479,
+          38.5325127
+        ]
+      },
+      "id": "node/13528272661"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13528277122",
+        "amenity": "clinic",
+        "name": "Городской центр наркологии",
+        "name:en": "Gorodskoy tsentr narkologii",
+        "name:tj": "Марказӣ шахрии наркологӣ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7590611,
+          38.5305614
+        ]
+      },
+      "id": "node/13528277122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13528277519",
+        "amenity": "clinic",
+        "name": "Узи",
+        "name:tj": "Узи"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.7625292,
+          38.5257772
+        ]
+      },
+      "id": "node/13528277519"
+    }
+  ]
+}
