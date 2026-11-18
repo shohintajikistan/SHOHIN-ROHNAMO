@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#071c16">
-<meta name="description" content="SHOHIN ROHNAMO — интерактивная карта Душанбе, остановки и маршруты">
+<meta name="description" content="SHOHIN ROHNAMO — карта Душанбе и полезные городские сервисы">
 <title>SHOHIN ROHNAMO — Душанбе</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -73,8 +73,8 @@ button,input{font:inherit}button{cursor:pointer;border:0}
 <div id="app">
 <div id="map"></div>
 <div class="top">
- <div class="brand"><div class="brandmark">♛</div><div class="brandname">SHOHIN ROHNAMO<small>ДУШАНБЕ • НАВИГАЦИЯ</small></div></div>
- <div class="searchwrap"><span class="glass">⌕</span><input id="search" autocomplete="off" placeholder="Поиск улицы, места или адреса…"><span id="clearSearch" style="display:none;color:#718078">×</span></div>
+ <div class="brand"><div class="brandmark">♛</div><div class="brandname">SHOHIN ROHNAMO<small>ДУШАНБЕ • ПОМОЩЬ РЯДОМ</small></div></div>
+ <div class="searchwrap"><span class="glass">⌕</span><input id="search" autocomplete="off" placeholder="Найти аптеку, больницу, банкомат, адрес…"><span id="clearSearch" style="display:none;color:#718078">×</span></div>
  <div id="searchResults"></div>
 </div>
 <div class="layers">
@@ -91,19 +91,21 @@ button,input{font:inherit}button{cursor:pointer;border:0}
  <div class="handle"></div>
  <div class="sheethead"><b id="sheetTitle">Карта Душанбе</b><span class="status" id="mapStatus">Загрузка данных…</span></div>
  <div class="quickcats">
-  <button class="cat active" data-cat="all" onclick="chooseCategory('all',this)">Всё</button>
-  <button class="cat" data-cat="transport" onclick="chooseCategory('transport',this)">🚏 Остановки</button>
-  <button class="cat" data-cat="hospital" onclick="chooseCategory('hospital',this)">✚ Больницы</button>
-  <button class="cat" data-cat="school" onclick="chooseCategory('school',this)">Школы</button>
-  <button class="cat" data-cat="shop" onclick="chooseCategory('shop',this)">Магазины</button>
-  <button class="cat" data-cat="food" onclick="chooseCategory('food',this)">Кафе</button>
+  <button class="cat active" data-cat="all" onclick="chooseCategory('all',this)">Все места</button>
+  <button class="cat" data-cat="pharmacy" onclick="chooseCategory('pharmacy',this)">Аптеки</button>
+  <button class="cat" data-cat="medical" onclick="chooseCategory('medical',this)">Больницы</button>
+  <button class="cat" data-cat="atm" onclick="chooseCategory('atm',this)">Банкоматы</button>
+  <button class="cat" data-cat="fuel" onclick="chooseCategory('fuel',this)">АЗС</button>
+  <button class="cat" data-cat="police" onclick="chooseCategory('police',this)">Полиция</button>
+  <button class="cat" data-cat="public" onclick="chooseCategory('public',this)">Госуслуги</button>
+  <button class="cat" data-cat="market" onclick="chooseCategory('market',this)">Маркеты</button>
  </div>
- <div class="info" id="sheetInfo">Настоящие улицы и здания OpenStreetMap. Нажмите на объект, чтобы посмотреть информацию.</div>
+ <div class="info" id="sheetInfo">Найдите ближайшую аптеку, больницу, банкомат, АЗС или государственное учреждение.</div>
 </div>
 <nav class="nav">
  <button class="active" onclick="navHome(this)"><span>⌖</span>Карта</button>
  <button onclick="openPanel('routePanel',this)"><span>↗</span>Маршрут</button>
- <button onclick="showTransit(this)"><span>▤</span>Транспорт</button>
+ <button onclick="chooseCategory('pharmacy',document.querySelector('[data-cat=pharmacy]'));navHome(this)"><span>✚</span>Рядом</button>
  <button onclick="openPanel('placesPanel',this)"><span>⌕</span>Места</button>
 </nav>
 <section class="panel" id="routePanel">
@@ -117,7 +119,7 @@ button,input{font:inherit}button{cursor:pointer;border:0}
  </div>
  <button class="primary" onclick="buildRoute()">Построить реальный маршрут</button>
  <div class="routeout" id="routeOut"></div>
- <p class="info">Маршрут рассчитывается по дорожной сети OpenStreetMap. Автобусные и маршрутные схемы показываются только при наличии подтверждённых данных в OpenStreetMap.</p>
+ <p class="info">Постройте автомобильный, пеший или велосипедный маршрут до выбранного места.</p>
 </section>
 <section class="panel" id="placesPanel">
  <div class="paneltop"><h2>Места Душанбе</h2><button class="close" onclick="closePanels()">×</button></div>
@@ -133,20 +135,67 @@ const DUSHANBE=[38.5598,68.7870];
 const map=L.map('map',{zoomControl:false}).setView(DUSHANBE,13);
 const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 const satellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
-let activeLayer='street',stopLayer=L.layerGroup().addTo(map),placeLayer=L.layerGroup().addTo(map),routeLayer=L.layerGroup().addTo(map),allStops=[],allPlaces=[],userMarker=null,routeMode='driving',userPosition=null,selectedCategory='all',searchTimer;
+let activeLayer='street',placeLayer=L.layerGroup().addTo(map),routeLayer=L.layerGroup().addTo(map),allPlaces=[],userMarker=null,routeMode='driving',userPosition=null,selectedCategory='all',searchTimer;
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>e.style.display='none',2800)}
 function setLayer(v){activeLayer=v;if(v==='sat'){map.removeLayer(street);satellite.addTo(map)}else{map.removeLayer(satellite);street.addTo(map)}document.getElementById('baseBtn').classList.toggle('active',v==='street');document.getElementById('satBtn').classList.toggle('active',v==='sat')}
-function navHome(btn){closePanels();document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');map.invalidateSize()}
+function navHome(btn){closePanels();document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');map.invalidateSize()}
 function openPanel(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('open'));document.getElementById(id).classList.add('open');if(btn){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}setTimeout(()=>map.invalidateSize(),250)}
 function closePanels(){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('open'));map.invalidateSize()}
 function setMode(btn){routeMode=btn.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===btn))}
-function safeName(p){return p.name||p['name:ru']||p['name:tg']||p['name:en']||'Объект без названия'}
-function markerIcon(kind){const color=kind==='stop'?'#087b53':'#0b6cba';return L.divIcon({className:'',html:'<div style="width:25px;height:25px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);background:'+color+';border:2px solid white;box-shadow:0 2px 7px #0005"></div>',iconSize:[25,25],iconAnchor:[12,24]})}
-function addStopFeatures(data){if(!data||!data.features)return;allStops=data.features;allStops.forEach(f=>{if(!f.geometry||f.geometry.type!=='Point')return;const c=f.geometry.coordinates,p=f.properties||{};const m=L.marker([c[1],c[0]],{icon:markerIcon('stop')}).bindPopup('<b>🚏 '+safeName(p)+'</b><br>'+ (p.operator||'Остановка общественного транспорта')+'<br><small>Данные OpenStreetMap</small>');m.featureType='transport';m.addTo(stopLayer)});document.getElementById('mapStatus').textContent=allStops.length+' остановок загружено'}
-function categoryOf(p){if(p.highway==='bus_stop'||p.public_transport)return'transport';if(p.amenity==='hospital'||p.healthcare)return'hospital';if(p.amenity==='school'||p.amenity==='university'||p.amenity==='college')return'school';if(p.shop)return'shop';if(p.amenity==='restaurant'||p.amenity==='cafe'||p.amenity==='fast_food')return'food';return'other'}
-function addPlaceFeatures(data){if(!data||!data.features)return;allPlaces=data.features;allPlaces.forEach(f=>{if(!f.geometry||f.geometry.type!=='Point')return;const p=f.properties||{},c=f.geometry.coordinates;if(!p.name&&!p['name:ru']&&!p['name:tg'])return;const m=L.circleMarker([c[1],c[0]],{radius:6,color:'#fff',weight:2,fillColor:'#087b53',fillOpacity:.95}).bindPopup('<b>'+safeName(p)+'</b><br>'+(p.amenity||p.shop||p.healthcare||'Место')+'<br><small>OpenStreetMap</small>');m.featureType=categoryOf(p);m.addTo(placeLayer)});document.getElementById('mapStatus').textContent=allStops.length+' остановок • '+allPlaces.length+' мест'}
-async function loadMapData(){try{const [s,p]=await Promise.all([fetch('./export%20(3).geojson').then(r=>r.ok?r.json():null),fetch('./export%20(2).geojson').then(r=>r.ok?r.json():null)]);addStopFeatures(s);addPlaceFeatures(p);document.getElementById('mapStatus').textContent=allStops.length+' остановок • '+allPlaces.length+' объектов'}catch(e){document.getElementById('mapStatus').textContent='Онлайн-карта активна';console.warn(e)}}
-function chooseCategory(cat,btn){selectedCategory=cat;document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('active',x===btn));const showStops=cat==='all'||cat==='transport';const showPlaces=cat!=='transport';if(showStops&&!map.hasLayer(stopLayer))stopLayer.addTo(map);if(!showStops&&map.hasLayer(stopLayer))map.removeLayer(stopLayer);if(showPlaces&&!map.hasLayer(placeLayer))placeLayer.addTo(map);if(!showPlaces&&map.hasLayer(placeLayer))map.removeLayer(placeLayer);if(cat==='all')document.getElementById('sheetInfo').textContent='Показаны улицы, остановки и загруженные места Душанбе.';else document.getElementById('sheetInfo').textContent='Слой: '+btn.textContent+'. Доступность объектов зависит от данных OpenStreetMap.'}
+function safeName(p){return p.name||p['name:ru']||p['name:tg']||p['name:en']||'Без названия'}
+const categoryInfo={
+ pharmacy:{label:'Аптека',icon:'✚',color:'#16834c'},
+ medical:{label:'Медицина',icon:'✚',color:'#d34c58'},
+ atm:{label:'Банкомат / банк',icon:'$',color:'#2673b8'},
+ fuel:{label:'Заправка',icon:'⛽',color:'#b87524'},
+ police:{label:'Полиция',icon:'★',color:'#344d9a'},
+ public:{label:'Государственная служба',icon:'▣',color:'#7250a4'},
+ market:{label:'Магазин / рынок',icon:'▤',color:'#b06a2b'}
+};
+function classify(p){
+ if(p.amenity==='pharmacy')return'pharmacy';
+ if(['hospital','clinic','doctors','dentist'].includes(p.amenity)||p.healthcare)return'medical';
+ if(p.amenity==='atm'||p.amenity==='bank')return'atm';
+ if(p.amenity==='fuel')return'fuel';
+ if(p.amenity==='police'||p.amenity==='fire_station')return'police';
+ if(['townhall','post_office','courthouse','community_centre','social_facility'].includes(p.amenity))return'public';
+ if(p.shop||p.amenity==='marketplace')return'market';
+ return null;
+}
+function featurePoint(el){if(el.type==='node')return[el.lat,el.lon];if(el.center)return[el.center.lat,el.center.lon];return null}
+function addUsefulPlaces(elements){
+ allPlaces=elements.map(el=>({el,point:featurePoint(el),props:el.tags||{}})).filter(x=>x.point&&classify(x.props));
+ placeLayer.clearLayers();
+ allPlaces.forEach(item=>{
+  const p=item.props,cat=classify(p),info=categoryInfo[cat],phone=p.phone||p['contact:phone']||'',hours=p.opening_hours||'График не указан',address=[p['addr:street'],p['addr:housenumber']].filter(Boolean).join(', ');
+  const marker=L.circleMarker(item.point,{radius:8,color:'#fff',weight:2,fillColor:info.color,fillOpacity:.98});
+  const lines=[info.label,address,phone?'Телефон: '+phone:'', 'Часы: '+hours,'Источник: OpenStreetMap'].filter(Boolean);
+  marker.bindPopup('<b>'+info.icon+' '+safeName(p)+'</b><br>'+lines.slice(0,4).join('<br>'));
+  marker.featureType=cat;marker.addTo(placeLayer);item.marker=marker;
+ });
+ document.getElementById('mapStatus').textContent=allPlaces.length+' полезных мест';
+ renderPlaceList();
+ applyCategory();
+}
+async function loadMapData(){
+ const box=[38.45,68.65,38.68,68.94];
+ const q='[out:json][timeout:30];(node(around:9000,38.5598,68.7870)[amenity~"pharmacy|hospital|clinic|doctors|dentist|atm|bank|fuel|police|fire_station|townhall|post_office|courthouse|community_centre|marketplace"];way(around:9000,38.5598,68.7870)[amenity~"pharmacy|hospital|clinic|doctors|dentist|atm|bank|fuel|police|fire_station|townhall|post_office|courthouse|community_centre|marketplace"];node(around:9000,38.5598,68.7870)[shop~"supermarket|convenience|mall|department_store"];way(around:9000,38.5598,68.7870)[shop~"supermarket|convenience|mall|department_store"];);out center tags;';
+ document.getElementById('mapStatus').textContent='Загружаем места Душанбе…';
+ const endpoints=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+ for(const endpoint of endpoints){try{
+  const r=await fetch(endpoint+'?data='+encodeURIComponent(q));if(!r.ok)throw Error('Overpass error');
+  const data=await r.json();addUsefulPlaces(data.elements||[]);return;
+ }catch(e){console.warn('Map data source unavailable',endpoint)}}
+ document.getElementById('mapStatus').textContent='Не удалось загрузить места';
+ document.getElementById('sheetInfo').textContent='Проверьте подключение к интернету и попробуйте снова.';
+}
+function applyCategory(){
+ const visible=allPlaces.filter(x=>selectedCategory==='all'||classify(x.props)===selectedCategory);
+ allPlaces.forEach(x=>{if(x.marker){if(visible.includes(x)){if(!map.hasLayer(x.marker))x.marker.addTo(map)}else map.removeLayer(x.marker)}});
+ document.getElementById('sheetInfo').textContent=selectedCategory==='all'?'Полезные места Душанбе: аптеки, медицина, банкоматы, заправки, полиция, госучреждения и магазины.':categoryInfo[selectedCategory].label+': найдено '+visible.length+' объектов на карте.';
+ document.getElementById('mapStatus').textContent=visible.length+' мест показано';
+ renderPlaceList(visible);
+}
 function locateMe(){if(!navigator.geolocation){toast('Геолокация недоступна в этом браузере');return}toast('Определяем ваше местоположение…');navigator.geolocation.getCurrentPosition(pos=>{userPosition=[pos.coords.longitude,pos.coords.latitude];const ll=[pos.coords.latitude,pos.coords.longitude];if(userMarker)map.removeLayer(userMarker);userMarker=L.circleMarker(ll,{radius:9,color:'#fff',weight:3,fillColor:'#08a56c',fillOpacity:1}).addTo(map).bindPopup('Вы здесь');map.setView(ll,16);document.getElementById('from').value='Моё местоположение';toast('Местоположение найдено')},()=>toast('Не удалось получить GPS. Проверьте разрешение геолокации.'),{enableHighAccuracy:true,timeout:12000})}
 async function geocode(q){if(q==='Моё местоположение'||q===''){if(userPosition)return userPosition;if(!userPosition)throw Error('Сначала нажмите кнопку определения местоположения или укажите адрес отправления.')}const url='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=tj&q='+encodeURIComponent(q+', Душанбе');const r=await fetch(url,{headers:{'Accept-Language':'ru'}});if(!r.ok)throw Error('Сервис поиска временно недоступен');const a=await r.json();if(!a.length)throw Error('Адрес не найден. Попробуйте другое название.');return[Number(a[0].lon),Number(a[0].lat)]}
 async function buildRoute(){const from=document.getElementById('from').value.trim()||'Моё местоположение',to=document.getElementById('to').value.trim(),out=document.getElementById('routeOut');if(!to){toast('Укажите пункт назначения');return}out.textContent='Ищем адреса и рассчитываем путь…';routeLayer.clearLayers();try{const a=await geocode(from),b=await geocode(to);let host='https://router.project-osrm.org/route/v1/driving';if(routeMode==='foot')host='https://routing.openstreetmap.de/routed-foot/route/v1/driving';if(routeMode==='bike')host='https://routing.openstreetmap.de/routed-bike/route/v1/driving';const r=await fetch(host+'/'+a.join(',')+';'+b.join(',')+'?overview=full&geometries=geojson&steps=true');if(!r.ok)throw Error('Сервис маршрутизации не ответил');const data=await r.json();if(data.code!=='Ok'||!data.routes?.length)throw Error('Маршрут не найден для выбранного способа передвижения');const route=data.routes[0],coords=route.geometry.coordinates.map(x=>[x[1],x[0]]);L.polyline(coords,{color:'#08a56c',weight:6,opacity:.9,lineCap:'round'}).addTo(routeLayer);L.marker([a[1],a[0]]).addTo(routeLayer).bindPopup('Начало');L.marker([b[1],b[0]]).addTo(routeLayer).bindPopup('Пункт назначения');map.fitBounds(L.latLngBounds(coords),{padding:[45,45]});const km=(route.distance/1000).toFixed(1),mins=Math.round(route.duration/60);out.innerHTML='<div class="placecard"><b>Маршрут построен</b><small>Расстояние: '+km+' км • Примерное время: '+mins+' мин</small><small>Путь проложен по дорожным данным OpenStreetMap.</small></div>';toast('Маршрут отображён на карте')}catch(e){out.textContent=e.message;toast(e.message)}}
@@ -154,7 +203,6 @@ async function searchPlaces(q){const box=document.getElementById('searchResults'
 document.getElementById('search').addEventListener('input',e=>{clearTimeout(searchTimer);document.getElementById('clearSearch').style.display=e.target.value?'block':'none';searchTimer=setTimeout(()=>searchPlaces(e.target.value),650)});
 document.getElementById('clearSearch').onclick=()=>{document.getElementById('search').value='';document.getElementById('clearSearch').style.display='none';document.getElementById('searchResults').style.display='none'};
 document.addEventListener('click',e=>{if(!e.target.closest('.top'))document.getElementById('searchResults').style.display='none'});
-function showTransit(btn){navHome(btn);chooseCategory('transport',document.querySelector('[data-cat="transport"]'));map.setView(DUSHANBE,14);document.getElementById('sheetTitle').textContent='Остановки транспорта';document.getElementById('sheetInfo').textContent='Показаны автобусные остановки, отмеченные в OpenStreetMap. Номера маршрутов доступны только там, где они внесены в карту.'}
 map.on('click',()=>document.getElementById('searchResults').style.display='none');
 loadMapData();
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
