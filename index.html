@@ -105,7 +105,7 @@ button,input{font:inherit}button{cursor:pointer;border:0}
 <nav class="nav">
  <button class="active" onclick="navHome(this)"><span>⌖</span>Карта</button>
  <button onclick="openPanel('routePanel',this)"><span>↗</span>Маршрут</button>
- <button onclick="chooseCategory('pharmacy',document.querySelector('[data-cat=pharmacy]'));navHome(this)"><span>✚</span>Рядом</button>
+ <button onclick="navHome(this);chooseCategory('all',document.querySelector('[data-cat=all]'));locateMe()"><span>◎</span>Рядом</button>
  <button onclick="openPanel('placesPanel',this)"><span>⌕</span>Места</button>
 </nav>
 <section class="panel" id="routePanel">
@@ -122,7 +122,7 @@ button,input{font:inherit}button{cursor:pointer;border:0}
  <p class="info">Постройте автомобильный, пеший или велосипедный маршрут до выбранного места.</p>
 </section>
 <section class="panel" id="placesPanel">
- <div class="paneltop"><h2>Места Душанбе</h2><button class="close" onclick="closePanels()">×</button></div>
+ <div class="paneltop"><h2>Полезные места Душанбе</h2><button class="close" onclick="closePanels()">×</button></div>
  <p class="info">Найдите реальные объекты на карте. Выберите категорию или воспользуйтесь поиском сверху.</p>
  <button class="primary" onclick="closePanels();document.getElementById('search').focus()">Поиск по карте</button>
  <div id="placeResults"></div>
